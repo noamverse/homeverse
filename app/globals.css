@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap");
+
+:root {
+  --bg: #06060b;
+  --surface: #0c0c14;
+  --card: #111119;
+  --card-hi: #16161f;
+  --border: #1e1e2e;
+  --border-hi: #2d2d44;
+  --text-1: #f2f2fa;
+  --text-2: #a0a0be;
+  --text-3: #6a6a84;
+  --accent: #5bffb0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 30% -10%, rgba(91, 255, 176, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 100% 0%, rgba(96, 165, 250, 0.08) 0%, transparent 35%),
+    var(--bg);
+  color: var(--text-1);
+  font-family: "Outfit", sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(91, 255, 176, 0.2);
+  color: var(--text-1);
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 8px rgba(91, 255, 176, 0.25);
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
