@@ -9,8 +9,8 @@ export default function StoriesPage() {
   return (
     <SectionPage
       eyebrow="Stories"
-      title="Entrepreneur features with warmth, ambition, and depth."
-      description="Portraits of founders, builders, and cultural leaders shaping the next generation with taste and conviction."
+      title="Narratives about atmosphere, stewardship, and the worlds people build."
+      description="Longer-form stories about institutions, builders, culture, and the emotional architecture behind serious lives."
       articles={getArticlesBySection("stories")}
     />
   );

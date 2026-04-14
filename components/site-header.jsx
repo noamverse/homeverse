@@ -4,11 +4,11 @@ import { siteTagline } from "@/lib/content";
 
 const navItems = [
   { href: "/", label: "Home" },
+  { href: "/philosophy", label: "Philosophy" },
+  { href: "/profiles", label: "Profiles" },
   { href: "/stories", label: "Stories" },
   { href: "/journal", label: "Journal" },
-  { href: "/news", label: "News" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/enter-home", label: "Enter HOME" },
 ];
 
 export default function SiteHeader() {
