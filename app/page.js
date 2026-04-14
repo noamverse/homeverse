@@ -1,5 +1,5 @@
-import InvestmentFeeAnalyzer from "@/components/investment-fee-analyzer";
+import HomePage from "@/components/home-page";
 
-export default function HomePage() {
-  return <InvestmentFeeAnalyzer />;
+export default function Page() {
+  return <HomePage />;
 }

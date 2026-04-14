@@ -1,15 +1,26 @@
 import "./globals.css";
+import SiteFooter from "@/components/site-footer";
+import SiteHeader from "@/components/site-header";
 
 export const metadata = {
-  title: "HOME | Investment Fee Analyzer",
+  title: {
+    default: "HOME",
+    template: "%s | HOME",
+  },
   description:
-    "A polished fee impact calculator for HOME, structured as a deployable Next.js project for Vercel.",
+    "HOME is a premium global media platform built around the idea that life is a family, not a marketplace.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <div className="site-shell">
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+        </div>
+      </body>
     </html>
   );
 }
