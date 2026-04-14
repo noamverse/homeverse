@@ -425,29 +425,38 @@
 
 .flywheel {
   display: grid;
-  grid-template-columns: repeat(7, minmax(120px, 1fr));
+  grid-template-columns: repeat(7, minmax(142px, 1fr));
   gap: 14px;
 }
 
 .flywheelStep {
   display: grid;
-  gap: 12px;
-  align-content: start;
+  gap: 14px;
+  align-content: center;
+  justify-items: center;
   min-height: 168px;
-  padding: 20px 18px;
+  padding: 24px 20px;
   border-radius: 24px;
   border: 1px solid rgba(98, 72, 56, 0.12);
+  text-align: center;
   background:
     linear-gradient(180deg, rgba(76, 39, 36, 0.96), rgba(31, 27, 39, 0.98)),
     radial-gradient(circle at top, rgba(246, 210, 127, 0.12), transparent 30%);
 }
 
 .flywheelStep span {
+  display: block;
   color: rgba(255, 223, 190, 0.68);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
 }
 
 .flywheelStep strong {
-  font-size: clamp(1.5rem, 2vw, 2.1rem);
+  display: block;
+  max-width: 11ch;
+  font-size: clamp(1.2rem, 1.55vw, 1.7rem);
+  line-height: 1.14;
+  text-wrap: balance;
   color: #fff1e4;
 }
 
