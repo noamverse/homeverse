@@ -11,11 +11,11 @@ export default function SiteFooter() {
         </div>
 
         <div className="site-nav" aria-label="Footer navigation">
+          <Link href="/philosophy">Philosophy</Link>
+          <Link href="/profiles">Profiles</Link>
           <Link href="/stories">Stories</Link>
           <Link href="/journal">Journal</Link>
-          <Link href="/news">News</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
+          <Link href="/enter-home">Enter HOME</Link>
         </div>
       </div>
     </footer>

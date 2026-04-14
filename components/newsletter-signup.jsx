@@ -2,10 +2,10 @@ export default function NewsletterSignup() {
   return (
     <section className="newsletter-card">
       <div>
-        <div className="eyebrow">Newsletter</div>
-        <h2 className="section-title">A quieter brief for modern life.</h2>
+        <div className="eyebrow">Journal letter</div>
+        <h2 className="section-title">A private note from the house.</h2>
         <p className="section-copy">
-          Receive thoughtful essays, founder profiles, and beautifully edited updates from HOME.
+          Receive essays, field notes, and thoughtful updates from HOME with warmth, clarity, and restraint.
         </p>
       </div>
 
@@ -14,7 +14,7 @@ export default function NewsletterSignup() {
         <input className="newsletter-input" type="email" placeholder="Your email" />
         <div className="newsletter-actions">
           <button type="button" className="button-primary">
-            Join the newsletter
+            Join the letter
           </button>
           <span className="newsletter-note">Basic UI for now. Connect this to your email platform later.</span>
         </div>

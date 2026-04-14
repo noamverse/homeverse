@@ -9,8 +9,8 @@ export default function JournalPage() {
   return (
     <SectionPage
       eyebrow="Journal"
-      title="Private thinking made public with precision."
-      description="Essays, notes, reflections, and editorial writing from the world behind HOME."
+      title="Essays from inside the house."
+      description="A quieter chamber for notes, reflections, philosophy, and the interior language behind HOME."
       articles={getArticlesBySection("journal")}
     />
   );
