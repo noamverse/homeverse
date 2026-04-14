@@ -5,10 +5,10 @@ import { siteTagline } from "@/lib/content";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/philosophy", label: "Philosophy" },
-  { href: "/profiles", label: "Profiles" },
+  { href: "/featured", label: "Featured" },
   { href: "/stories", label: "Stories" },
-  { href: "/journal", label: "Journal" },
-  { href: "/enter-home", label: "Enter HOME" },
+  { href: "/ecosystem", label: "Ecosystem" },
+  { href: "/welcome", label: "Welcome HOME" },
 ];
 
 export default function SiteHeader() {

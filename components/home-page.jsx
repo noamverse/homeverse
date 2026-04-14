@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  enterHomeBlock,
   getFeaturedProfiles,
   getFeaturedStories,
   homeHeroDetails,
@@ -9,6 +8,7 @@ import {
   homePillars,
   manifestoExcerpt,
   siteTagline,
+  welcomeHomeBlock,
   whatHomeIs,
 } from "@/lib/content";
 
@@ -73,8 +73,8 @@ export default function HomePage() {
                 <p className="home-hero-subhead">{homeIntro.subhead}</p>
 
                 <div className="home-hero-actions">
-                  <Link href="/enter-home" className="button-primary">
-                    Enter HOME
+                  <Link href="/welcome" className="button-primary">
+                    Welcome HOME
                   </Link>
                   <Link href="/philosophy" className="button-secondary">
                     Read the philosophy
@@ -127,11 +127,11 @@ export default function HomePage() {
           <section className="home-profiles">
             <div className="home-section-heading">
               <div>
-                <p className="home-section-label">Featured profiles</p>
+                <p className="home-section-label">Featured</p>
                 <h2 className="section-title">People and institutions with rooms inside them.</h2>
               </div>
-              <Link href="/profiles" className="button-secondary">
-                View profiles
+              <Link href="/featured" className="button-secondary">
+                View featured
               </Link>
             </div>
 
@@ -147,7 +147,7 @@ export default function HomePage() {
                   <p className="home-card-kicker">Editorial standard</p>
                   <h3 className="home-card-title">We look for builders whose work changes the feeling of a room.</h3>
                   <p className="home-card-copy">
-                    HOME profiles founders, patrons, hosts, and institutions whose presence creates trust, coherence,
+                    HOME features founders, patrons, hosts, and institutions whose presence creates trust, coherence,
                     and a stronger sense of how to live.
                   </p>
                 </aside>
@@ -188,17 +188,17 @@ export default function HomePage() {
 
           <section className="home-threshold">
             <div className="home-threshold__copy">
-              <p className="home-section-label">Enter HOME</p>
-              <h2 className="section-title">{enterHomeBlock.title}</h2>
-              <p className="section-copy section-copy--large">{enterHomeBlock.body}</p>
+              <p className="home-section-label">Welcome HOME</p>
+              <h2 className="section-title">{welcomeHomeBlock.title}</h2>
+              <p className="section-copy section-copy--large">{welcomeHomeBlock.body}</p>
             </div>
 
             <div className="home-threshold__actions">
-              <Link href="/enter-home" className="button-primary">
+              <Link href="/welcome" className="button-primary">
                 Begin here
               </Link>
-              <Link href="/journal" className="button-secondary">
-                Read the journal
+              <Link href="/ecosystem" className="button-secondary">
+                Explore the ecosystem
               </Link>
             </div>
           </section>

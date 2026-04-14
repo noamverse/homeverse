@@ -1,0 +1,634 @@
+.page {
+  color: #2d2019;
+}
+
+.shell {
+  position: relative;
+  display: grid;
+  gap: 34px;
+  padding-bottom: 24px;
+}
+
+.shell::before {
+  content: "";
+  position: absolute;
+  inset: 0 -8% auto;
+  height: 1800px;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(210, 174, 100, 0.18), transparent 18%),
+    radial-gradient(circle at 88% 12%, rgba(126, 72, 63, 0.16), transparent 20%),
+    radial-gradient(circle at 50% 32%, rgba(105, 84, 130, 0.08), transparent 26%),
+    radial-gradient(circle at 50% 56%, rgba(221, 187, 139, 0.14), transparent 24%);
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.intro,
+.mapSection,
+.pillarsSection,
+.flywheelSection,
+.layersSection,
+.entrySection {
+  border: 1px solid rgba(102, 75, 58, 0.12);
+  box-shadow: 0 30px 90px rgba(62, 37, 25, 0.08);
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.58fr) minmax(300px, 0.9fr);
+  gap: 20px;
+  align-items: stretch;
+  padding: 24px 26px;
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(214, 180, 104, 0.14), transparent 26%),
+    radial-gradient(circle at 82% 22%, rgba(116, 87, 140, 0.1), transparent 20%),
+    linear-gradient(180deg, rgba(255, 252, 247, 0.98), rgba(244, 234, 223, 0.94));
+}
+
+.introCopyWrap {
+  display: grid;
+  align-content: end;
+  gap: 8px;
+}
+
+.eyebrow,
+.pillarLabel,
+.mapNodeKind,
+.layerLabel,
+.coreLabel,
+.flywheelStep span {
+  margin: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.eyebrow,
+.pillarLabel,
+.layerLabel,
+.coreLabel,
+.mapNodeKind {
+  color: #765540;
+}
+
+.title,
+.sectionHeading h2,
+.core h3,
+.mapNode h3,
+.pillarCard h3,
+.entryCard h3,
+.flywheelStep strong {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  line-height: 0.94;
+  color: #231711;
+}
+
+.title {
+  margin-top: 8px;
+  font-size: clamp(2.8rem, 5vw, 4.9rem);
+}
+
+.introCopy,
+.sectionHeading p:last-child,
+.core p,
+.mapNode p,
+.pillarCard p,
+.layerDescription,
+.layerCard li,
+.entryCard p {
+  margin: 0;
+  line-height: 1.84;
+  color: #5f4d42;
+}
+
+.introCopy {
+  max-width: 29ch;
+  font-size: 0.98rem;
+}
+
+.thresholdPanel {
+  position: relative;
+  overflow: hidden;
+  min-height: 208px;
+  border-radius: 28px;
+  border: 1px solid rgba(100, 73, 58, 0.12);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(249, 242, 233, 0.14), transparent 18%),
+    radial-gradient(circle at 18% 18%, rgba(214, 180, 104, 0.18), transparent 22%),
+    radial-gradient(circle at 82% 18%, rgba(114, 82, 137, 0.14), transparent 18%),
+    linear-gradient(135deg, rgba(56, 35, 38, 0.98), rgba(25, 24, 34, 0.98));
+}
+
+.thresholdOrbit,
+.thresholdRingOuter,
+.thresholdRingInner,
+.thresholdPulse {
+  position: absolute;
+}
+
+.thresholdOrbit {
+  inset: 0;
+}
+
+.thresholdRingOuter,
+.thresholdRingInner {
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 236, 217, 0.16);
+}
+
+.thresholdRingOuter {
+  width: 320px;
+  height: 320px;
+}
+
+.thresholdRingInner {
+  width: 170px;
+  height: 170px;
+}
+
+.thresholdPulse {
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(246, 210, 127, 0.95), rgba(246, 210, 127, 0.24));
+  box-shadow: 0 0 40px rgba(246, 210, 127, 0.5);
+}
+
+.thresholdPanelBody {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-content: end;
+  min-height: 208px;
+  padding: 24px;
+}
+
+.thresholdLabel {
+  margin: 0 0 14px;
+  color: rgba(255, 226, 195, 0.78);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.thresholdSignals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.thresholdSignals span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 235, 214, 0.14);
+  background: rgba(255, 251, 246, 0.08);
+  color: rgba(255, 241, 227, 0.9);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mapSection,
+.pillarsSection,
+.flywheelSection,
+.layersSection,
+.entrySection {
+  padding: 34px;
+  border-radius: 38px;
+  background:
+    radial-gradient(circle at 84% 10%, rgba(214, 180, 104, 0.12), transparent 20%),
+    linear-gradient(180deg, rgba(255, 252, 247, 0.98), rgba(240, 231, 220, 0.94));
+}
+
+.sectionHeading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.74fr);
+  gap: 24px;
+  align-items: end;
+  margin-bottom: 22px;
+}
+
+.sectionHeading h2 {
+  font-size: clamp(2.6rem, 4vw, 4.2rem);
+}
+
+.cosmos {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas:
+    "ventures . hospitality"
+    "fellowship core engine"
+    "base relationship media";
+  gap: 18px;
+  align-items: stretch;
+  min-height: 0;
+  padding: 28px;
+  overflow: hidden;
+  border-radius: 34px;
+  border: 1px solid rgba(86, 63, 53, 0.12);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(247, 240, 232, 0.9), rgba(230, 218, 206, 0.76) 36%, rgba(52, 37, 42, 0.92) 100%),
+    linear-gradient(135deg, rgba(54, 35, 34, 0.98), rgba(24, 24, 32, 0.98));
+  box-shadow: inset 0 1px 0 rgba(255, 246, 233, 0.12);
+}
+
+.orbitField,
+.ringOuter,
+.ringMiddle,
+.ringInner,
+.gridGlow {
+  position: absolute;
+}
+
+.orbitField {
+  inset: 0;
+}
+
+.ringOuter,
+.ringMiddle,
+.ringInner {
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 237, 218, 0.18);
+}
+
+.ringOuter {
+  width: min(68vw, 660px);
+  height: min(68vw, 660px);
+  box-shadow: 0 0 120px rgba(246, 210, 127, 0.08);
+}
+
+.ringMiddle {
+  width: min(54vw, 500px);
+  height: min(54vw, 500px);
+  border: 1px dashed rgba(255, 222, 182, 0.18);
+  transform: translate(-50%, -50%);
+}
+
+.ringInner {
+  width: min(38vw, 340px);
+  height: min(38vw, 340px);
+  border-color: rgba(255, 210, 154, 0.24);
+}
+
+.gridGlow {
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 240, 224, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 240, 224, 0.04) 1px, transparent 1px);
+  background-size: 70px 70px;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.82), transparent 86%);
+}
+
+.core,
+.mapNode {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  min-height: 172px;
+  padding: 20px 20px 22px;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 240, 222, 0.12);
+  backdrop-filter: blur(16px);
+  transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+}
+
+.core:hover,
+.mapNode:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 231, 205, 0.3);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+
+.core {
+  grid-area: core;
+  align-self: center;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(246, 210, 127, 0.28), transparent 36%),
+    linear-gradient(180deg, rgba(74, 36, 32, 0.94), rgba(30, 27, 38, 0.96));
+  box-shadow:
+    0 30px 80px rgba(24, 14, 14, 0.28),
+    inset 0 1px 0 rgba(255, 246, 233, 0.14);
+}
+
+.core h3 {
+  margin-top: 8px;
+  margin-bottom: 12px;
+  font-size: clamp(2.8rem, 4.8vw, 4.4rem);
+  color: #fff3e8;
+}
+
+.core p,
+.coreLabel {
+  color: rgba(255, 233, 212, 0.82);
+}
+
+.mapNode {
+  background:
+    linear-gradient(180deg, rgba(255, 252, 247, 0.9), rgba(243, 230, 217, 0.82)),
+    radial-gradient(circle at top right, rgba(215, 181, 106, 0.1), transparent 24%);
+}
+
+.mapNode h3 {
+  margin-top: 8px;
+  margin-bottom: 10px;
+  font-size: clamp(1.52rem, 2.2vw, 2.05rem);
+}
+
+.mapNodeVentures {
+  grid-area: ventures;
+}
+
+.mapNodeHospitality {
+  grid-area: hospitality;
+}
+
+.mapNodeFellowship {
+  grid-area: fellowship;
+}
+
+.mapNodeEngine {
+  grid-area: engine;
+}
+
+.mapNodeBase {
+  grid-area: base;
+}
+
+.mapNodeMedia {
+  grid-area: media;
+}
+
+.mapNodeRelationship {
+  grid-area: relationship;
+}
+
+.pillarsGrid,
+.entryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.pillarCard,
+.entryCard,
+.layerCard {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+  border-radius: 28px;
+  border: 1px solid rgba(98, 72, 56, 0.12);
+  background:
+    radial-gradient(circle at top right, rgba(210, 174, 100, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(244, 236, 228, 0.92));
+}
+
+.pillarCard h3,
+.entryCard h3 {
+  font-size: clamp(2rem, 3.2vw, 3rem);
+}
+
+.pillarNotes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pillarNotes span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(98, 72, 56, 0.12);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #705443;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.flywheel {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(142px, 1fr));
+  gap: 14px;
+}
+
+.flywheelStep {
+  display: grid;
+  gap: 14px;
+  align-content: center;
+  justify-items: center;
+  min-height: 168px;
+  padding: 24px 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(98, 72, 56, 0.12);
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(76, 39, 36, 0.96), rgba(31, 27, 39, 0.98)),
+    radial-gradient(circle at top, rgba(246, 210, 127, 0.12), transparent 30%);
+}
+
+.flywheelStep span {
+  display: block;
+  color: rgba(255, 223, 190, 0.68);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+}
+
+.flywheelStep strong {
+  display: block;
+  max-width: 11ch;
+  font-size: clamp(1.2rem, 1.55vw, 1.7rem);
+  line-height: 1.14;
+  text-wrap: balance;
+  color: #fff1e4;
+}
+
+.layerGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.layerCardNow {
+  background:
+    radial-gradient(circle at top right, rgba(210, 174, 100, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(244, 236, 228, 0.92));
+}
+
+.layerCardNext {
+  background:
+    radial-gradient(circle at top right, rgba(114, 82, 137, 0.12), transparent 30%),
+    linear-gradient(180deg, rgba(79, 42, 46, 0.98), rgba(33, 30, 45, 0.98));
+}
+
+.layerCardNext,
+.layerCardNext .layerLabel,
+.layerCardNext .layerDescription,
+.layerCardNext li {
+  color: #f4e7d8;
+}
+
+.layerCard ul {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.entryCard a {
+  width: fit-content;
+  padding: 10px 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(98, 72, 56, 0.14);
+  background: rgba(255, 255, 255, 0.6);
+  color: #3e2b20;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+}
+
+.entryCard a:hover {
+  transform: translateY(-1px);
+  border-color: rgba(98, 72, 56, 0.28);
+}
+
+@media (max-width: 1180px) {
+  .intro,
+  .sectionHeading,
+  .pillarsGrid,
+  .entryGrid,
+  .layerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .cosmos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "core core"
+      "ventures hospitality"
+      "fellowship engine"
+      "base media"
+      "relationship relationship";
+    padding: 22px;
+  }
+
+  .orbitField {
+    inset: 22px;
+  }
+
+  .flywheel {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .core {
+    min-height: 220px;
+  }
+
+  .ringOuter {
+    width: min(82vw, 560px);
+    height: min(82vw, 560px);
+  }
+
+  .ringMiddle {
+    width: min(66vw, 420px);
+    height: min(66vw, 420px);
+  }
+
+  .ringInner {
+    width: min(52vw, 300px);
+    height: min(52vw, 300px);
+  }
+}
+
+@media (max-width: 720px) {
+  .intro,
+  .mapSection,
+  .pillarsSection,
+  .flywheelSection,
+  .layersSection,
+  .entrySection {
+    padding: 24px;
+    border-radius: 28px;
+  }
+
+  .title {
+    font-size: clamp(2.4rem, 11vw, 3.8rem);
+  }
+
+  .sectionHeading h2,
+  .pillarCard h3,
+  .entryCard h3 {
+    font-size: clamp(2.1rem, 10vw, 3rem);
+  }
+
+  .thresholdPanel,
+  .thresholdPanelBody {
+    min-height: 190px;
+  }
+
+  .thresholdRingOuter {
+    width: 240px;
+    height: 240px;
+  }
+
+  .thresholdRingInner {
+    width: 128px;
+    height: 128px;
+  }
+
+  .cosmos {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "core"
+      "ventures"
+      "hospitality"
+      "fellowship"
+      "engine"
+      "base"
+      "relationship"
+      "media";
+    padding: 18px;
+    border-radius: 26px;
+  }
+
+  .core h3 {
+    font-size: clamp(2.4rem, 12vw, 3.4rem);
+  }
+
+  .flywheel {
+    grid-template-columns: 1fr;
+  }
+
+  .pillarCard,
+  .entryCard,
+  .layerCard,
+  .mapNode,
+  .core,
+  .flywheelStep {
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .mapNode,
+  .core {
+    min-height: 0;
+  }
+}

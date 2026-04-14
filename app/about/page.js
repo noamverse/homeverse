@@ -33,7 +33,7 @@ export default function AboutPage() {
             <div className="eyebrow">What we cover</div>
             <ul className="pill-list">
               <li>Entrepreneur features and founder profiles</li>
-              <li>Essays and journal-style writing</li>
+              <li>Essays and slower ecosystem writing</li>
               <li>Current events through a calmer lens</li>
               <li>Culture, design, family, taste, and modern life</li>
             </ul>
