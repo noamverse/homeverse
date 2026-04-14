@@ -5,7 +5,7 @@ import { siteTagline } from "@/lib/content";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/philosophy", label: "Philosophy" },
-  { href: "/profiles", label: "Profiles" },
+  { href: "/featured", label: "Featured" },
   { href: "/stories", label: "Stories" },
   { href: "/journal", label: "Journal" },
   { href: "/welcome", label: "Welcome HOME" },

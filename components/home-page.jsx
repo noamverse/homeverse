@@ -127,11 +127,11 @@ export default function HomePage() {
           <section className="home-profiles">
             <div className="home-section-heading">
               <div>
-                <p className="home-section-label">Featured profiles</p>
+                <p className="home-section-label">Featured</p>
                 <h2 className="section-title">People and institutions with rooms inside them.</h2>
               </div>
-              <Link href="/profiles" className="button-secondary">
-                View profiles
+              <Link href="/featured" className="button-secondary">
+                View featured
               </Link>
             </div>
 
@@ -147,7 +147,7 @@ export default function HomePage() {
                   <p className="home-card-kicker">Editorial standard</p>
                   <h3 className="home-card-title">We look for builders whose work changes the feeling of a room.</h3>
                   <p className="home-card-copy">
-                    HOME profiles founders, patrons, hosts, and institutions whose presence creates trust, coherence,
+                    HOME features founders, patrons, hosts, and institutions whose presence creates trust, coherence,
                     and a stronger sense of how to live.
                   </p>
                 </aside>

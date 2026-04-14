@@ -13,9 +13,9 @@ const pathways = [
     title: "Be Featured",
     body:
       "For founders, hosts, patrons, and worldbuilders whose work carries atmosphere, substance, and a point of view HOME would want to study with care.",
-    detail: "Profiles, essays, conversations, and story-led editorial formats.",
-    cta: "View profiles",
-    href: "/profiles",
+    detail: "Features, essays, conversations, and story-led editorial formats.",
+    cta: "View featured",
+    href: "/featured",
   },
   {
     eyebrow: "Creative engagement",
@@ -220,7 +220,7 @@ export default function WelcomePage() {
               <Link href="/journal" className="button-secondary">
                 Stay close through the journal
               </Link>
-              <Link href="/profiles" className="button-primary">
+              <Link href="/featured" className="button-primary">
                 Continue into HOME
               </Link>
             </div>
