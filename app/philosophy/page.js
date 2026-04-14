@@ -158,8 +158,8 @@ export default function PhilosophyPage() {
           </p>
 
           <div className="philosophy-closing__actions">
-            <Link href="/enter-home" className="button-primary">
-              Enter HOME
+            <Link href="/welcome" className="button-primary">
+              Welcome HOME
             </Link>
             <Link href="/journal" className="button-secondary">
               Read the journal

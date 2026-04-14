@@ -8,7 +8,7 @@ const navItems = [
   { href: "/profiles", label: "Profiles" },
   { href: "/stories", label: "Stories" },
   { href: "/journal", label: "Journal" },
-  { href: "/enter-home", label: "Enter HOME" },
+  { href: "/welcome", label: "Welcome HOME" },
 ];
 
 export default function SiteHeader() {

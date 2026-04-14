@@ -15,7 +15,7 @@ export default function SiteFooter() {
           <Link href="/profiles">Profiles</Link>
           <Link href="/stories">Stories</Link>
           <Link href="/journal">Journal</Link>
-          <Link href="/enter-home">Enter HOME</Link>
+          <Link href="/welcome">Welcome HOME</Link>
         </div>
       </div>
     </footer>

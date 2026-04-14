@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  enterHomeBlock,
   getFeaturedProfiles,
   getFeaturedStories,
   homeHeroDetails,
@@ -9,6 +8,7 @@ import {
   homePillars,
   manifestoExcerpt,
   siteTagline,
+  welcomeHomeBlock,
   whatHomeIs,
 } from "@/lib/content";
 
@@ -73,8 +73,8 @@ export default function HomePage() {
                 <p className="home-hero-subhead">{homeIntro.subhead}</p>
 
                 <div className="home-hero-actions">
-                  <Link href="/enter-home" className="button-primary">
-                    Enter HOME
+                  <Link href="/welcome" className="button-primary">
+                    Welcome HOME
                   </Link>
                   <Link href="/philosophy" className="button-secondary">
                     Read the philosophy
@@ -188,13 +188,13 @@ export default function HomePage() {
 
           <section className="home-threshold">
             <div className="home-threshold__copy">
-              <p className="home-section-label">Enter HOME</p>
-              <h2 className="section-title">{enterHomeBlock.title}</h2>
-              <p className="section-copy section-copy--large">{enterHomeBlock.body}</p>
+              <p className="home-section-label">Welcome HOME</p>
+              <h2 className="section-title">{welcomeHomeBlock.title}</h2>
+              <p className="section-copy section-copy--large">{welcomeHomeBlock.body}</p>
             </div>
 
             <div className="home-threshold__actions">
-              <Link href="/enter-home" className="button-primary">
+              <Link href="/welcome" className="button-primary">
                 Begin here
               </Link>
               <Link href="/journal" className="button-secondary">

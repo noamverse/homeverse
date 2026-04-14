@@ -2700,3 +2700,396 @@ body {
     font-size: clamp(2.5rem, 11vw, 4rem);
   }
 }
+
+/* Welcome HOME */
+
+.welcome-page {
+  padding-top: 8px;
+}
+
+.welcome-shell {
+  position: relative;
+  display: grid;
+  gap: 34px;
+  padding-bottom: 24px;
+}
+
+.welcome-shell::before {
+  content: "";
+  position: absolute;
+  inset: 12px -8% auto;
+  height: 1240px;
+  background:
+    radial-gradient(circle at 14% 8%, rgba(205, 164, 83, 0.18), transparent 21%),
+    radial-gradient(circle at 82% 12%, rgba(132, 54, 48, 0.16), transparent 18%),
+    radial-gradient(circle at 50% 46%, rgba(111, 73, 59, 0.11), transparent 26%);
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.welcome-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-threshold-header,
+.welcome-orientation,
+.welcome-pathways,
+.welcome-intake,
+.welcome-closing {
+  border: 1px solid rgba(109, 73, 52, 0.12);
+  box-shadow: 0 28px 80px rgba(58, 33, 24, 0.08);
+}
+
+.welcome-threshold-header {
+  padding: 28px 30px;
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(205, 164, 83, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(255, 252, 246, 0.98), rgba(244, 233, 222, 0.93));
+}
+
+.welcome-threshold-header__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.welcome-threshold-header__marker {
+  margin: 0;
+  color: rgba(111, 73, 59, 0.7);
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.welcome-threshold-header__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.7fr);
+  gap: 24px;
+  align-items: end;
+}
+
+.welcome-threshold-header__title {
+  margin: 0 0 14px;
+  font-size: clamp(2.8rem, 5vw, 4.6rem);
+  line-height: 0.94;
+}
+
+.welcome-threshold-header__supporting {
+  max-width: 36ch;
+  margin: 0;
+  color: #4c3428;
+  font-size: 1.04rem;
+  line-height: 1.85;
+}
+
+.welcome-threshold-header__note {
+  padding: 20px 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(109, 73, 52, 0.1);
+  background: rgba(255, 251, 245, 0.72);
+}
+
+.welcome-threshold-header__note-label,
+.welcome-intake__aside-label {
+  margin: 0 0 10px;
+  color: #7a5744;
+  font-size: 0.76rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.welcome-threshold-header__note-quote {
+  margin: 0 0 10px;
+  max-width: 18ch;
+  color: #3c2a22;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.08;
+}
+
+.welcome-threshold-header__note-text {
+  margin: 0;
+  color: #5b4031;
+  line-height: 1.8;
+}
+
+.welcome-orientation,
+.welcome-intake {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 26px;
+  padding: 30px;
+  border-radius: 34px;
+  background: linear-gradient(180deg, rgba(255, 252, 247, 0.98), rgba(246, 238, 229, 0.95));
+}
+
+.welcome-orientation__notes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.welcome-orientation__notes article {
+  padding: 24px 22px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.64);
+  border: 1px solid rgba(109, 73, 52, 0.12);
+}
+
+.welcome-orientation__notes p,
+.welcome-intake__aside p,
+.welcome-pathway-card p,
+.welcome-section-heading .section-copy,
+.welcome-closing__body {
+  margin: 0;
+  color: #5b4031;
+  line-height: 1.85;
+}
+
+.welcome-pathways {
+  padding: 32px;
+  border-radius: 38px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(205, 164, 83, 0.12), transparent 20%),
+    linear-gradient(180deg, rgba(250, 245, 238, 0.98), rgba(237, 225, 214, 0.94));
+}
+
+.welcome-section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.7fr);
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+
+.welcome-pathways__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.welcome-pathway-card {
+  display: grid;
+  gap: 18px;
+  min-height: 100%;
+  padding: 28px 26px;
+  border-radius: 28px;
+  border: 1px solid rgba(109, 73, 52, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 252, 247, 0.82), rgba(255, 248, 240, 0.62)),
+    radial-gradient(circle at top right, rgba(205, 164, 83, 0.08), transparent 24%);
+}
+
+.welcome-pathway-card__topline,
+.welcome-pathway-card__footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.welcome-pathway-card__topline {
+  color: #7c5744;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.welcome-pathway-card h3 {
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  line-height: 0.96;
+}
+
+.welcome-pathway-card__footer {
+  align-items: end;
+  padding-top: 8px;
+  border-top: 1px solid rgba(109, 73, 52, 0.1);
+}
+
+.welcome-pathway-card__footer p {
+  max-width: 32ch;
+  color: #755241;
+  font-size: 0.95rem;
+}
+
+.welcome-pathway-card__footer a {
+  color: #5a3727;
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.welcome-intake__aside {
+  margin-top: 24px;
+  max-width: 30rem;
+  padding: 22px 24px;
+  border-radius: 24px;
+  background: rgba(94, 58, 41, 0.08);
+}
+
+.welcome-intake__aside-label {
+  color: #6f4834;
+}
+
+.welcome-intake__panel {
+  padding: 26px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(77, 43, 36, 0.98), rgba(35, 29, 31, 0.98));
+  box-shadow: inset 0 1px 0 rgba(255, 248, 240, 0.08);
+}
+
+.welcome-intake-form {
+  display: grid;
+  gap: 18px;
+}
+
+.welcome-intake-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.welcome-intake-form__field {
+  display: grid;
+  gap: 10px;
+}
+
+.welcome-intake-form__field span {
+  color: rgba(245, 236, 224, 0.82);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.welcome-intake-form__field input,
+.welcome-intake-form__field select,
+.welcome-intake-form__field textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 240, 222, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 249, 241, 0.06);
+  color: #f7ede1;
+  padding: 16px 18px;
+  font: inherit;
+  outline: none;
+}
+
+.welcome-intake-form__field input::placeholder,
+.welcome-intake-form__field textarea::placeholder {
+  color: rgba(247, 237, 225, 0.54);
+}
+
+.welcome-intake-form__field input:focus,
+.welcome-intake-form__field select:focus,
+.welcome-intake-form__field textarea:focus {
+  border-color: rgba(214, 180, 102, 0.56);
+  box-shadow: 0 0 0 3px rgba(214, 180, 102, 0.12);
+}
+
+.welcome-intake-form__field textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.welcome-intake-form__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 6px;
+}
+
+.welcome-intake-form__actions p {
+  max-width: 32ch;
+  margin: 0;
+  color: rgba(245, 236, 224, 0.72);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.welcome-closing {
+  padding: 72px 44px;
+  border-radius: 40px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(205, 164, 83, 0.18), transparent 22%),
+    linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(239, 228, 218, 0.95));
+}
+
+.welcome-closing__title {
+  max-width: 13ch;
+  margin: 0 auto 22px;
+  font-size: clamp(3rem, 6vw, 5.4rem);
+  line-height: 0.94;
+}
+
+.welcome-closing__body {
+  max-width: 43ch;
+  margin: 0 auto 28px;
+}
+
+.welcome-closing__actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+@media (max-width: 1100px) {
+  .welcome-threshold-header__body,
+  .welcome-orientation,
+  .welcome-intake,
+  .welcome-section-heading,
+  .welcome-orientation__notes,
+  .welcome-pathways__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .welcome-threshold-header,
+  .welcome-orientation,
+  .welcome-pathways,
+  .welcome-intake,
+  .welcome-closing {
+    padding: 24px;
+    border-radius: 28px;
+  }
+
+  .welcome-threshold-header__topline,
+  .welcome-pathway-card__topline,
+  .welcome-pathway-card__footer,
+  .welcome-intake-form__actions {
+    display: grid;
+  }
+
+  .welcome-threshold-header__title {
+    font-size: clamp(2.5rem, 11vw, 3.8rem);
+  }
+
+  .welcome-threshold-header__supporting,
+  .welcome-closing__body {
+    font-size: 1rem;
+  }
+
+  .welcome-threshold-header__note,
+  .welcome-orientation__notes article,
+  .welcome-intake__panel,
+  .welcome-intake__aside,
+  .welcome-pathway-card {
+    padding: 20px;
+  }
+
+  .welcome-intake-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-closing__title {
+    font-size: clamp(2.3rem, 11vw, 3.8rem);
+  }
+}
