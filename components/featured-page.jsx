@@ -45,7 +45,7 @@ const featuredMosaic = [
     excerpt: "A quieter editorial instinct for readers who want signal without frenzy.",
     links: [
       { label: "Read story", href: "/articles/after-the-noise" },
-      { label: "Journal pathway", href: "/journal" },
+      { label: "Ecosystem pathway", href: "/ecosystem" },
     ],
   },
   {
@@ -127,7 +127,7 @@ const curationBands = [
         company: "Mercer Studio",
         note: "Writing toward calm, context, and a more beautiful reading atmosphere.",
         href: "/articles/after-the-noise",
-        relationship: ["Story live", "Journal adjacent"],
+        relationship: ["Story live", "Ecosystem adjacent"],
       },
       {
         name: "Noor Hadley",
@@ -403,14 +403,14 @@ export default function FeaturedPage() {
           <h2>The feature field keeps growing as HOME finds people and companies worth knowing well.</h2>
           <p>
             If you belong in this world, the next step can be a quiet introduction, a company context note, or a
-            deeper read through the journal and stories.
+            deeper read through the ecosystem and stories.
           </p>
           <div className="featured-closing__actions">
             <Link href="/welcome" className="button-primary">
               Introduce yourself
             </Link>
-            <Link href="/journal" className="button-secondary">
-              Read the journal
+            <Link href="/ecosystem" className="button-secondary">
+              Explore the ecosystem
             </Link>
           </div>
         </section>

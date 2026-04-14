@@ -7,7 +7,7 @@ const navItems = [
   { href: "/philosophy", label: "Philosophy" },
   { href: "/featured", label: "Featured" },
   { href: "/stories", label: "Stories" },
-  { href: "/journal", label: "Journal" },
+  { href: "/ecosystem", label: "Ecosystem" },
   { href: "/welcome", label: "Welcome HOME" },
 ];
 

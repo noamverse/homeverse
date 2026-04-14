@@ -14,7 +14,7 @@ export default function SiteFooter() {
           <Link href="/philosophy">Philosophy</Link>
           <Link href="/featured">Featured</Link>
           <Link href="/stories">Stories</Link>
-          <Link href="/journal">Journal</Link>
+          <Link href="/ecosystem">Ecosystem</Link>
           <Link href="/welcome">Welcome HOME</Link>
         </div>
       </div>

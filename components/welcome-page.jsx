@@ -39,10 +39,10 @@ const pathways = [
     eyebrow: "Ongoing correspondence",
     title: "Receive the Signal",
     body:
-      "For readers who want a quieter way to stay close: journal notes, thoughtful updates, and invitations when something meaningful is ready to be received.",
-    detail: "A private channel for the people who want to follow the world as it takes form.",
-    cta: "Read the journal",
-    href: "/journal",
+      "For readers who want a quieter way to stay close: worldview, pathways, thoughtful updates, and invitations as the HOME world takes form.",
+    detail: "A private channel for the people who want to follow the ecosystem as it deepens.",
+    cta: "Explore the ecosystem",
+    href: "/ecosystem",
   },
 ];
 
@@ -217,8 +217,8 @@ export default function WelcomePage() {
             </p>
 
             <div className="welcome-closing__actions">
-              <Link href="/journal" className="button-secondary">
-                Stay close through the journal
+              <Link href="/ecosystem" className="button-secondary">
+                Explore the ecosystem
               </Link>
               <Link href="/featured" className="button-primary">
                 Continue into HOME

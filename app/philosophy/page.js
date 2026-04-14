@@ -161,8 +161,8 @@ export default function PhilosophyPage() {
             <Link href="/welcome" className="button-primary">
               Welcome HOME
             </Link>
-            <Link href="/journal" className="button-secondary">
-              Read the journal
+            <Link href="/ecosystem" className="button-secondary">
+              Explore the ecosystem
             </Link>
           </div>
         </section>

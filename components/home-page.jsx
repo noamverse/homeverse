@@ -197,8 +197,8 @@ export default function HomePage() {
               <Link href="/welcome" className="button-primary">
                 Begin here
               </Link>
-              <Link href="/journal" className="button-secondary">
-                Read the journal
+              <Link href="/ecosystem" className="button-secondary">
+                Explore the ecosystem
               </Link>
             </div>
           </section>

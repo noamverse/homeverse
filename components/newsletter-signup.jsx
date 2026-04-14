@@ -2,7 +2,7 @@ export default function NewsletterSignup() {
   return (
     <section className="newsletter-card">
       <div>
-        <div className="eyebrow">Journal letter</div>
+      <div className="eyebrow">HOME signal</div>
         <h2 className="section-title">A private note from the house.</h2>
         <p className="section-copy">
           Receive essays, field notes, and thoughtful updates from HOME with warmth, clarity, and restraint.
