@@ -28,7 +28,6 @@ export default function SiteHeader() {
             className="brand-logo"
             priority
           />
-          <span className="brand-wordmark">HOME</span>
         </Link>
 
         <nav className="site-nav" aria-label="Primary navigation">
