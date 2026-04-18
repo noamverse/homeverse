@@ -1,208 +1,177 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   getFeaturedProfiles,
   getFeaturedStories,
-  homeHeroDetails,
-  homeIntro,
   homePhilosophyStrip,
   homePillars,
-  manifestoExcerpt,
   siteTagline,
   welcomeHomeBlock,
-  whatHomeIs,
 } from "@/lib/content";
 
-function ProfileCard({ profile, featured = false }) {
+function ProfileCard({ profile }) {
   return (
-    <article
-      className={featured ? "home-profile-card home-profile-card--featured" : "home-profile-card"}
-      style={{ backgroundImage: profile.tone }}
-    >
-      <div className="home-profile-card__veil" />
-      <div className="home-profile-card__body">
-        <p className="home-card-kicker">{profile.category}</p>
-        <h3 className="home-card-title">{profile.title}</h3>
-        <p className="home-card-copy">{profile.excerpt}</p>
-        <div className="home-card-meta">
+    <article className="hp-profile-card">
+      <div className="hp-profile-card__accent" style={{ backgroundImage: profile.tone }} />
+      <div className="hp-profile-card__body">
+        <p className="hp-card-kicker">{profile.category}</p>
+        <h3 className="hp-card-title">{profile.title}</h3>
+        <p className="hp-card-copy">{profile.excerpt}</p>
+        <div className="hp-card-meta">
           <span>{profile.author}</span>
           <span>&middot;</span>
           <span>{profile.readTime}</span>
         </div>
-        <Link href={`/articles/${profile.slug}`} className="home-card-link">
-          Read profile
+        <Link href={`/articles/${profile.slug}`} className="hp-card-link">
+          Read profile &rarr;
         </Link>
       </div>
     </article>
   );
 }
 
-function StoryFeature({ story, featured = false }) {
+function StoryCard({ story, lead = false }) {
   return (
-    <article className={featured ? "home-story home-story--featured" : "home-story"}>
-      <div className="home-story__tone" style={{ backgroundImage: story.tone }} />
-      <div className="home-story__body">
-        <p className="home-card-kicker">{story.category}</p>
-        <h3 className="home-card-title">{story.title}</h3>
-        <p className="home-card-copy">{story.excerpt}</p>
-        <div className="home-card-meta">
+    <article className={lead ? "hp-story-lead" : "hp-story-card"}>
+      <div
+        className={lead ? "hp-story-lead__cover" : "hp-story-card__accent"}
+        style={{ backgroundImage: story.tone }}
+      />
+      <div className={lead ? "hp-story-lead__body" : "hp-story-card__body"}>
+        <p className="hp-card-kicker">{story.category}</p>
+        <h3 className={lead ? "hp-story-lead__title" : "hp-card-title"}>{story.title}</h3>
+        <p className="hp-card-copy">{story.excerpt}</p>
+        <div className="hp-card-meta">
           <span>{story.author}</span>
           <span>&middot;</span>
           <span>{story.date}</span>
         </div>
+        <Link href={`/articles/${story.slug}`} className="hp-card-link">
+          Read story &rarr;
+        </Link>
       </div>
-      <Link href={`/articles/${story.slug}`} className="home-card-link">
-        Read story
-      </Link>
     </article>
   );
 }
 
 export default function HomePage() {
-  const [leadProfile, ...supportingProfiles] = getFeaturedProfiles();
+  const profiles = getFeaturedProfiles();
   const [leadStory, ...storyList] = getFeaturedStories();
 
   return (
-    <main className="page-main">
+    <main>
+      {/* Hero — full viewport */}
+      <section className="hp-hero" aria-label="Welcome to HOME">
+        <div className="hp-hero__glow" aria-hidden="true" />
+        <div className="hp-hero__inner">
+          <Image
+            src="/home.png.png"
+            alt="HOME"
+            width={440}
+            height={198}
+            className="hp-hero__logo-img"
+            priority
+          />
+          <p className="hp-hero__tagline">{siteTagline}</p>
+          <hr className="hp-hero__rule" aria-hidden="true" />
+          <Link href="/welcome" className="hp-hero__cta">
+            Enter HOME
+          </Link>
+        </div>
+      </section>
+
       <div className="container">
-        <div className="home-landing">
-          <section className="home-hero-section">
-            <div className="home-hero-shell">
-              <div className="home-hero-copy">
-                <p className="home-section-label">{homeIntro.eyebrow}</p>
-                <h1 className="home-hero-title">A world built for belonging, stewardship, and serious lives.</h1>
-                <p className="home-hero-subhead">{homeIntro.subhead}</p>
+        {/* Pillars */}
+        <section className="hp-section hp-pillars" aria-labelledby="pillars-heading">
+          <div className="hp-section__header">
+            <h2 className="hp-section__title" id="pillars-heading">
+              What HOME is built on.
+            </h2>
+            <Link href="/philosophy" className="hp-section__link">
+              Read the philosophy &rarr;
+            </Link>
+          </div>
 
-                <div className="home-hero-actions">
-                  <Link href="/welcome" className="button-primary">
-                    Welcome HOME
-                  </Link>
-                  <Link href="/philosophy" className="button-secondary">
-                    Read the philosophy
-                  </Link>
-                </div>
-              </div>
+          <div className="hp-pillars__list">
+            {homePillars.map((pillar, i) => (
+              <article key={pillar.title} className="hp-pillar">
+                <span className="hp-pillar__number">0{i + 1}</span>
+                <h3 className="hp-pillar__title">{pillar.title}</h3>
+                <p className="hp-pillar__body">{pillar.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-              <div className="home-hero-visual">
-                <div className="home-hero-chamber">
-                  <div className="home-hero-chamber__halo" />
-                  <div className="home-hero-chamber__frame">
-                    <p className="home-hero-chamber__label">Threshold</p>
-                    <p className="home-hero-chamber__quote">{siteTagline}</p>
-                  </div>
-                </div>
+        {/* Featured Profiles */}
+        <section className="hp-section hp-profiles" aria-labelledby="profiles-heading">
+          <div className="hp-section__header">
+            <h2 className="hp-section__title" id="profiles-heading">
+              People and institutions with rooms inside them.
+            </h2>
+            <Link href="/featured" className="hp-section__link">
+              View all featured &rarr;
+            </Link>
+          </div>
 
-                <div className="home-hero-ledger">
-                  <p className="home-hero-ledger__label">Inside HOME</p>
-                  <ul className="home-hero-ledger__list">
-                    {homeHeroDetails.map((detail) => (
-                      <li key={detail}>{detail}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
+          <div className="hp-profiles__grid">
+            {profiles.map((profile) => (
+              <ProfileCard key={profile.slug} profile={profile} />
+            ))}
+          </div>
+        </section>
 
-          <section className="home-philosophy-strip" aria-label="HOME philosophy">
-            <p>{homePhilosophyStrip}</p>
-          </section>
+        {/* Featured Stories */}
+        <section className="hp-section hp-stories" aria-labelledby="stories-heading">
+          <div className="hp-section__header">
+            <h2 className="hp-section__title" id="stories-heading">
+              Stories that move with a different rhythm.
+            </h2>
+            <Link href="/stories" className="hp-section__link">
+              View all stories &rarr;
+            </Link>
+          </div>
 
-          <section className="home-explainer">
-            <div className="home-explainer__copy">
-              <p className="home-section-label">What HOME is</p>
-              <h2 className="section-title">{whatHomeIs.title}</h2>
-              <p className="section-copy section-copy--large">{whatHomeIs.body}</p>
-            </div>
+          <div className="hp-stories__layout">
+            {leadStory ? <StoryCard story={leadStory} lead /> : null}
 
-            <div className="home-pillars">
-              {homePillars.map((pillar) => (
-                <article key={pillar.title} className="home-pillar">
-                  <h3>{pillar.title}</h3>
-                  <p>{pillar.body}</p>
-                </article>
+            <div className="hp-story-rail">
+              {storyList.map((story) => (
+                <StoryCard key={story.slug} story={story} />
               ))}
             </div>
-          </section>
+          </div>
+        </section>
+      </div>
 
-          <section className="home-profiles">
-            <div className="home-section-heading">
-              <div>
-                <p className="home-section-label">Featured</p>
-                <h2 className="section-title">People and institutions with rooms inside them.</h2>
-              </div>
-              <Link href="/featured" className="button-secondary">
-                View featured
-              </Link>
-            </div>
-
-            <div className="home-profile-grid">
-              {leadProfile ? <ProfileCard profile={leadProfile} featured /> : null}
-
-              <div className="home-profile-stack">
-                {supportingProfiles.map((profile) => (
-                  <ProfileCard key={profile.slug} profile={profile} />
-                ))}
-
-                <aside className="home-profile-note">
-                  <p className="home-card-kicker">Editorial standard</p>
-                  <h3 className="home-card-title">We look for builders whose work changes the feeling of a room.</h3>
-                  <p className="home-card-copy">
-                    HOME features founders, patrons, hosts, and institutions whose presence creates trust, coherence,
-                    and a stronger sense of how to live.
-                  </p>
-                </aside>
-              </div>
-            </div>
-          </section>
-
-          <section className="home-stories">
-            <div className="home-section-heading">
-              <div>
-                <p className="home-section-label">Featured stories</p>
-                <h2 className="section-title">Stories that move with a different rhythm.</h2>
-              </div>
-              <Link href="/stories" className="button-secondary">
-                View stories
-              </Link>
-            </div>
-
-            <div className="home-stories-layout">
-              {leadStory ? <StoryFeature story={leadStory} featured /> : null}
-
-              <div className="home-story-rail">
-                {storyList.map((story) => (
-                  <StoryFeature key={story.slug} story={story} />
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section className="home-manifesto">
-            <p className="home-section-label">Manifesto</p>
-            <h2 className="home-manifesto__title">{manifestoExcerpt.title}</h2>
-            <p className="home-manifesto__body">{manifestoExcerpt.body}</p>
-            <Link href="/philosophy" className="button-secondary">
-              Read the full philosophy
-            </Link>
-          </section>
-
-          <section className="home-threshold">
-            <div className="home-threshold__copy">
-              <p className="home-section-label">Welcome HOME</p>
-              <h2 className="section-title">{welcomeHomeBlock.title}</h2>
-              <p className="section-copy section-copy--large">{welcomeHomeBlock.body}</p>
-            </div>
-
-            <div className="home-threshold__actions">
-              <Link href="/welcome" className="button-primary">
-                Begin here
-              </Link>
-              <Link href="/ecosystem" className="button-secondary">
-                Explore the ecosystem
-              </Link>
-            </div>
-          </section>
+      {/* Manifesto — full width */}
+      <section className="hp-manifesto" aria-label="HOME manifesto">
+        <div className="hp-manifesto__glow" aria-hidden="true" />
+        <div className="hp-manifesto__inner">
+          <span className="hp-manifesto__mark" aria-hidden="true">&ldquo;</span>
+          <blockquote className="hp-manifesto__quote">{homePhilosophyStrip}</blockquote>
+          <Link href="/philosophy" className="hp-manifesto__cta">
+            Read the full philosophy &rarr;
+          </Link>
         </div>
+      </section>
+
+      {/* CTA */}
+      <div className="container">
+        <section className="hp-section hp-cta" aria-labelledby="cta-heading">
+          <h2 className="hp-cta__title" id="cta-heading">
+            {welcomeHomeBlock.title}
+          </h2>
+          <p className="hp-cta__body">{welcomeHomeBlock.body}</p>
+          <div className="hp-cta__actions">
+            <Link href="/welcome" className="hp-hero__cta">
+              Begin here
+            </Link>
+            <Link href="/ecosystem" className="hp-section__link">
+              Explore the ecosystem &rarr;
+            </Link>
+          </div>
+        </section>
       </div>
     </main>
   );
