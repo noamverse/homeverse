@@ -12,7 +12,7 @@ import {
 function ProfileCard({ profile }) {
   return (
     <article className="hp-profile-card">
-      <div className="hp-profile-card__accent" style={{ backgroundImage: profile.tone }} />
+      <div className="hp-profile-card__accent" />
       <div className="hp-profile-card__body">
         <p className="hp-card-kicker">{profile.category}</p>
         <h3 className="hp-card-title">{profile.title}</h3>
@@ -31,15 +31,39 @@ function ProfileCard({ profile }) {
 }
 
 function StoryCard({ story, lead = false }) {
+  if (lead) {
+    return (
+      <article className="hp-story-lead">
+        <div className="hp-story-lead__cover">
+          <div className="hp-story-lead__cover-tone" style={{ backgroundImage: story.tone }} />
+          <div className="hp-story-lead__cover-inner">
+            <p className="hp-card-kicker">{story.category}</p>
+            <h3 className="hp-story-lead__cover-title">{story.title}</h3>
+          </div>
+        </div>
+        <div className="hp-story-lead__body">
+          <p className="hp-card-copy">{story.excerpt}</p>
+          <div className="hp-card-meta">
+            <span>{story.author}</span>
+            <span>&middot;</span>
+            <span>{story.date}</span>
+          </div>
+          <Link href={`/articles/${story.slug}`} className="hp-card-link">
+            Read story &rarr;
+          </Link>
+        </div>
+      </article>
+    );
+  }
+
   return (
-    <article className={lead ? "hp-story-lead" : "hp-story-card"}>
-      <div
-        className={lead ? "hp-story-lead__cover" : "hp-story-card__accent"}
-        style={{ backgroundImage: story.tone }}
-      />
-      <div className={lead ? "hp-story-lead__body" : "hp-story-card__body"}>
+    <article className="hp-story-card">
+      <div className="hp-story-card__accent">
+        <div className="hp-story-card__accent-tone" style={{ backgroundImage: story.tone }} />
+      </div>
+      <div className="hp-story-card__body">
         <p className="hp-card-kicker">{story.category}</p>
-        <h3 className={lead ? "hp-story-lead__title" : "hp-card-title"}>{story.title}</h3>
+        <h3 className="hp-card-title">{story.title}</h3>
         <p className="hp-card-copy">{story.excerpt}</p>
         <div className="hp-card-meta">
           <span>{story.author}</span>
