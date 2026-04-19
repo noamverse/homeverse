@@ -1,289 +1,428 @@
+"use client";
+
+import { useEffect } from "react";
 import Link from "next/link";
-import styles from "./ecosystem-page.module.css";
+import HomeFlywheel from "./home-flywheel";
 
-const thresholdSignals = ["Belonging", "Hospitality", "Media", "Capital", "Events", "Spaces", "Relationship"];
+// ── Data ─────────────────────────────────────────────────────────────────────
 
-const pillars = [
+const BRANCHES = [
   {
-    title: "Capital with conscience",
-    label: "HOME Ventures",
-    body: "Belief, timing, and patronage before the market has language for the value.",
-    notes: ["Founder backing", "Patronage structures", "Long-horizon trust"],
+    id: "ventures",
+    name: "HOME Ventures",
+    status: "ACTIVE",
+    tone: "active",
+    thesis: "Capital for founders building belonging.",
+    description:
+      "A venture studio investing in, developing, and amplifying founders and companies who bring people together and help scale belonging. Includes The HOME Fund and The Feminine Fund.",
+    anchor: "#ventures",
   },
   {
-    title: "Hospitality as a worldview",
-    label: "HOME Hospitality",
-    body: "The philosophy made tangible through rooms, dinners, and atmosphere-led experiences.",
-    notes: ["Gatherings", "Concept design", "Atmosphere-led experiences"],
+    id: "engine",
+    name: "HOME Engine",
+    status: "EMERGING",
+    tone: "emerging",
+    thesis: "Incubation for creative founders beyond tech.",
+    description:
+      "An institutional partner for founders outside the tech canon — CPG, food, hospitality, brand. Resources, relationships, and runway, in exchange for small, meaningful equity.",
+    anchor: "#engine",
   },
   {
-    title: "Fellowship and belonging",
-    label: "HOME Fellowship",
-    body: "Aligned founders, patrons, and builders gathered into formats where relationship matures.",
-    notes: ["Salons", "Private events", "Membership rhythms"],
+    id: "fellowship",
+    name: "HOME Fellowship",
+    status: "ACTIVE",
+    tone: "active",
+    thesis: "Gatherings where people leave their masks at the door.",
+    description:
+      "Dinners, retreats, game nights, and galas built on one principle: come as you are, leave even more yourself. No obligations. No agendas. Just family.",
+    anchor: "#fellowship",
   },
   {
-    title: "Operational lift for builders",
-    label: "HOME Engine",
-    body: "Strategy and incubation support that translate resonance into practical momentum.",
-    notes: ["Founder support", "Creative strategy", "Incubation"],
+    id: "hospitality",
+    name: "HOME Hospitality",
+    status: "FORMING",
+    tone: "forming",
+    thesis: "Restaurants and concepts that feel like home.",
+    description:
+      "A portfolio of hospitality brands — fine dining, neighborhood concepts, and experiences — designed so every room feels like a place you belong.",
+    anchor: "#hospitality",
   },
   {
-    title: "Spaces that hold the field",
-    label: "HOME Base",
-    body: "The spatial expression of the ecosystem: future residences, gathering rooms, and living nodes.",
-    notes: ["Residencies", "Gathering spaces", "Physical nodes"],
+    id: "ai",
+    name: "HOME AI",
+    status: "ACTIVE",
+    tone: "active",
+    thesis: "Applied AI built in service of relationship.",
+    description:
+      "Our AI studio. We build the tools that make every other arm of the ecosystem more intelligent, more efficient, and more deeply relational.",
+    anchor: "#ai",
   },
   {
-    title: "Story as connective tissue",
-    label: "Media / Distribution",
-    body: "Profiles, features, and amplification create the first layer of trust and entry.",
-    notes: ["Editorial", "Distribution", "Amplification"],
+    id: "base",
+    name: "HOME Base",
+    status: "FORMING",
+    tone: "forming",
+    thesis: "Physical spaces where the ecosystem comes alive.",
+    description:
+      "Multi-purpose buildings in major cities — coworking, events, content studios, food halls, offices, and in-house services — designed as homes for founders, not as real estate.",
+    anchor: "#base",
   },
 ];
 
-const flywheelSteps = ["Story", "Trust", "Relationship", "Collaboration", "Opportunity", "Belonging", "Expansion"];
-
-const layerGroups = [
+const COMPOUND_NODES = [
   {
-    title: "Active now",
-    tone: "now",
-    description: "The parts of HOME already creating signal, relationship, and momentum.",
-    items: [
-      "Editorial signal and public philosophy",
-      "Founder and worldbuilder amplification",
-      "Introductions and early collaborations",
-      "Welcome surfaces that turn resonance into conversation",
-    ],
+    label: "RELATIONSHIP",
+    desc: "Someone enters the ecosystem through a real relationship.",
+    color: "#4a7fcf",
   },
   {
-    title: "Emerging next",
-    tone: "next",
-    description: "The layers moving from concept to embodiment as the ecosystem deepens.",
-    items: [
-      "Recurring fellowship formats and private gatherings",
-      "Hospitality concepts and experience-led programming",
-      "Founder engine and incubation support",
-      "HOME Base spaces and place-based nodes",
-    ],
+    label: "STORY",
+    desc: "We see them, and tell their story publicly.",
+    color: "#7c5cbf",
+  },
+  {
+    label: "DISTRIBUTION",
+    desc: "The story travels through our platform and community.",
+    color: "#d4763b",
+  },
+  {
+    label: "AMPLIFICATION",
+    desc: "New people find them through us.",
+    color: "#b43723",
+  },
+  {
+    label: "CAPITAL",
+    desc: "Belief-driven investment flows toward the aligned.",
+    color: "#c9a84c",
+  },
+  {
+    label: "INFRASTRUCTURE",
+    desc: "We give them the tools, spaces, and network to scale.",
+    color: "#e8e4dd",
+  },
+  {
+    label: "BELONGING",
+    desc: "They stay. They compound. They bring others home.",
+    color: "#c9a84c",
+  },
+];
+
+const BUILDING_NOW = [
+  {
+    name: "HOME Media Platform",
+    desc: "The publishing and distribution layer you are standing in.",
+  },
+  {
+    name: "HOME Fellowship (first cohort)",
+    desc: "Small dinners and gatherings forming the core community.",
+  },
+  {
+    name: "HOME Ventures (initial deployments)",
+    desc: "First syndicate investments in aligned founders.",
+  },
+  {
+    name: "HOME AI (internal tools)",
+    desc: "The tools that power every other arm.",
   },
 ];
 
-const entryWays = [
+const EMERGING_NEXT = [
   {
-    title: "Be Featured",
-    body: "For founders, hosts, patrons, and builders whose work carries a clear atmosphere and deserves studied amplification.",
-    href: "/featured",
-    cta: "Enter through Featured",
+    name: "HOME Engine (first cohort)",
+    desc: "Full incubation program launching in our first city.",
   },
   {
-    title: "Work With HOME",
-    body: "For aligned collaborators seeking strategy, editorial development, programming, or ecosystem-building partnership.",
-    href: "/welcome",
-    cta: "Begin the conversation",
+    name: "HOME Base (first location)",
+    desc: "Scouting locations for our first physical flagship.",
   },
   {
-    title: "Partner With HOME",
-    body: "For institutions, brands, and family offices that understand relationship, hospitality, and long-horizon trust as real infrastructure.",
-    href: "/welcome",
-    cta: "Explore partnership",
+    name: "The Feminine Fund",
+    desc: "A dedicated vehicle for feminine founders.",
   },
   {
-    title: "Receive the Signal",
-    body: "For those who want to stay close to the world as it forms through stories, invitations, and future correspondence.",
-    href: "/stories",
-    cta: "Stay near the field",
+    name: "HOME Hospitality (first concept)",
+    desc: "Bringing our first restaurant concept to reality.",
   },
 ];
+
+const PATHWAYS = [
+  {
+    condition: "If you build",
+    body: "We feature founders and companies we believe in. Start a relationship.",
+    linkLabel: "Write to us →",
+    href: "#", // TODO: wire real destination
+  },
+  {
+    condition: "If you invest",
+    body: "We work with aligned capital. Share what you believe in, and why.",
+    linkLabel: "Tell us your thesis →",
+    href: "#", // TODO: wire real destination
+  },
+  {
+    condition: "If you gather",
+    body: "Fellowship is how HOME lives in the world. You are welcome at the table.",
+    linkLabel: "Join a gathering →",
+    href: "#", // TODO: wire real destination
+  },
+  {
+    condition: "If you're becoming",
+    body: "HOME is a way of being before it is anywhere you go. Read, subscribe, and keep reading.",
+    linkLabel: "Follow along →",
+    href: "#", // TODO: wire real destination
+  },
+];
+
+// ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function EcosystemPage() {
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("home-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "-80px 0px 0px 0px", threshold: 0 }
+    );
+
+    document.querySelectorAll(".home-reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <main className={`page-main ${styles.page}`}>
-      <div className="container">
-        <div className={styles.shell}>
-          <section className={styles.intro}>
-            <div className={styles.introCopyWrap}>
-              <p className={styles.eyebrow}>Architectural map</p>
-              <h1 className={styles.title}>Ecosystem</h1>
-              <p className={styles.introCopy}>The living architecture of HOME, seen as a field rather than a feed.</p>
+    <main className="page-main eco-page" style={{ position: "relative" }}>
+
+      {/* ── Grain + Blooms ── */}
+      <div className="home-grain" aria-hidden="true" />
+      <div className="home-bloom-cool" aria-hidden="true" style={{ top: "-8vh", left: "-12vw" }} />
+      <div className="home-bloom-warm" aria-hidden="true" style={{ top: "38vh", right: "-6vw" }} />
+      <div className="home-bloom-gold" aria-hidden="true" style={{ bottom: "8vh", left: "8vw" }} />
+
+      <div style={{ position: "relative", zIndex: 1 }}>
+
+        {/* ══ SECTION 1 — HERO ══════════════════════════════════════════ */}
+        <section className="eco-hero home-reveal">
+          <div className="eco-hero__wrap">
+            <div className="eco-hero__glow" aria-hidden="true" />
+            <div className="eco-hero__container">
+              <p className="eco-hero__eyebrow">The Map</p>
+              <h1 className="eco-hero__title">The HOME Ecosystem</h1>
+              <p className="eco-hero__sub">
+                HOME is not a company. It is an ecosystem — a living constellation of vehicles
+                through which one mission expresses itself: life is a family, not a marketplace.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ══ SECTION 2 — FLYWHEEL ══════════════════════════════════════ */}
+        <section className="eco-flywheel-section">
+          <div className="eco-flywheel-bloom" aria-hidden="true" />
+          <div className="eco-flywheel-inner home-reveal">
+            <HomeFlywheel />
+          </div>
+        </section>
+
+        {/* ══ SECTION 3 — MAJOR BRANCHES ═══════════════════════════════ */}
+        <section className="eco-branches">
+          <div className="container">
+
+            <div className="eco-section-band home-reveal">
+              <div className="eco-section-rule" aria-hidden="true" />
+              <p className="eco-eyebrow">The Constellation</p>
+              <h2 className="eco-section-title">Major Branches</h2>
+              <p className="eco-section-sub">
+                Each branch is a distinct expression of one principle. Every arm feeds the others.
+              </p>
+              <div className="eco-section-rule" aria-hidden="true" />
             </div>
 
-            <div className={styles.thresholdPanel}>
-              <div className={styles.thresholdOrbit} aria-hidden="true">
-                <span className={styles.thresholdRingOuter} />
-                <span className={styles.thresholdRingInner} />
-                <span className={styles.thresholdPulse} />
+            <div className="eco-branch-list" role="list">
+              {BRANCHES.map((branch, i) => (
+                <article
+                  key={branch.id}
+                  id={branch.id}
+                  className="eco-branch-row home-reveal"
+                  style={{ transitionDelay: `${i * 80}ms` }}
+                  role="listitem"
+                >
+                  <div className="eco-branch-left">
+                    <span className="eco-branch-name">{branch.name}</span>
+                    <span className={`eco-branch-status eco-branch-status--${branch.tone}`}>
+                      {branch.status}
+                    </span>
+                  </div>
+                  <div className="eco-branch-mid">
+                    <p className="eco-branch-thesis">{branch.thesis}</p>
+                    <p className="eco-branch-desc">{branch.description}</p>
+                  </div>
+                  <Link href={branch.anchor} className="eco-branch-link">
+                    Learn more →
+                  </Link>
+                </article>
+              ))}
+            </div>
+
+          </div>
+        </section>
+
+        {/* ══ SECTION 4 — HOW IT COMPOUNDS ═════════════════════════════ */}
+        <section className="eco-compounds">
+
+          <div className="container">
+            <div className="eco-section-band home-reveal">
+              <div className="eco-section-rule" aria-hidden="true" />
+              <p className="eco-eyebrow">The Mechanism</p>
+              <h2 className="eco-section-title">How It Compounds</h2>
+              <p className="eco-section-sub">
+                Every arm of HOME feeds the others. Relationships deepen, stories multiply,
+                capital compounds, and belonging scales.
+              </p>
+              <div className="eco-section-rule" aria-hidden="true" />
+            </div>
+          </div>
+
+          <div className="eco-loop-scroll">
+            <div className="eco-loop home-reveal">
+              {COMPOUND_NODES.map((node, i) => (
+                <div key={node.label} className="eco-loop-track">
+                  <div
+                    className="eco-node"
+                    style={{ animationDelay: `${i * 0.65}s` }}
+                  >
+                    <div
+                      className="eco-node__dot"
+                      style={{
+                        background: `radial-gradient(ellipse at 38% 38%, ${node.color} 0%, ${node.color}55 55%, transparent 100%)`,
+                        boxShadow: `0 0 20px ${node.color}55, 0 0 40px ${node.color}22`,
+                      }}
+                    />
+                    <p className="eco-node__label">{node.label}</p>
+                    <p className="eco-node__desc">{node.desc}</p>
+                  </div>
+
+                  {i < COMPOUND_NODES.length - 1 && (
+                    <div className="eco-connector" aria-hidden="true">
+                      <div className="eco-connector__track">
+                        <span
+                          className="eco-connector__pulse"
+                          style={{ animationDelay: `${i * 1.0}s` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="container">
+            <p className="eco-loop-coda home-reveal">
+              And then — it begins again. Deeper every time.
+            </p>
+          </div>
+
+        </section>
+
+        {/* ══ SECTION 5 — CURRENT & EMERGING ═══════════════════════════ */}
+        <section className="eco-current">
+          <div className="container">
+
+            <div className="eco-section-band home-reveal">
+              <div className="eco-section-rule" aria-hidden="true" />
+              <p className="eco-eyebrow">Where We Are</p>
+              <h2 className="eco-section-title">Current &amp; Emerging</h2>
+              <p className="eco-section-sub">
+                We believe in transparency. Here is what we are actively building, and what
+                is taking shape next.
+              </p>
+              <div className="eco-section-rule" aria-hidden="true" />
+            </div>
+
+            <div className="eco-current-split">
+              <div className="eco-current-col home-reveal">
+                <p className="eco-col-header">Building Now</p>
+                <div className="eco-col-items">
+                  {BUILDING_NOW.map((item) => (
+                    <div key={item.name} className="eco-col-item">
+                      <p className="eco-col-item__name">{item.name}</p>
+                      <p className="eco-col-item__desc">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <div className={styles.thresholdPanelBody}>
-                <p className={styles.thresholdLabel}>Field notes</p>
-                <div className={styles.thresholdSignals}>
-                  {thresholdSignals.map((signal) => (
-                    <span key={signal}>{signal}</span>
+              <div className="eco-current-divider" aria-hidden="true" />
+
+              <div className="eco-current-col home-reveal" style={{ transitionDelay: "200ms" }}>
+                <p className="eco-col-header">Emerging Next</p>
+                <div className="eco-col-items">
+                  {EMERGING_NEXT.map((item) => (
+                    <div key={item.name} className="eco-col-item">
+                      <p className="eco-col-item__name">{item.name}</p>
+                      <p className="eco-col-item__desc">{item.desc}</p>
+                    </div>
                   ))}
                 </div>
               </div>
             </div>
-          </section>
 
-          <section className={styles.mapSection}>
-            <div className={styles.sectionHeading}>
-              <div>
-                <p className={styles.eyebrow}>Central map</p>
-                <h2>HOME at the center. Distinct branches around it. One field.</h2>
-              </div>
-              <p>A cleaner view of how signal, spaces, capital, and belonging reinforce one another.</p>
+          </div>
+        </section>
+
+        {/* ══ SECTION 6 — WAYS TO RELATE ═══════════════════════════════ */}
+        <section className="eco-relate">
+          <div className="container">
+
+            <div className="eco-section-band home-reveal">
+              <div className="eco-section-rule" aria-hidden="true" />
+              <p className="eco-eyebrow">You Are Invited</p>
+              <h2 className="eco-section-title eco-section-title--narrow">Ways To Relate</h2>
+              <p className="eco-relate-intro">
+                HOME does not onboard customers. It welcomes people. If any of this resonates,
+                here is how you can begin:
+              </p>
+              <div className="eco-section-rule" aria-hidden="true" />
             </div>
 
-            <div className={styles.cosmos}>
-              <div className={styles.orbitField} aria-hidden="true">
-                <span className={styles.ringOuter} />
-                <span className={styles.ringMiddle} />
-                <span className={styles.ringInner} />
-                <span className={styles.gridGlow} />
-              </div>
-
-              <article className={`${styles.mapNode} ${styles.mapNodeVentures}`}>
-                <p className={styles.mapNodeKind}>Capital</p>
-                <h3>HOME Ventures</h3>
-                <p>Long-horizon capital and patronage for founders with cultural consequence.</p>
-              </article>
-
-              <article className={`${styles.mapNode} ${styles.mapNodeHospitality}`}>
-                <p className={styles.mapNodeKind}>Atmosphere</p>
-                <h3>HOME Hospitality</h3>
-                <p>Tables, spaces, and hospitality concepts that turn philosophy into lived welcome.</p>
-              </article>
-
-              <article className={`${styles.mapNode} ${styles.mapNodeFellowship}`}>
-                <p className={styles.mapNodeKind}>Gathering</p>
-                <h3>HOME Fellowship</h3>
-                <p>Salons and private gatherings where trust compounds in person.</p>
-              </article>
-
-              <div className={styles.core}>
-                <p className={styles.coreLabel}>Center</p>
-                <h3>HOME</h3>
-                <p>A family-level operating system built on love, hospitality, stewardship, and belonging.</p>
-              </div>
-
-              <article className={`${styles.mapNode} ${styles.mapNodeEngine}`}>
-                <p className={styles.mapNodeKind}>Support</p>
-                <h3>HOME Engine</h3>
-                <p>Founder support and operating lift that turns signal into traction.</p>
-              </article>
-
-              <article className={`${styles.mapNode} ${styles.mapNodeBase}`}>
-                <p className={styles.mapNodeKind}>Space</p>
-                <h3>HOME Base</h3>
-                <p>Physical houses and future spaces where the ecosystem can convene and deepen.</p>
-              </article>
-
-              <article className={`${styles.mapNode} ${styles.mapNodeRelationship}`}>
-                <p className={styles.mapNodeKind}>Infrastructure</p>
-                <h3>Relationship Layer</h3>
-                <p>Introductions, curation, trust, and relational memory across the whole field.</p>
-              </article>
-
-              <article className={`${styles.mapNode} ${styles.mapNodeMedia}`}>
-                <p className={styles.mapNodeKind}>Signal</p>
-                <h3>Media / Distribution</h3>
-                <p>Editorial and amplification surfaces that circulate the right stories with care.</p>
-              </article>
-            </div>
-          </section>
-
-          <section className={styles.pillarsSection}>
-            <div className={styles.sectionHeading}>
-              <div>
-                <p className={styles.eyebrow}>Major branches</p>
-                <h2>Each branch holds a different form of warmth, leverage, and continuity.</h2>
-              </div>
-              <p>Each layer stands alone, but becomes stronger inside the shared field.</p>
-            </div>
-
-            <div className={styles.pillarsGrid}>
-              {pillars.map((pillar) => (
-                <article key={pillar.label} className={styles.pillarCard}>
-                  <p className={styles.pillarLabel}>{pillar.label}</p>
-                  <h3>{pillar.title}</h3>
-                  <p>{pillar.body}</p>
-                  <div className={styles.pillarNotes}>
-                    {pillar.notes.map((note) => (
-                      <span key={note}>{note}</span>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className={styles.flywheelSection}>
-            <div className={styles.sectionHeading}>
-              <div>
-                <p className={styles.eyebrow}>How it compounds</p>
-                <h2>HOME compounds through deepened relationship, not widened extraction.</h2>
-              </div>
-              <p>A simple flywheel for how the field expands.</p>
-            </div>
-
-            <div className={styles.flywheel}>
-              {flywheelSteps.map((step, index) => (
-                <div key={step} className={styles.flywheelStep}>
-                  <span>{`0${index + 1}`}</span>
-                  <strong>{step}</strong>
+            <div className="eco-pathways">
+              {PATHWAYS.map((pathway, i) => (
+                <div
+                  key={pathway.condition}
+                  className="eco-pathway home-reveal"
+                  style={{ transitionDelay: `${i * 120}ms` }}
+                >
+                  <p className="eco-pathway__body">
+                    <em className="eco-pathway__condition">{pathway.condition}:</em>{" "}
+                    {pathway.body}
+                  </p>
+                  <Link href={pathway.href} className="eco-pathway__link">
+                    {pathway.linkLabel}
+                  </Link>
                 </div>
               ))}
             </div>
-          </section>
 
-          <section className={styles.layersSection}>
-            <div className={styles.sectionHeading}>
-              <div>
-                <p className={styles.eyebrow}>Current and emerging</p>
-                <h2>The world is active now, while new layers prepare to come into form.</h2>
-              </div>
-              <p>What is already live, and what is coherently coming next.</p>
-            </div>
+          </div>
+        </section>
 
-            <div className={styles.layerGrid}>
-              {layerGroups.map((group) => (
-                <article
-                  key={group.title}
-                  className={`${styles.layerCard} ${group.tone === "next" ? styles.layerCardNext : styles.layerCardNow}`}
-                >
-                  <p className={styles.layerLabel}>{group.title}</p>
-                  <p className={styles.layerDescription}>{group.description}</p>
-                  <ul>
-                    {group.items.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </section>
+        {/* ══ SECTION 7 — CLOSING NOTE ══════════════════════════════════ */}
+        <section className="eco-closing home-reveal">
+          <div className="eco-closing__glow" aria-hidden="true" />
+          <p className="eco-closing__title">
+            This is not a company you join. It is a world organizing itself around a simple idea.
+          </p>
+          <p className="eco-closing__coda">
+            Life is a family, not a marketplace.
+          </p>
+        </section>
 
-          <section className={styles.entrySection}>
-            <div className={styles.sectionHeading}>
-              <div>
-                <p className={styles.eyebrow}>Ways to enter</p>
-                <h2>There are multiple points of entry into the field, depending on who you are and what you are carrying.</h2>
-              </div>
-              <p>Not one door, but several clear paths inward.</p>
-            </div>
-
-            <div className={styles.entryGrid}>
-              {entryWays.map((entry) => (
-                <article key={entry.title} className={styles.entryCard}>
-                  <h3>{entry.title}</h3>
-                  <p>{entry.body}</p>
-                  <Link href={entry.href}>{entry.cta}</Link>
-                </article>
-              ))}
-            </div>
-          </section>
-        </div>
       </div>
     </main>
   );
