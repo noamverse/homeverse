@@ -9,14 +9,15 @@ const exploreLinks = [
   { href: "/ecosystem", label: "Ecosystem" },
 ];
 
-// TODO: Replace '#' with actual ecosystem sub-page URLs when they exist
 const ecosystemLinks = [
-  { href: "#", label: "HOME Ventures" },
-  { href: "#", label: "HOME AI" },
-  { href: "#", label: "HOME Fellowship" },
-  { href: "#", label: "HOME Base" },
-  { href: "#", label: "HOME Media" },
-  { href: "#", label: "HOME Fund" },
+  { href: "/ecosystem#ventures",   label: "HOME Ventures" },
+  { href: "/ecosystem#ai",         label: "HOME AI" },
+  { href: "/ecosystem#fellowship", label: "HOME Fellowship" },
+  { href: "/ecosystem#base",       label: "HOME Base" },
+  // TODO: Add /ecosystem#media anchor once HOME Media becomes a dedicated branch on the ecosystem page
+  { href: "/ecosystem",            label: "HOME Media" },
+  // TODO: Add /ecosystem#fund anchor once HOME Fund becomes a dedicated branch on the ecosystem page
+  { href: "/ecosystem",            label: "HOME Fund" },
 ];
 
 export default function SiteFooter() {
@@ -61,7 +62,7 @@ export default function SiteFooter() {
 
       {/* 3. Connective tissue — the closing whisper */}
       <div className="sf-bottom">
-        {/* TODO: Replace hello@home.xyz with the real contact email */}
+        {/* TODO: Replace with real HOME email address once domain and email are configured. */}
         <a href="mailto:hello@home.xyz" className="sf-bottom__contact">
           Write to us — hello@home.xyz
         </a>

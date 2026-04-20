@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect } from "react";
 import { articles, getArticleBySlug } from "@/lib/content";
-import styles from "./stories-page.module.css";
+
+// ── Placeholder data ──────────────────────────────────────────────────────────
 
 const storyPlan = [
   {
@@ -54,27 +58,22 @@ const thematicNotes = [
   },
 ];
 
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
 function coverStyle(article) {
   if (article.image) {
     return {
-      backgroundImage: `linear-gradient(180deg, rgba(250,244,236,0.05), rgba(33,20,14,0.16)), url(${article.image})`,
+      backgroundImage: `linear-gradient(180deg, rgba(20,18,16,0.18), rgba(20,18,16,0.48)), url(${article.image})`,
     };
   }
-
-  return {
-    backgroundImage: article.tone,
-  };
+  return { background: "var(--surface-hi)" };
 }
 
 function buildCollection() {
   return storyPlan
     .map((entry) => {
       const article = getArticleBySlug(entry.slug);
-
-      if (!article) {
-        return null;
-      }
-
+      if (!article) return null;
       return { ...entry, article };
     })
     .filter(Boolean);
@@ -92,43 +91,57 @@ function StoryLink({ article, children, className }) {
   );
 }
 
-function CollectionCard({ item }) {
-  const { article, label, tone, layout } = item;
+// ── Sub-components ────────────────────────────────────────────────────────────
 
+function StoryHairline() {
+  return <div className="stor-hairline" aria-hidden="true" />;
+}
+
+function CollectionCard({ item, delay = 0 }) {
+  const { article, label } = item;
   return (
-    <article className={`${styles.collectionCard} ${layout ? styles[`collectionCard${layout[0].toUpperCase()}${layout.slice(1)}`] : ""}`}>
-      <div className={styles.collectionHeader}>
-        <p className={styles.kicker}>{label}</p>
-        <span className={styles.collectionMeta}>{article.category}</span>
+    <article className="stor-card home-reveal" style={{ transitionDelay: `${delay}ms` }}>
+      <div className="stor-card-header">
+        <span className="stor-card-category">{label}</span>
+        <span className="stor-card-meta">{article.category}</span>
       </div>
-      <h3 className={styles.collectionTitle}>{article.title}</h3>
-      <p className={styles.collectionExcerpt}>{article.excerpt}</p>
-      <p className={styles.collectionTone}>{tone}</p>
-      <div className={styles.collectionFooter}>
-        <span>{formatMeta(article)}</span>
-        <StoryLink article={article} className={styles.inlineLink}>
-          Read Story
-        </StoryLink>
+      <h3 className="stor-card-title">{article.title}</h3>
+      <p className="stor-card-byline">{formatMeta(article)}</p>
+      <p className="stor-card-excerpt">{article.excerpt}</p>
+      <StoryLink article={article} className="stor-read-link">Read →</StoryLink>
+    </article>
+  );
+}
+
+function GroupCard({ group, delay = 0 }) {
+  return (
+    <article className="stor-card home-reveal" style={{ transitionDelay: `${delay}ms` }}>
+      <p className="stor-card-category">{group.name}</p>
+      <p className="stor-group-desc">{group.description}</p>
+      <div className="stor-group-links">
+        {group.items.map((item) => (
+          <StoryLink key={item.article.slug} article={item.article} className="stor-group-link">
+            {item.article.title}
+          </StoryLink>
+        ))}
       </div>
     </article>
   );
 }
 
-function ArchiveEntry({ article }) {
+function ArchiveEntry({ article, delay = 0 }) {
   return (
-    <article className={styles.archiveEntry}>
-      <div className={styles.archiveMeta}>
-        <span>{article.category}</span>
-        <span>{article.date}</span>
-      </div>
-      <h3>{article.title}</h3>
-      <p>{article.excerpt}</p>
-      <StoryLink article={article} className={styles.archiveLink}>
-        Open story
-      </StoryLink>
+    <article className="stor-card home-reveal" style={{ transitionDelay: `${delay}ms` }}>
+      <span className="stor-card-category">{article.category}</span>
+      <h3 className="stor-card-title stor-card-title--sm">{article.title}</h3>
+      <p className="stor-card-byline">{article.date}</p>
+      <p className="stor-card-excerpt">{article.excerpt}</p>
+      <Link href={`/articles/${article.slug}`} className="stor-read-link">Read →</Link>
     </article>
   );
 }
+
+// ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function StoriesPage() {
   const collection = buildCollection();
@@ -144,135 +157,147 @@ export default function StoriesPage() {
     .concat(collection.slice(-2).map((item) => item.article))
     .slice(0, 3);
 
-  return (
-    <main className={`page-main ${styles.storiesPage}`}>
-      <div className="container">
-        <div className={styles.shell}>
-          <section className={styles.intro}>
-            <div>
-              <p className={styles.pageLabel}>Stories</p>
-              <h1 className={styles.pageTitle}>Stories</h1>
-            </div>
-            <p className={styles.pageIntro}>
-              A calm editorial surface for founder narratives, essays, company stories, and in-depth pieces meant to be read slowly.
-            </p>
-          </section>
+  // Reveal on scroll — respects prefers-reduced-motion
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
 
-          <section className={styles.featuredStory}>
-            <div className={styles.featuredCopy}>
-              <p className={styles.kicker}>Featured story</p>
-              <div className={styles.featuredMetaRow}>
-                <span>{featured.article.category}</span>
-                <span>{featured.article.date}</span>
-                <span>{featured.article.readTime}</span>
-              </div>
-              <h2 className={styles.featuredTitle}>{featured.article.title}</h2>
-              <p className={styles.featuredExcerpt}>{featured.article.excerpt}</p>
-              <p className={styles.featuredLead}>{featured.article.lead}</p>
-              <div className={styles.featuredDetails}>
-                <div>
-                  <span className={styles.detailLabel}>By</span>
-                  <p>{featured.article.author}</p>
-                </div>
-                <div>
-                  <span className={styles.detailLabel}>Frame</span>
-                  <p>{featured.tone}</p>
-                </div>
-              </div>
-              <StoryLink article={featured.article} className={styles.primaryLink}>
-                Read Story
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("home-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "-80px 0px 0px 0px", threshold: 0 }
+    );
+
+    document.querySelectorAll(".home-reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <main className="page-main" style={{ position: "relative" }}>
+
+      {/* ── Grain texture overlay ── */}
+      <div className="home-grain" aria-hidden="true" />
+
+      {/* ── Atmospheric blooms — cool upper-left, gold lower-right ── */}
+      <div
+        className="home-bloom-cool"
+        aria-hidden="true"
+        style={{ top: "-5vh", left: "-10vw" }}
+      />
+      <div
+        className="home-bloom-gold"
+        aria-hidden="true"
+        style={{ bottom: "5vh", right: "-5vw" }}
+      />
+
+      {/* ── HERO — multi-color gradient border matching Philosophy ── */}
+      <section className="stor-hero">
+        <div className="stor-hero__wrap">
+          <div className="stor-hero__glow" aria-hidden="true" />
+          <div className="stor-hero__container home-reveal">
+            <p className="stor-hero__eyebrow">Dispatches from HOME</p>
+            <h1 className="stor-hero__title">Stories</h1>
+            <p className="stor-hero__sub">
+              Essays, reflections, and dispatches from the people and places building a more relational world.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+
+        {/* ── Hairline between hero and featured ── */}
+        <StoryHairline />
+
+        {/* ── FEATURED STORY ── */}
+        {featured && (
+          <section className="stor-featured home-reveal">
+            <div className="stor-featured__copy">
+              <p className="stor-card-category">Featured Story</p>
+              <p className="stor-card-byline">{formatMeta(featured.article)}</p>
+              <h2 className="stor-featured__title">{featured.article.title}</h2>
+              <p className="stor-featured__excerpt">{featured.article.excerpt}</p>
+              {featured.article.lead && (
+                <p className="stor-featured__lead">{featured.article.lead}</p>
+              )}
+              <StoryLink article={featured.article} className="stor-read-link">
+                Read →
               </StoryLink>
             </div>
-
-            <div className={styles.featuredVisualWrap}>
-              <div className={styles.featuredVisual} style={coverStyle(featured.article)} />
-              <div className={styles.featuredMarginalia}>
-                <span>Long-form</span>
-                <p>{featured.article.lead}</p>
-              </div>
-            </div>
+            <div
+              className="stor-featured__visual"
+              style={coverStyle(featured.article)}
+            />
           </section>
+        )}
 
-          <section className={styles.collectionSection}>
-            <div className={styles.sectionHeading}>
-              <div>
-                <p className={styles.kicker}>Story collection</p>
-                <h2>Pieces arranged with editorial hierarchy instead of a feed.</h2>
-              </div>
-              <p>
-                The reading experience moves between portraits, essays, and observations, varying pace and scale so the page feels closer to a table of contents than a blog archive.
-              </p>
-            </div>
+        {/* ── Hairline ── */}
+        <StoryHairline />
 
-            <div className={styles.collectionGrid}>
-              {curatedStories.map((item) => (
-                <CollectionCard key={item.article.slug} item={item} />
-              ))}
-            </div>
-          </section>
+        {/* ── STORY COLLECTION ── */}
+        <section className="stor-section">
+          <p className="stor-section-label home-reveal">Story collection</p>
+          <h2 className="stor-section-heading home-reveal">
+            Pieces arranged with editorial hierarchy instead of a feed.
+          </h2>
+          <StoryHairline />
+          <div className="stor-grid">
+            {curatedStories.map((item, i) => (
+              <CollectionCard key={item.article.slug} item={item} delay={i * 120} />
+            ))}
+          </div>
+        </section>
 
-          <section className={styles.groupingSection}>
-            <div className={styles.sectionHeading}>
-              <div>
-                <p className={styles.kicker}>Reading paths</p>
-                <h2>Subtle groupings for the kinds of stories gathered here.</h2>
-              </div>
-              <p>
-                These are not filters or content buckets so much as moods of reading, each with its own cadence and depth.
-              </p>
-            </div>
+        {/* ── Hairline ── */}
+        <StoryHairline />
 
-            <div className={styles.groupingGrid}>
-              {groupedStories.map((group) => (
-                <article key={group.name} className={styles.groupCard}>
-                  <p className={styles.kicker}>{group.name}</p>
-                  <p className={styles.groupDescription}>{group.description}</p>
-                  <div className={styles.groupLinks}>
-                    {group.items.map((item) => (
-                      <StoryLink key={item.article.slug} article={item.article} className={styles.groupLink}>
-                        {item.article.title}
-                      </StoryLink>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
+        {/* ── READING PATHS ── */}
+        <section className="stor-section">
+          <p className="stor-section-label home-reveal">Reading paths</p>
+          <h2 className="stor-section-heading home-reveal">
+            Subtle groupings for the kinds of stories gathered here.
+          </h2>
+          <StoryHairline />
+          <div className="stor-grid stor-grid--3">
+            {groupedStories.map((group, i) => (
+              <GroupCard key={group.name} group={group} delay={i * 120} />
+            ))}
+          </div>
+        </section>
 
-          <section className={styles.archiveSection}>
-            <div className={styles.sectionHeading}>
-              <div>
-                <p className={styles.kicker}>Archive</p>
-                <h2>Explore further into the editorial world.</h2>
-              </div>
-              <p>
-                Older pieces and adjacent reading for anyone who wants to keep moving through HOME&apos;s wider body of writing.
-              </p>
-            </div>
+        {/* ── Hairline ── */}
+        <StoryHairline />
 
-            <div className={styles.archiveGrid}>
-              {archive.map((article) => (
-                <ArchiveEntry key={article.slug} article={article} />
-              ))}
-            </div>
-          </section>
+        {/* ── ARCHIVE ── */}
+        <section className="stor-section">
+          <p className="stor-section-label home-reveal">Archive</p>
+          <h2 className="stor-section-heading home-reveal">
+            Explore further into the editorial world.
+          </h2>
+          <StoryHairline />
+          <div className="stor-grid stor-grid--3">
+            {archive.map((article, i) => (
+              <ArchiveEntry key={article.slug} article={article} delay={i * 120} />
+            ))}
+          </div>
+        </section>
 
-          <section className={styles.closing}>
-            <p className={styles.kicker}>Stay with the reading</p>
-            <h2>The deeper world of HOME is built through slow attention, not speed.</h2>
-            <p>
-              Follow the essays, founder stories, and editorial features that keep tracing how institutions feel from the inside.
-            </p>
-            <div className={styles.closingActions}>
-              <Link href="/featured" className={styles.secondaryLink}>
-                Browse Featured
-              </Link>
-              <Link href="/philosophy" className={styles.secondaryLink}>
-                Read the philosophy
-              </Link>
-            </div>
-          </section>
-        </div>
+        {/* ── Hairline ── */}
+        <StoryHairline />
+
+        {/* ── CLOSING NOTE ── */}
+        <section className="stor-closing home-reveal">
+          <p className="stor-closing__note">
+            Have a story to tell? Stories find us through relationship, not submission forms. Start there.
+          </p>
+        </section>
+
       </div>
     </main>
   );

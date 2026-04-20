@@ -247,18 +247,18 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   text-align: center;
   padding: 80px 24px 60px;
-  overflow: hidden;
 }
 
 .sf-hero__glow {
   position: absolute;
-  inset: 0;
+  /* Extend 160px below the hero zone so the glow tapers into the nav rather than ending abruptly */
+  inset: 0 0 -160px 0;
   /* Candlelight ambient — warm gold core bleeding into orange/red at edges */
   background: radial-gradient(
-    ellipse 72% 65% at 50% 62%,
+    ellipse 80% 55% at 50% 48%,
     rgba(201, 168, 76, 0.07) 0%,
-    rgba(212, 118, 59, 0.05) 38%,
-    rgba(180, 55, 35, 0.025) 62%,
+    rgba(212, 118, 59, 0.045) 32%,
+    rgba(180, 55, 35, 0.018) 58%,
     transparent 100%
   );
   pointer-events: none;
@@ -6817,4 +6817,459 @@ h1, h2, h3, h4, h5, h6 {
   .eco-section-band {
     padding-bottom: 40px;
   }
+}
+
+/* ═══════════════════════════════════════════════
+   WELCOME HOME v2 — THE THRESHOLD
+   Prefix: .wh-*
+═══════════════════════════════════════════════ */
+
+.wh-page {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ── Section 1: Threshold ── */
+
+.wh-threshold {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wh-threshold__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 24px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.wh-threshold__logo-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+
+.wh-threshold__glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 900px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(74, 127, 207, 0.42) 0%,
+    rgba(124, 92, 191, 0.32) 20%,
+    rgba(212, 118, 59, 0.24) 38%,
+    rgba(201, 168, 76, 0.16) 55%,
+    transparent 72%
+  );
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wh-threshold__logo {
+  width: 160px;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  filter:
+    drop-shadow(0 0 20px rgba(74, 127, 207, 0.65))
+    drop-shadow(0 0 40px rgba(201, 168, 76, 0.45))
+    drop-shadow(0 0 80px rgba(124, 92, 191, 0.28));
+}
+
+.wh-threshold__you-are {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 2rem;
+  color: var(--text);
+  margin: 0 0 20px;
+  line-height: 1.25;
+}
+
+.wh-threshold__headline {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  color: var(--ink);
+  margin: 0 0 40px;
+  line-height: 1.05;
+  text-shadow:
+    0 0 60px rgba(201, 168, 76, 0.40),
+    0 0 120px rgba(201, 168, 76, 0.18);
+}
+
+.wh-threshold__sub {
+  font-family: "Inter", sans-serif;
+  font-size: 1.1rem;
+  color: var(--text);
+  max-width: 52ch;
+  text-align: center;
+  line-height: 1.82;
+  margin: 0;
+  opacity: 0.88;
+}
+
+/* Scroll hint — opacity controlled via JS ref */
+.wh-scroll-hint {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes wh-hint-pulse {
+  0%, 100% { opacity: 0.7; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(0.62); }
+}
+
+.wh-scroll-hint__line {
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(to bottom, transparent, rgba(201, 168, 76, 0.85), transparent);
+  transform-origin: top;
+  animation: wh-hint-pulse 2.2s ease-in-out infinite;
+}
+
+.wh-scroll-hint__text {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.65);
+}
+
+/* ── Shared eyebrow ── */
+
+.wh-eyebrow {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: rgba(201, 168, 76, 0.78);
+  margin: 0 0 16px;
+  letter-spacing: 0.01em;
+}
+
+/* ── Section 2: The First Breath ── */
+
+.wh-breath {
+  padding: 200px 24px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.wh-breath__inner {
+  max-width: 64ch;
+}
+
+.wh-breath__headline {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  color: var(--ink);
+  line-height: 1.28;
+  margin: 0 auto 40px;
+  max-width: 28ch;
+}
+
+.wh-breath__body {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  color: var(--text);
+  max-width: 58ch;
+  line-height: 1.88;
+  opacity: 0.85;
+  margin: 0 auto;
+}
+
+/* ── Section 3: Doorways ── */
+
+.wh-doorways {
+  padding: 0 24px 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wh-doorways__header {
+  text-align: center;
+  margin-bottom: 100px;
+  max-width: 64ch;
+}
+
+.wh-doorways__headline {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 3.5vw, 2.5rem);
+  color: var(--ink);
+  margin: 0 0 24px;
+  line-height: 1.1;
+}
+
+.wh-doorways__sub {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  color: var(--text);
+  max-width: 58ch;
+  opacity: 0.82;
+  margin: 0 auto;
+  line-height: 1.82;
+}
+
+.wh-doorway {
+  text-align: center;
+  max-width: 50ch;
+  margin-bottom: 80px;
+}
+
+.wh-doorway:last-of-type {
+  margin-bottom: 0;
+}
+
+.wh-doorway__title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.75rem;
+  color: var(--ink);
+  margin: 0 0 20px;
+  line-height: 1.25;
+}
+
+.wh-doorway__body {
+  font-family: "Inter", sans-serif;
+  font-size: 0.98rem;
+  color: var(--text);
+  opacity: 0.82;
+  line-height: 1.82;
+  margin: 0 0 24px;
+}
+
+/* Gold text link — underline animates in on hover, left-to-right */
+.wh-text-link {
+  font-family: "Inter", sans-serif;
+  font-size: 0.98rem;
+  color: var(--gold);
+  background-image: linear-gradient(var(--gold), var(--gold));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 0% 1px;
+  padding-bottom: 2px;
+  transition: background-size 200ms ease;
+}
+
+.wh-text-link:hover {
+  background-size: 100% 1px;
+}
+
+.wh-text-link--lg {
+  font-size: 1.15rem;
+}
+
+/* ── Section 4: Invitation ── */
+
+.wh-invitation {
+  position: relative;
+  padding: 180px 24px 140px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.wh-invitation__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 64ch;
+}
+
+.wh-invitation__headline {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 3.5vw, 2.5rem);
+  color: var(--ink);
+  max-width: 26ch;
+  margin: 0 auto 40px;
+  line-height: 1.22;
+}
+
+.wh-invitation__body {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  color: var(--text);
+  max-width: 55ch;
+  opacity: 0.85;
+  line-height: 1.88;
+  margin: 0 auto 30px;
+}
+
+/* ── Section 4.5: Quiet List Invitation ── */
+
+.wh-list-invite {
+  padding: 140px 24px 100px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.wh-list-invite__inner {
+  max-width: 56ch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wh-list-invite__eyebrow {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: rgba(201, 168, 76, 0.55);
+  letter-spacing: 0.04em;
+  margin: 0 0 16px;
+}
+
+.wh-list-invite__headline {
+  font-family: "Playfair Display", serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--ink);
+  max-width: 32ch;
+  line-height: 1.3;
+  margin: 0 0 32px;
+}
+
+.wh-list-invite__body {
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  color: rgba(240, 237, 232, 0.58);
+  max-width: 52ch;
+  line-height: 1.78;
+  margin: 0 0 28px;
+}
+
+.wh-list-invite__form {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 520px;
+  justify-content: center;
+}
+
+.wh-list-invite__input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 220, 180, 0.15);
+  border-radius: 2px;
+  padding: 14px 18px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  color: rgba(240, 237, 232, 0.88);
+  width: 280px;
+  outline: none;
+  transition: border-color 200ms ease;
+}
+
+.wh-list-invite__input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.wh-list-invite__input:focus {
+  border-color: rgba(255, 220, 180, 0.4);
+}
+
+.wh-list-invite__btn {
+  background: transparent;
+  border: 1px solid rgba(255, 220, 180, 0.3);
+  border-radius: 2px;
+  padding: 14px 24px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease;
+  white-space: nowrap;
+}
+
+.wh-list-invite__btn:hover {
+  border-color: rgba(255, 220, 180, 0.6);
+  color: rgba(201, 168, 76, 1);
+}
+
+.wh-list-invite__confirm {
+  font-family: "Inter", sans-serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: rgba(201, 168, 76, 0.65);
+  margin: 20px 0 0;
+  animation: wh-fade-in 600ms ease forwards;
+}
+
+@keyframes wh-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Section 5: Closing ── */
+
+.wh-closing {
+  padding: 120px 24px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.wh-closing__line {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 600;
+  color: var(--ink);
+  max-width: 30ch;
+  line-height: 1.28;
+  text-shadow:
+    0 0 60px rgba(201, 168, 76, 0.32),
+    0 0 100px rgba(201, 168, 76, 0.14);
+  margin: 0;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 1279px) {
+  .wh-threshold__logo  { width: 120px; }
+  .wh-threshold__glow  { width: 640px; height: 640px; }
+  .wh-threshold__you-are { font-size: 1.75rem; }
+}
+
+@media (max-width: 767px) {
+  .wh-threshold        { min-height: 90vh; }
+  .wh-threshold__logo  { width: 96px; }
+  .wh-threshold__glow  { width: 420px; height: 420px; }
+  .wh-threshold__you-are { font-size: 1.5rem; }
+  .wh-threshold__logo-wrap { margin-bottom: 40px; }
+  .wh-breath           { padding: 120px 24px; }
+  .wh-doorways         { padding: 0 24px 100px; }
+  .wh-doorways__header { margin-bottom: 72px; }
+  .wh-doorway          { margin-bottom: 60px; }
+  .wh-invitation       { padding: 120px 24px 100px; }
+  .wh-list-invite      { padding: 100px 24px 80px; }
+  .wh-list-invite__form { flex-direction: column; align-items: center; }
+  .wh-list-invite__input { width: 100%; max-width: 360px; }
+  .wh-list-invite__btn { width: 100%; max-width: 360px; }
+  .wh-closing          { padding: 80px 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wh-scroll-hint__line { animation: none; }
 }

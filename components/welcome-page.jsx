@@ -1,232 +1,256 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
-import { siteTagline } from "@/lib/content";
 
-const arrivalNotes = [
-  "Some people arrive as readers and want to stay close to the signal.",
-  "Some arrive because they sense a collaboration, feature, or patronage opportunity.",
-  "Some simply want to introduce themselves to the house before taking a next step.",
-];
-
-const pathways = [
-  {
-    eyebrow: "Editorial consideration",
-    title: "Be Featured",
-    body:
-      "For founders, hosts, patrons, and worldbuilders whose work carries atmosphere, substance, and a point of view HOME would want to study with care.",
-    detail: "Features, essays, conversations, and story-led editorial formats.",
-    cta: "View featured",
-    href: "/featured",
-  },
-  {
-    eyebrow: "Creative engagement",
-    title: "Work With HOME",
-    body:
-      "For aligned collaborators who want to build with the house through strategy, editorial projects, cultural programming, or thoughtful commissions.",
-    detail: "Creative direction, publishing concepts, experiences, and slower forms of advisory work.",
-    cta: "Read the philosophy",
-    href: "/philosophy",
-  },
-  {
-    eyebrow: "Institutional alignment",
-    title: "Partner With HOME",
-    body:
-      "For brands, institutions, and patrons who understand that trust is built through restraint, standards, and the quality of the environment around the work.",
-    detail: "Partnerships shaped for resonance, cultural fit, and long-horizon value.",
-    cta: "Enter the stories",
-    href: "/stories",
-  },
-  {
-    eyebrow: "Ongoing correspondence",
-    title: "Receive the Signal",
-    body:
-      "For readers who want a quieter way to stay close: worldview, pathways, thoughtful updates, and invitations as the HOME world takes form.",
-    detail: "A private channel for the people who want to follow the ecosystem as it deepens.",
-    cta: "Explore the ecosystem",
-    href: "/ecosystem",
-  },
-];
-
-const intakeOptions = [
-  "Be featured",
-  "Work with HOME",
-  "Partner with HOME",
-  "Receive the signal",
-];
-
-function PathwayCard({ eyebrow, title, body, detail, cta, href, index }) {
-  return (
-    <article className="welcome-pathway-card">
-      <div className="welcome-pathway-card__topline">
-        <span>{eyebrow}</span>
-        <span>{`0${index + 1}`}</span>
-      </div>
-      <h3>{title}</h3>
-      <p>{body}</p>
-      <div className="welcome-pathway-card__footer">
-        <p>{detail}</p>
-        <Link href={href}>{cta}</Link>
-      </div>
-    </article>
-  );
+function useScrollReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll(".home-reveal");
+    if (!els.length) return;
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("home-revealed");
+            observer.unobserve(e.target);
+          }
+        }),
+      { threshold: 0.12 }
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 }
 
 export default function WelcomePage() {
+  const prefersReduced = useReducedMotion();
+  const scrollHintRef = useRef(null);
+  const [listEmail, setListEmail] = useState("");
+  const [listConfirmed, setListConfirmed] = useState(false);
+  useScrollReveal();
+
+  // Fade the scroll hint out as user begins to scroll
+  useEffect(() => {
+    const hint = scrollHintRef.current;
+    if (!hint) return;
+    const targetOpacity = prefersReduced ? 0.6 : 0.7;
+    const timer = setTimeout(() => {
+      hint.style.transition = "opacity 1.4s ease";
+      hint.style.opacity = String(targetOpacity);
+    }, 2200);
+    const onScroll = () => {
+      hint.style.transition = "none";
+      hint.style.opacity = String(Math.max(0, targetOpacity * (1 - window.scrollY / 180)));
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [prefersReduced]);
+
+  const ease = [0.22, 1, 0.36, 1];
+
   return (
-    <main className="page-main welcome-page">
-      <div className="container">
-        <div className="welcome-shell">
-          <section className="welcome-threshold-header">
-            <div className="welcome-threshold-header__topline">
-              <p className="home-section-label">Welcome HOME</p>
-              <p className="welcome-threshold-header__marker">Receiving room</p>
-            </div>
+    <main className="wh-page">
+      <div className="home-grain" aria-hidden="true" />
+      <div className="home-bloom-warm" aria-hidden="true" style={{ top: "-8vh", left: "-12vw" }} />
+      <div className="home-bloom-cool" aria-hidden="true" style={{ top: "28vh", right: "-8vw" }} />
 
-            <div className="welcome-threshold-header__body">
-              <div>
-                <h1 className="welcome-threshold-header__title">Welcome HOME</h1>
-                <p className="welcome-threshold-header__supporting">
-                  A quiet threshold into the house, where collaboration, correspondence, and considered arrival can
-                  begin with warmth.
-                </p>
-              </div>
+      {/* ── SECTION 1: THE THRESHOLD ── */}
+      <section className="wh-threshold" aria-label="Welcome threshold">
+        <div className="wh-threshold__inner">
 
-              <div className="welcome-threshold-header__note">
-                <p className="welcome-threshold-header__note-label">Threshold note</p>
-                <p className="welcome-threshold-header__note-quote">{siteTagline}</p>
-                <p className="welcome-threshold-header__note-text">
-                  This page is here to help you find the right path into HOME without turning the first encounter into
-                  a transaction.
-                </p>
-              </div>
-            </div>
-          </section>
+          {/* Logo with multi-color glow, both pulsing together */}
+          <motion.div
+            className="wh-threshold__logo-wrap"
+            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease, delay: 0.2 }}
+          >
+            <motion.div
+              className="wh-threshold__glow"
+              aria-hidden="true"
+              animate={prefersReduced ? {} : { opacity: [0.35, 0.5, 0.35], scale: [1, 1.07, 1] }}
+              transition={{ duration: 8, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+            />
+            <motion.div
+              style={{ position: "relative", zIndex: 1 }}
+              animate={prefersReduced ? {} : { scale: [1, 1.03, 1] }}
+              transition={{ duration: 8, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+            >
+              <Image
+                src="/home.png.png"
+                alt="HOME"
+                width={500}
+                height={500}
+                className="wh-threshold__logo"
+                priority
+              />
+            </motion.div>
+          </motion.div>
 
-          <section className="welcome-orientation">
-            <div className="welcome-orientation__intro">
-              <p className="home-section-label">Orientation</p>
-              <h2 className="section-title">There are different ways to arrive into HOME.</h2>
-              <p className="section-copy section-copy--large">
-                Some people come to read. Some come because they recognize a fit. Some are looking for a place to
-                introduce an idea, a body of work, or a future collaboration. The point of this page is not to rush
-                that process. It is to give it shape.
-              </p>
-            </div>
+          <motion.p
+            className="wh-threshold__you-are"
+            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease, delay: 0.65 }}
+          >
+            You&rsquo;re here.
+          </motion.p>
 
-            <div className="welcome-orientation__notes">
-              {arrivalNotes.map((note) => (
-                <article key={note}>
-                  <p>{note}</p>
-                </article>
-              ))}
-            </div>
-          </section>
+          <motion.h1
+            className="wh-threshold__headline"
+            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease, delay: 0.95 }}
+          >
+            Welcome HOME.
+          </motion.h1>
 
-          <section className="welcome-pathways">
-            <div className="welcome-section-heading">
-              <div>
-                <p className="home-section-label">Pathways</p>
-                <h2 className="section-title">Choose the form of arrival that feels true to why you are here.</h2>
-              </div>
-              <p className="section-copy">
-                These are not dashboard options or a menu of transactions. They are four different ways of entering
-                the ecosystem with clarity.
-              </p>
-            </div>
-
-            <div className="welcome-pathways__grid">
-              {pathways.map((pathway, index) => (
-                <PathwayCard key={pathway.title} {...pathway} index={index} />
-              ))}
-            </div>
-          </section>
-
-          <section className="welcome-intake">
-            <div className="welcome-intake__copy">
-              <p className="home-section-label">Begin the intake</p>
-              <h2 className="section-title">Leave a first note for the house.</h2>
-              <p className="section-copy section-copy--large">
-                A light beginning is enough. Tell HOME how you are arriving, who you are, and what you would like to
-                open. This can become the intake surface for future newsletter signups, collaborations, features, and
-                partnership inquiries without losing the dignity of the page.
-              </p>
-
-              <div className="welcome-intake__aside">
-                <p className="welcome-intake__aside-label">A note on tone</p>
-                <p>
-                  Brief is welcome. Specific is helpful. A few well-chosen lines are better than a formal pitch deck
-                  disguised as a contact form.
-                </p>
-              </div>
-            </div>
-
-            <div className="welcome-intake__panel">
-              <form className="welcome-intake-form">
-                <div className="welcome-intake-form__row">
-                  <label className="welcome-intake-form__field">
-                    <span>Name</span>
-                    <input type="text" placeholder="Your name" />
-                  </label>
-                  <label className="welcome-intake-form__field">
-                    <span>Email</span>
-                    <input type="email" placeholder="Your email" />
-                  </label>
-                </div>
-
-                <label className="welcome-intake-form__field">
-                  <span>I am arriving to...</span>
-                  <select defaultValue="">
-                    <option value="" disabled>
-                      Select a pathway
-                    </option>
-                    {intakeOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-
-                <label className="welcome-intake-form__field">
-                  <span>Context</span>
-                  <textarea
-                    rows="5"
-                    placeholder="A few lines about your work, your interest, or the conversation you would like to begin."
-                  />
-                </label>
-
-                <div className="welcome-intake-form__actions">
-                  <button type="button" className="button-primary">
-                    Begin the conversation
-                  </button>
-                  <p>
-                    UI only for now. This section is ready to connect later to newsletter, inquiry, and partnership
-                    workflows.
-                  </p>
-                </div>
-              </form>
-            </div>
-          </section>
-
-          <section className="welcome-closing">
-            <p className="home-section-label">Final invitation</p>
-            <h2 className="welcome-closing__title">If the atmosphere feels familiar, you have already found the door.</h2>
-            <p className="welcome-closing__body">
-              Welcome HOME. Enter with care, with signal, with a sense of proportion. Whether you are here to read,
-              collaborate, partner, or simply stay near the field, let this be the place where the relationship begins
-              well.
-            </p>
-
-            <div className="welcome-closing__actions">
-              <Link href="/ecosystem" className="button-secondary">
-                Explore the ecosystem
-              </Link>
-              <Link href="/featured" className="button-primary">
-                Continue into HOME
-              </Link>
-            </div>
-          </section>
+          <motion.p
+            className="wh-threshold__sub"
+            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease, delay: 1.25 }}
+          >
+            This is a world built on one idea &mdash; that life should feel more like a family, and less like a
+            marketplace.
+          </motion.p>
         </div>
-      </div>
+
+        {/* Scroll hint — fades in late, fades out on scroll via ref */}
+        <div ref={scrollHintRef} className="wh-scroll-hint" aria-hidden="true" style={{ opacity: 0 }}>
+          <div className="wh-scroll-hint__line" />
+          <span className="wh-scroll-hint__text">There&rsquo;s more inside.</span>
+        </div>
+      </section>
+
+      {/* ── SECTION 2: THE FIRST BREATH ── */}
+      <section className="wh-breath">
+        <div className="wh-breath__inner home-reveal">
+          <p className="wh-eyebrow">Before we go any further.</p>
+          <h2 className="wh-breath__headline">
+            HOME is not something you join. It is something you recognize.
+          </h2>
+          <p className="wh-breath__body">
+            If you&rsquo;ve ever felt that the world is built more for transactions than for people &mdash; you already
+            know HOME. This is the place where that knowing has a home.
+          </p>
+        </div>
+      </section>
+
+      {/* ── SECTION 3: WHAT YOU'LL FIND HERE ── */}
+      <section className="wh-doorways">
+        <div className="wh-doorways__header home-reveal">
+          <p className="wh-eyebrow">Inside</p>
+          <h2 className="wh-doorways__headline">What you&rsquo;ll find here</h2>
+          <p className="wh-doorways__sub">
+            HOME lives through writing, gathering, and building. Here&rsquo;s where to begin, depending on why you
+            came.
+          </p>
+        </div>
+
+        <div className="wh-doorway home-reveal">
+          <p className="wh-eyebrow">If you came to read</p>
+          <h3 className="wh-doorway__title">Our philosophy, in writing.</h3>
+          <p className="wh-doorway__body">
+            Start with Philosophy. Then Stories when you&rsquo;re ready for longer reads.
+          </p>
+          <Link href="/philosophy" className="wh-text-link">Begin with Philosophy &rarr;</Link>
+        </div>
+
+        <div className="wh-doorway home-reveal">
+          <p className="wh-eyebrow">If you came to meet</p>
+          <h3 className="wh-doorway__title">The people we&rsquo;re featuring.</h3>
+          <p className="wh-doorway__body">
+            Start with Featured. The founders and companies we&rsquo;re currently amplifying.
+          </p>
+          <Link href="/featured" className="wh-text-link">Begin with Featured &rarr;</Link>
+        </div>
+
+        <div className="wh-doorway home-reveal">
+          <p className="wh-eyebrow">If you came to build</p>
+          <h3 className="wh-doorway__title">The ecosystem we&rsquo;re building.</h3>
+          <p className="wh-doorway__body">
+            Start with Ecosystem. The map of HOME&rsquo;s multiverse and the vehicles inside it.
+          </p>
+          <Link href="/ecosystem" className="wh-text-link">Begin with Ecosystem &rarr;</Link>
+        </div>
+      </section>
+
+      {/* ── SECTION 4: ONE INVITATION ── */}
+      <section className="wh-invitation">
+        <div
+          className="home-bloom-gold"
+          aria-hidden="true"
+          style={{ top: "5%", left: "50%", transform: "translateX(-50%)" }}
+        />
+        <div className="wh-invitation__inner home-reveal">
+          <p className="wh-eyebrow">One more thing</p>
+          <h2 className="wh-invitation__headline">
+            If any of this resonates &mdash; write to us.
+          </h2>
+          <p className="wh-invitation__body">
+            There are no forms here. No pressure. Just an email address, and a human on the other end who will read
+            what you send. That&rsquo;s how HOME has always worked. It&rsquo;s how it always will.
+          </p>
+          {/* TODO: replace hello@home.xyz with the real domain email once confirmed */}
+          <a href="mailto:hello@home.xyz" className="wh-text-link wh-text-link--lg">
+            hello@home.xyz &rarr;
+          </a>
+        </div>
+      </section>
+
+      {/* ── SECTION 4.5: QUIET LIST INVITATION ── */}
+      <section className="wh-list-invite">
+        <div className="wh-list-invite__inner home-reveal">
+          <p className="wh-list-invite__eyebrow">And if you want to be written to</p>
+          <h3 className="wh-list-invite__headline">
+            We write from time to time. No schedule. No selling.
+          </h3>
+          <p className="wh-list-invite__body">
+            Essays, reflections, and dispatches from the ecosystem, sent only when there is something real to share.
+            You can leave if it ever stops being real.
+          </p>
+          <form
+            className="wh-list-invite__form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              // TODO: Wire to email list provider (Buttondown recommended) once account is set up. Endpoint goes here.
+              console.log("List email:", listEmail);
+              setListConfirmed(true);
+            }}
+          >
+            <input
+              className="wh-list-invite__input"
+              type="email"
+              value={listEmail}
+              onChange={(e) => setListEmail(e.target.value)}
+              placeholder="your email"
+              aria-label="Your email address"
+              required
+            />
+            <button type="submit" className="wh-list-invite__btn">
+              Come inside
+            </button>
+          </form>
+          {listConfirmed && (
+            <p className="wh-list-invite__confirm">
+              Thank you. We&rsquo;ll be in touch when there&rsquo;s something real to share.
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* ── SECTION 5: THE CLOSING LINE ── */}
+      <section className="wh-closing">
+        <h2 className="wh-closing__line home-reveal">
+          Come as you are. Leave even more yourself.
+        </h2>
+      </section>
     </main>
   );
 }

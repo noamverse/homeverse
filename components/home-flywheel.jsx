@@ -263,13 +263,23 @@ export default function HomeFlywheel() {
         <motion.div
           animate={prefersReduced ? {} : { scale: [1, 1.04, 1] }}
           transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            width: isMobile ? 85 : flywheelSize < 600 ? 110 : 140,
+            height: isMobile ? 85 : flywheelSize < 600 ? 110 : 140,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
           <Image
             src="/home.png.png"
             alt="HOME"
-            width={isMobile ? 72 : 110}
-            height={isMobile ? 32 : 50}
+            width={500}
+            height={500}
             style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
               filter:
                 "drop-shadow(0 0 12px rgba(74,127,207,0.7)) drop-shadow(0 0 24px rgba(201,168,76,0.5))",
             }}
