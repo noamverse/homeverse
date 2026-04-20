@@ -2,96 +2,32 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
+import { features } from "@/content/features";
 
-// ── Placeholder data ──────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
-const founderSpotlight = {
-  eyebrow: "Newest Feature",
-  name: "[Founder Name]",
-  role: "[Role], [Company]",
-  quote: "[A short resonant quote from the founder that captures their relational philosophy.]",
-  excerpt:
-    "[Opening paragraph of the feature article — a few sentences that draw the reader into who this person is and why they are worth knowing. Keep the tone warm and editorial.]",
-  href: "/featured",
-  readTime: "7 min read", // TODO: Update when article is published
-  byline: "Profile by [Writer Name]", // TODO: Update when writer is assigned
-};
+function formatDate(dateStr) {
+  if (!dateStr || dateStr.startsWith("[")) return dateStr;
+  return new Date(dateStr).toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
+}
 
-// TODO: Replace with real founder features as they are published
-const founderRows = [
-  {
-    date: "[Month Year]",
-    name: "[Founder Name]",
-    desc: "[One-line pitch of the feature — what makes this person worth reading about.]",
-    href: "/featured",
-    category: "FOUNDER PROFILE",
-  },
-  {
-    date: "[Month Year]",
-    name: "[Founder Name]",
-    desc: "[One-line pitch of the feature — what makes this person worth reading about.]",
-    href: "/featured",
-    category: "IN CONVERSATION",
-  },
-  {
-    date: "[Month Year]",
-    name: "[Founder Name]",
-    desc: "[One-line pitch of the feature — what makes this person worth reading about.]",
-    href: "/featured",
-    category: "BUILDER",
-  },
-  {
-    date: "[Month Year]",
-    name: "[Founder Name]",
-    desc: "[One-line pitch of the feature — what makes this person worth reading about.]",
-    href: "/featured",
-    category: "NEW THIS WEEK",
-  },
-];
+// ── Derived data ──────────────────────────────────────────────────────────────
 
-const companySpotlight = {
-  eyebrow: "Newest Feature",
-  name: "[Company Name]",
-  role: "[Sector] · [Tagline]",
-  quote: "[A short resonant line that captures the company's relational signature.]",
-  excerpt:
-    "[Opening paragraph of the feature — what this company is building, why it stands apart, and why HOME is amplifying it now. Editorial tone, not promotional.]",
-  href: "/featured",
-  readTime: "7 min read", // TODO: Update when article is published
-  byline: "Profile by [Writer Name]", // TODO: Update when writer is assigned
-};
-
-// TODO: Replace with real company features as they are published
-const companyRows = [
-  {
-    date: "[Month Year]",
-    name: "[Company Name]",
-    desc: "[One-line description of the company and what makes it worth knowing.]",
-    href: "/featured",
-    category: "COMPANY SPOTLIGHT",
-  },
-  {
-    date: "[Month Year]",
-    name: "[Company Name]",
-    desc: "[One-line description of the company and what makes it worth knowing.]",
-    href: "/featured",
-    category: "IN CONVERSATION",
-  },
-  {
-    date: "[Month Year]",
-    name: "[Company Name]",
-    desc: "[One-line description of the company and what makes it worth knowing.]",
-    href: "/featured",
-    category: "BUILDER",
-  },
-  {
-    date: "[Month Year]",
-    name: "[Company Name]",
-    desc: "[One-line description of the company and what makes it worth knowing.]",
-    href: "/featured",
-    category: "NEW THIS WEEK",
-  },
-];
+const founderSpotlight = features.find(
+  (f) => f.type === "founder" && f.status === "featured"
+);
+const founderRows = features.filter(
+  (f) => f.type === "founder" && f.status === "standard"
+);
+const companySpotlight = features.find(
+  (f) => f.type === "company" && f.status === "featured"
+);
+const companyRows = features.filter(
+  (f) => f.type === "company" && f.status === "standard"
+);
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
@@ -124,15 +60,15 @@ function SpotlightCard({ item, variant }) {
         </div>
 
         <div>
-          <p className="feat-spotlight-eyebrow">{item.eyebrow}</p>
+          <p className="feat-spotlight-eyebrow">Newest Feature</p>
           <h3 className="feat-spotlight-name">{item.name}</h3>
           <p className="feat-byline">{item.byline}</p>
         </div>
 
-        <p className="feat-spotlight-role">{item.role}</p>
-        <p className="feat-spotlight-quote">{item.quote}</p>
+        <p className="feat-spotlight-role">{item.title}</p>
+        <p className="feat-spotlight-quote">{item.pullQuote}</p>
         <p className="feat-spotlight-excerpt">{item.excerpt}</p>
-        <Link href={item.href} className="feat-read-link">
+        <Link href={`/featured/${item.slug}`} className="feat-read-link">
           Read the feature →
         </Link>
       </div>
@@ -151,11 +87,11 @@ function EditorialRow({ item, warm, delay }) {
         <div className={`feat-row-image${warm ? " feat-row-image--warm" : ""}`} />
       </div>
       <div className="feat-row-content">
-        <p className="feat-row-date">{item.date}</p>
+        <p className="feat-row-date">{formatDate(item.publishedDate)}</p>
         <p className="feat-row-name">{item.name}</p>
-        <p className="feat-row-desc">{item.desc}</p>
+        <p className="feat-row-desc">{item.excerpt}</p>
       </div>
-      <Link href={item.href} className="feat-row-link">
+      <Link href={`/featured/${item.slug}`} className="feat-row-link">
         Read →
       </Link>
     </article>
@@ -251,14 +187,16 @@ export default function FeaturedPage() {
             subtext="The people building a more relational world. New features published regularly."
           />
 
-          <div className="feat-spotlight-wrap home-reveal">
-            <div className="feat-spotlight-glow feat-spotlight-glow--cool" aria-hidden="true" />
-            <SpotlightCard item={founderSpotlight} variant="founder" />
-          </div>
+          {founderSpotlight && (
+            <div className="feat-spotlight-wrap home-reveal">
+              <div className="feat-spotlight-glow feat-spotlight-glow--cool" aria-hidden="true" />
+              <SpotlightCard item={founderSpotlight} variant="founder" />
+            </div>
+          )}
 
           <div className="feat-editorial-list">
             {founderRows.map((row, i) => (
-              <EditorialRow key={i} item={row} warm={false} delay={i * 120} />
+              <EditorialRow key={row.slug} item={row} warm={false} delay={i * 120} />
             ))}
           </div>
         </section>
@@ -270,14 +208,16 @@ export default function FeaturedPage() {
             subtext="The ventures building the relational future. New features published regularly."
           />
 
-          <div className="feat-spotlight-wrap home-reveal">
-            <div className="feat-spotlight-glow feat-spotlight-glow--warm" aria-hidden="true" />
-            <SpotlightCard item={companySpotlight} variant="company" />
-          </div>
+          {companySpotlight && (
+            <div className="feat-spotlight-wrap home-reveal">
+              <div className="feat-spotlight-glow feat-spotlight-glow--warm" aria-hidden="true" />
+              <SpotlightCard item={companySpotlight} variant="company" />
+            </div>
+          )}
 
           <div className="feat-editorial-list">
             {companyRows.map((row, i) => (
-              <EditorialRow key={i} item={row} warm={true} delay={i * 120} />
+              <EditorialRow key={row.slug} item={row} warm={true} delay={i * 120} />
             ))}
           </div>
         </section>

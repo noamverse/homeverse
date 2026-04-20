@@ -150,25 +150,32 @@ const PATHWAYS = [
     condition: "If you build",
     body: "We feature founders and companies we believe in. Start a relationship.",
     linkLabel: "Write to us →",
-    href: "#", // TODO: wire real destination
+    // TODO: Verify email is active once Cloudflare Email Routing is configured
+    href: "mailto:hello@homeverse.family",
+    external: false,
   },
   {
     condition: "If you invest",
     body: "We work with aligned capital. Share what you believe in, and why.",
     linkLabel: "Tell us your thesis →",
-    href: "#", // TODO: wire real destination
+    // TODO: Verify email is active once Cloudflare Email Routing is configured
+    href: "mailto:hello@homeverse.family?subject=Investment Thesis",
+    external: false,
   },
   {
     condition: "If you gather",
     body: "Fellowship is how HOME lives in the world. You are welcome at the table.",
     linkLabel: "Join a gathering →",
-    href: "#", // TODO: wire real destination
+    // TODO: Verify email is active once Cloudflare Email Routing is configured
+    href: "mailto:hello@homeverse.family?subject=Fellowship Gathering",
+    external: false,
   },
   {
     condition: "If you're becoming",
     body: "HOME is a way of being before it is anywhere you go. Read, subscribe, and keep reading.",
     linkLabel: "Follow along →",
-    href: "#", // TODO: wire real destination
+    href: "https://www.threads.com/@noamverse",
+    external: true,
   },
 ];
 
@@ -402,9 +409,15 @@ export default function EcosystemPage() {
                     <em className="eco-pathway__condition">{pathway.condition}:</em>{" "}
                     {pathway.body}
                   </p>
-                  <Link href={pathway.href} className="eco-pathway__link">
-                    {pathway.linkLabel}
-                  </Link>
+                  {pathway.external ? (
+                    <a href={pathway.href} className="eco-pathway__link" target="_blank" rel="noopener noreferrer">
+                      {pathway.linkLabel}
+                    </a>
+                  ) : (
+                    <a href={pathway.href} className="eco-pathway__link">
+                      {pathway.linkLabel}
+                    </a>
+                  )}
                 </div>
               ))}
             </div>

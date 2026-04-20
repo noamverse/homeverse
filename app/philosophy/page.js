@@ -8,6 +8,8 @@ const expressions = [
 
 export const metadata = {
   title: "Philosophy",
+  description:
+    "A world built on one idea: life should feel more like a family, and less like a marketplace.",
 };
 
 export default function PhilosophyPage() {

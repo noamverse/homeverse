@@ -2,93 +2,51 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { articles, getArticleBySlug } from "@/lib/content";
+import stories from "@/content/stories";
 
-// ── Placeholder data ──────────────────────────────────────────────────────────
+// ── Reading path groups ───────────────────────────────────────────────────────
 
-const storyPlan = [
+const GROUPS = [
   {
-    slug: "the-new-private-standard",
-    label: "Featured story",
-    collection: "Features",
-    tone: "A defining editorial feature about atmosphere, restraint, and the builders shaping a quieter standard.",
+    kind: "essay",
+    label: "Essays",
+    description:
+      "Closer, more reflective writing on belonging, taste, and the private conditions of clarity.",
   },
   {
-    slug: "the-house-a-founder-builds",
-    label: "Founder story",
-    collection: "Company Stories",
-    tone: "A founder portrait about the rooms institutions create and the moral texture of welcome.",
-    layout: "portrait",
+    kind: "dispatch",
+    label: "Dispatches",
+    description:
+      "Long-form editorial pieces that frame the emotional climate around serious work.",
   },
   {
-    slug: "after-the-noise",
-    label: "Cultural observation",
-    collection: "Features",
-    tone: "A shorter cultural read on editorial calm, curation, and attention after urgency fatigue.",
-    layout: "feature",
-  },
-  {
-    slug: "building-homes-not-audiences",
-    label: "Essay",
-    collection: "Essays",
-    tone: "An essay on relationship, belonging, and the refusal of audience logic.",
-    layout: "essay",
-  },
-  {
-    slug: "a-patron-sense-of-time",
-    label: "Long-form portrait",
-    collection: "Company Stories",
-    tone: "A long-horizon piece about patronage, time, and protecting institutions that deserve to deepen.",
-    layout: "portraitAlt",
-  },
-];
-
-const thematicNotes = [
-  {
-    name: "Features",
-    description: "Long-form editorial pieces that frame the emotional climate around serious work.",
-  },
-  {
-    name: "Essays",
-    description: "Closer, more reflective writing on belonging, taste, and the private conditions of clarity.",
-  },
-  {
-    name: "Company Stories",
-    description: "Portraits of founders, patrons, and institutions whose tone matters as much as their output.",
+    kind: "reflection",
+    label: "Reflections",
+    description:
+      "Portraits of founders, patrons, and institutions whose tone matters as much as their output.",
   },
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function coverStyle(article) {
-  if (article.image) {
+function formatMeta(story) {
+  const date = new Date(story.publishedDate).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+  return `${story.byline} / ${date} / ${story.readTime}`;
+}
+
+function coverStyle(story) {
+  if (story.heroImage) {
     return {
-      backgroundImage: `linear-gradient(180deg, rgba(20,18,16,0.18), rgba(20,18,16,0.48)), url(${article.image})`,
+      backgroundImage: `linear-gradient(180deg, rgba(20,18,16,0.18), rgba(20,18,16,0.48)), url(${story.heroImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
     };
   }
   return { background: "var(--surface-hi)" };
-}
-
-function buildCollection() {
-  return storyPlan
-    .map((entry) => {
-      const article = getArticleBySlug(entry.slug);
-      if (!article) return null;
-      return { ...entry, article };
-    })
-    .filter(Boolean);
-}
-
-function formatMeta(article) {
-  return `${article.author} / ${article.date} / ${article.readTime}`;
-}
-
-function StoryLink({ article, children, className }) {
-  return (
-    <Link href={`/articles/${article.slug}`} className={className}>
-      {children}
-    </Link>
-  );
 }
 
 // ── Sub-components ────────────────────────────────────────────────────────────
@@ -97,18 +55,16 @@ function StoryHairline() {
   return <div className="stor-hairline" aria-hidden="true" />;
 }
 
-function CollectionCard({ item, delay = 0 }) {
-  const { article, label } = item;
+function CollectionCard({ story, delay = 0 }) {
   return (
     <article className="stor-card home-reveal" style={{ transitionDelay: `${delay}ms` }}>
       <div className="stor-card-header">
-        <span className="stor-card-category">{label}</span>
-        <span className="stor-card-meta">{article.category}</span>
+        <span className="stor-card-category">{story.category}</span>
       </div>
-      <h3 className="stor-card-title">{article.title}</h3>
-      <p className="stor-card-byline">{formatMeta(article)}</p>
-      <p className="stor-card-excerpt">{article.excerpt}</p>
-      <StoryLink article={article} className="stor-read-link">Read →</StoryLink>
+      <h3 className="stor-card-title">{story.title}</h3>
+      <p className="stor-card-byline">{formatMeta(story)}</p>
+      <p className="stor-card-excerpt">{story.excerpt}</p>
+      <Link href={`/stories/${story.slug}`} className="stor-read-link">Read →</Link>
     </article>
   );
 }
@@ -116,27 +72,33 @@ function CollectionCard({ item, delay = 0 }) {
 function GroupCard({ group, delay = 0 }) {
   return (
     <article className="stor-card home-reveal" style={{ transitionDelay: `${delay}ms` }}>
-      <p className="stor-card-category">{group.name}</p>
+      <p className="stor-card-category">{group.label}</p>
       <p className="stor-group-desc">{group.description}</p>
       <div className="stor-group-links">
-        {group.items.map((item) => (
-          <StoryLink key={item.article.slug} article={item.article} className="stor-group-link">
-            {item.article.title}
-          </StoryLink>
+        {group.items.map((story) => (
+          <Link key={story.slug} href={`/stories/${story.slug}`} className="stor-group-link">
+            {story.title}
+          </Link>
         ))}
       </div>
     </article>
   );
 }
 
-function ArchiveEntry({ article, delay = 0 }) {
+function ArchiveEntry({ story, delay = 0 }) {
   return (
     <article className="stor-card home-reveal" style={{ transitionDelay: `${delay}ms` }}>
-      <span className="stor-card-category">{article.category}</span>
-      <h3 className="stor-card-title stor-card-title--sm">{article.title}</h3>
-      <p className="stor-card-byline">{article.date}</p>
-      <p className="stor-card-excerpt">{article.excerpt}</p>
-      <Link href={`/articles/${article.slug}`} className="stor-read-link">Read →</Link>
+      <span className="stor-card-category">{story.category}</span>
+      <h3 className="stor-card-title stor-card-title--sm">{story.title}</h3>
+      <p className="stor-card-byline">
+        {new Date(story.publishedDate).toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        })}
+      </p>
+      <p className="stor-card-excerpt">{story.excerpt}</p>
+      <Link href={`/stories/${story.slug}`} className="stor-read-link">Read →</Link>
     </article>
   );
 }
@@ -144,18 +106,14 @@ function ArchiveEntry({ article, delay = 0 }) {
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function StoriesPage() {
-  const collection = buildCollection();
-  const [featured, ...curatedStories] = collection;
+  const [featured, ...curated] = stories;
 
-  const groupedStories = thematicNotes.map((group) => ({
+  const groupedStories = GROUPS.map((group) => ({
     ...group,
-    items: collection.filter((item) => item.collection === group.name),
+    items: stories.filter((s) => s.kind === group.kind),
   }));
 
-  const archive = articles
-    .filter((article) => !collection.some((item) => item.article.slug === article.slug))
-    .concat(collection.slice(-2).map((item) => item.article))
-    .slice(0, 3);
+  const archive = stories.slice(-3);
 
   // Reveal on scroll — respects prefers-reduced-motion
   useEffect(() => {
@@ -220,19 +178,16 @@ export default function StoriesPage() {
           <section className="stor-featured home-reveal">
             <div className="stor-featured__copy">
               <p className="stor-card-category">Featured Story</p>
-              <p className="stor-card-byline">{formatMeta(featured.article)}</p>
-              <h2 className="stor-featured__title">{featured.article.title}</h2>
-              <p className="stor-featured__excerpt">{featured.article.excerpt}</p>
-              {featured.article.lead && (
-                <p className="stor-featured__lead">{featured.article.lead}</p>
-              )}
-              <StoryLink article={featured.article} className="stor-read-link">
+              <p className="stor-card-byline">{formatMeta(featured)}</p>
+              <h2 className="stor-featured__title">{featured.title}</h2>
+              <p className="stor-featured__excerpt">{featured.excerpt}</p>
+              <Link href={`/stories/${featured.slug}`} className="stor-read-link">
                 Read →
-              </StoryLink>
+              </Link>
             </div>
             <div
               className="stor-featured__visual"
-              style={coverStyle(featured.article)}
+              style={coverStyle(featured)}
             />
           </section>
         )}
@@ -248,8 +203,8 @@ export default function StoriesPage() {
           </h2>
           <StoryHairline />
           <div className="stor-grid">
-            {curatedStories.map((item, i) => (
-              <CollectionCard key={item.article.slug} item={item} delay={i * 120} />
+            {curated.map((story, i) => (
+              <CollectionCard key={story.slug} story={story} delay={i * 120} />
             ))}
           </div>
         </section>
@@ -266,7 +221,7 @@ export default function StoriesPage() {
           <StoryHairline />
           <div className="stor-grid stor-grid--3">
             {groupedStories.map((group, i) => (
-              <GroupCard key={group.name} group={group} delay={i * 120} />
+              <GroupCard key={group.kind} group={group} delay={i * 120} />
             ))}
           </div>
         </section>
@@ -282,8 +237,8 @@ export default function StoriesPage() {
           </h2>
           <StoryHairline />
           <div className="stor-grid stor-grid--3">
-            {archive.map((article, i) => (
-              <ArchiveEntry key={article.slug} article={article} delay={i * 120} />
+            {archive.map((story, i) => (
+              <ArchiveEntry key={story.slug} story={story} delay={i * 120} />
             ))}
           </div>
         </section>

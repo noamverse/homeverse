@@ -14,10 +14,8 @@ const ecosystemLinks = [
   { href: "/ecosystem#ai",         label: "HOME AI" },
   { href: "/ecosystem#fellowship", label: "HOME Fellowship" },
   { href: "/ecosystem#base",       label: "HOME Base" },
-  // TODO: Add /ecosystem#media anchor once HOME Media becomes a dedicated branch on the ecosystem page
   { href: "/ecosystem",            label: "HOME Media" },
-  // TODO: Add /ecosystem#fund anchor once HOME Fund becomes a dedicated branch on the ecosystem page
-  { href: "/ecosystem",            label: "HOME Fund" },
+  { href: "/ecosystem#ventures",   label: "HOME Fund" },
 ];
 
 export default function SiteFooter() {
@@ -62,17 +60,16 @@ export default function SiteFooter() {
 
       {/* 3. Connective tissue — the closing whisper */}
       <div className="sf-bottom">
-        {/* TODO: Replace with real HOME email address once domain and email are configured. */}
-        <a href="mailto:hello@home.xyz" className="sf-bottom__contact">
-          Write to us — hello@home.xyz
+        {/* TODO: Verify email is active once Cloudflare Email Routing is configured */}
+        <a href="mailto:hello@homeverse.family" className="sf-bottom__contact">
+          Write to us — hello@homeverse.family
         </a>
         <div className="sf-bottom__social">
-          {/* TODO: Replace '#' with real social profile URLs */}
-          <a href="#" className="sf-bottom__social-link">Threads</a>
+          <a href="https://www.threads.com/@noamverse" className="sf-bottom__social-link" target="_blank" rel="noopener noreferrer">Threads</a>
           <span className="sf-bottom__dot" aria-hidden="true">·</span>
-          <a href="#" className="sf-bottom__social-link">Instagram</a>
+          <a href="https://www.instagram.com/homemultiverse" className="sf-bottom__social-link" target="_blank" rel="noopener noreferrer">Instagram</a>
           <span className="sf-bottom__dot" aria-hidden="true">·</span>
-          <a href="#" className="sf-bottom__social-link">LinkedIn</a>
+          <a href="https://www.linkedin.com/company/homemultiverse/" className="sf-bottom__social-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
         <p className="sf-bottom__copy">© 2026 HOME. Built with love.</p>
       </div>
