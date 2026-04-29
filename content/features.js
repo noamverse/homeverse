@@ -42,7 +42,8 @@ export const features = [
   byline: "Profile by Noam Polinger",
   excerpt: "Elite in his craft, he sees the world through a way of meticulousness that changes everyone he encounters.",
   pullQuote: "'I'm a steward, building with what I've been trusted with.'",
-  heroImage: "/images/features/jose-virella.png",
+  heroImage: "/images/features/jose-virella-headshot.png",
+  heroImageWide: "/images/features/jose-feature.png",
   body: [
     "There is a particular kind of person you only recognize once you've spent time around them. Quiet at first. Reserved. Easy to potentially overlook in a room full of louder voices selling louder things. And then, slowly, you notice the work. You notice that every frame they shoot is composed like a sentence in a sermon. You notice that they don't have the most 'followers', don't 'brand' much, don't perform much — and yet the people they work with come back, and come back, and come back. You notice that they never once told you how good they are, because they didn't need to.",
     "Jose Virella is that person. He is the founder of Samson Videography — though calling Samson a videography company is a bit like calling a cathedral a 'just a building'. Technically, it's true. Functionally it doesn't begin to describe the full story. Out of Tampa, Jose has been quietly building a body of work that has reached coaches, consultants, and ministry leaders across the country and the world, including some of the biggest names in their categories. He wouldn't tell you that part. He'd tell you he serves people who have a message and need help bringing it to life. Which is true. It is also a profound understatement.",
