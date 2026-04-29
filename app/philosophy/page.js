@@ -24,7 +24,7 @@ export default function PhilosophyPage() {
             <p className="phil-hero__eyebrow">A philosophy, not a pitch.</p>
             <h1 className="phil-hero__title">Life is a family, not a marketplace.</h1>
             <p className="phil-hero__sub">
-              We are replacing transactional culture with relational culture. Across business,
+              We are creating a new economy, a Relational Economy. Across business, capital,
               hospitality, investment, and community — we build environments where people experience
               belonging, connection, and unconditional human value.
             </p>
