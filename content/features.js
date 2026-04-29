@@ -1,6 +1,5 @@
-// TODO: Replace all placeholder content with real features as they are published.
-// Each object with status "featured" renders as the large spotlight card.
-// Each object with status "standard" renders as an editorial row.
+// Set 'published: true' to make a feature appear on the live Featured page.
+// Set 'published: false' (or omit) to keep it as a draft.
 
 export const features = [
 
@@ -9,6 +8,7 @@ export const features = [
     slug: "placeholder-founder-spotlight",
     type: "founder",
     status: "featured",
+    published: false,
     name: "[Founder Name]",
     title: "[Role], [Company]",
     publishedDate: "2026-04-21",
@@ -33,6 +33,7 @@ export const features = [
     slug: "placeholder-founder-one",
     type: "founder",
     status: "standard",
+    published: false,
     name: "[Founder Name]",
     title: "[Role], [Company]",
     publishedDate: "2026-04-15",
@@ -53,6 +54,7 @@ export const features = [
     slug: "placeholder-founder-two",
     type: "founder",
     status: "standard",
+    published: false,
     name: "[Founder Name]",
     title: "[Role], [Company]",
     publishedDate: "2026-04-10",
@@ -73,6 +75,7 @@ export const features = [
     slug: "placeholder-founder-three",
     type: "founder",
     status: "standard",
+    published: false,
     name: "[Founder Name]",
     title: "[Role], [Company]",
     publishedDate: "2026-04-05",
@@ -93,6 +96,7 @@ export const features = [
     slug: "placeholder-founder-four",
     type: "founder",
     status: "standard",
+    published: false,
     name: "[Founder Name]",
     title: "[Role], [Company]",
     publishedDate: "2026-03-28",
@@ -115,6 +119,7 @@ export const features = [
     slug: "placeholder-company-spotlight",
     type: "company",
     status: "featured",
+    published: false,
     name: "[Company Name]",
     title: "[Sector] · [Tagline]",
     publishedDate: "2026-04-20",
@@ -139,6 +144,7 @@ export const features = [
     slug: "placeholder-company-one",
     type: "company",
     status: "standard",
+    published: false,
     name: "[Company Name]",
     title: "[Sector] · [Tagline]",
     publishedDate: "2026-04-14",
@@ -159,6 +165,7 @@ export const features = [
     slug: "placeholder-company-two",
     type: "company",
     status: "standard",
+    published: false,
     name: "[Company Name]",
     title: "[Sector] · [Tagline]",
     publishedDate: "2026-04-08",
@@ -179,6 +186,7 @@ export const features = [
     slug: "placeholder-company-three",
     type: "company",
     status: "standard",
+    published: false,
     name: "[Company Name]",
     title: "[Sector] · [Tagline]",
     publishedDate: "2026-04-02",
@@ -199,6 +207,7 @@ export const features = [
     slug: "placeholder-company-four",
     type: "company",
     status: "standard",
+    published: false,
     name: "[Company Name]",
     title: "[Sector] · [Tagline]",
     publishedDate: "2026-03-25",

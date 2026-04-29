@@ -7273,3 +7273,430 @@ h1, h2, h3, h4, h5, h6 {
 @media (prefers-reduced-motion: reduce) {
   .wh-scroll-hint__line { animation: none; }
 }
+
+/* ═══════════════════════════════════════════════
+   FEATURED WALL — Wall of Faces Grid
+   Prefix: .wall-*
+═══════════════════════════════════════════════ */
+
+/* ── Collapsed top band ── */
+
+.wall-top {
+  padding-top: 80px;
+  text-align: center;
+}
+
+.wall-top__eyebrow {
+  display: block;
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.70);
+  margin: 0 0 12px;
+}
+
+.wall-top__headline {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.6rem, 4.5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 24px;
+}
+
+.wall-top__sub {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  line-height: 1.78;
+  color: var(--text);
+  opacity: 0.88;
+  max-width: 60ch;
+  margin: 0 auto;
+}
+
+/* ── Search bar ── */
+
+.wall-search-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 32px auto 40px;
+}
+
+.wall-search-field {
+  position: relative;
+  width: min(480px, calc(100% - 32px));
+  display: flex;
+  align-items: center;
+}
+
+.wall-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(201, 168, 76, 0.55);
+  pointer-events: none;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.wall-search-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 220, 180, 0.15);
+  border-radius: 2px;
+  padding: 14px 18px 14px 40px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  color: var(--text);
+  transition: border-color 0.2s ease;
+}
+
+.wall-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.wall-search-input:focus {
+  outline: none;
+  border-color: rgba(255, 220, 180, 0.40);
+}
+
+/* ── Empty search state ── */
+
+.wall-empty {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: rgba(201, 168, 76, 0.60);
+  text-align: center;
+  padding: 80px 0 120px;
+  margin: 0;
+}
+
+/* ── Zero-published placeholder ── */
+
+.wall-empty-build {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: rgba(201, 168, 76, 0.60);
+  text-align: center;
+  padding: 80px 0 120px;
+  margin: 0;
+}
+
+/* ── Grid ── */
+
+.wall-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin-bottom: 80px;
+}
+
+/* ── Tile base ── */
+
+.wall-tile {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  cursor: pointer;
+  text-decoration: none;
+  border-right: 1px solid rgba(255, 220, 180, 0.06);
+  border-bottom: 1px solid rgba(255, 220, 180, 0.06);
+  isolation: isolate;
+  z-index: 0;
+  will-change: transform;
+  /* z-index delay lets tile stay on top during settle animation */
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+              z-index 0ms 400ms;
+}
+
+/* Ambient glow — present at opacity 0, transitions to 0.4 on hover */
+.wall-tile::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(74, 127, 207, 0.55) 0%,
+    rgba(124, 92, 191, 0.40) 30%,
+    rgba(212, 118, 59, 0.30) 60%,
+    transparent 80%
+  );
+  filter: blur(24px);
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Gradient border ring — invisible at rest, reveals on hover */
+.wall-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(transparent, transparent) padding-box,
+    linear-gradient(
+      135deg,
+      rgba(74,  127, 207, 0.88) 0%,
+      rgba(124,  92, 191, 0.78) 28%,
+      rgba(212, 118,  59, 0.76) 65%,
+      rgba(201, 168,  76, 0.72) 100%
+    ) border-box;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Inner content wrapper — clips image + content to tile bounds ── */
+
+.wall-tile__inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Focus ring for keyboard nav */
+.wall-tile:focus-visible {
+  outline: none;
+}
+
+/* ── Hover: 3D lift + glow + border ── */
+
+.wall-tile:hover,
+.wall-tile:focus-visible {
+  transform: translateY(-8px) scale(1.02);
+  z-index: 10;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+              z-index 0ms;
+}
+
+.wall-tile:hover::before,
+.wall-tile:focus-visible::before {
+  opacity: 0.4;
+}
+
+.wall-tile:hover::after,
+.wall-tile:focus-visible::after {
+  opacity: 1;
+}
+
+/* ── Image layer ── */
+
+.wall-tile__img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  background-color: #161412;
+  z-index: 0;
+  transition: filter 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wall-tile:hover .wall-tile__img,
+.wall-tile:focus-visible .wall-tile__img {
+  filter: saturate(115%);
+}
+
+/* ── Dark gradient veil over image ── */
+
+.wall-tile__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 18, 16, 0.00) 0%,
+    rgba(20, 18, 16, 0.25) 45%,
+    rgba(20, 18, 16, 0.85) 100%
+  );
+  z-index: 1;
+}
+
+/* ── Pull quote — hidden until hover/focus ── */
+
+.wall-tile__quote {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 24px;
+  z-index: 2;
+  opacity: 0;
+  background: linear-gradient(180deg, rgba(20, 18, 16, 0.32) 0%, transparent 100%);
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wall-tile__quote p {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.45;
+  text-align: center;
+  color: rgba(240, 237, 232, 0.92);
+  max-width: 28ch;
+  margin: 0;
+}
+
+.wall-tile:hover .wall-tile__quote,
+.wall-tile:focus-visible .wall-tile__quote {
+  opacity: 1;
+}
+
+/* ── Persistent editorial labels ── */
+
+.wall-tile__labels {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 60px 24px 24px;
+  z-index: 3;
+}
+
+.wall-tile__cat {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 0.70rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.88);
+  margin-bottom: 6px;
+}
+
+.wall-tile__name {
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+  line-height: 1.05;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+
+.wall-tile__role {
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+  color: rgba(240, 237, 232, 0.72);
+  margin: 0 0 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wall-tile__byline {
+  font-family: "Inter", sans-serif;
+  font-style: italic;
+  font-size: 0.8rem;
+  color: rgba(201, 168, 76, 0.68);
+  margin: 0;
+}
+
+/* ── Read affordance ── */
+
+.wall-tile__read {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gold);
+  z-index: 3;
+  opacity: 0;
+  transform: translateX(0);
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  white-space: nowrap;
+}
+
+.wall-tile:hover .wall-tile__read,
+.wall-tile:focus-visible .wall-tile__read {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+/* ── Responsive: tablet (768–1279px) ── */
+
+@media (max-width: 1279px) and (min-width: 768px) {
+  .wall-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .wall-top { padding-top: 60px; }
+  .wall-search-wrap { margin: 24px auto 32px; }
+}
+
+/* ── Responsive: mobile (<768px) ── */
+
+@media (max-width: 767px) {
+  .wall-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .wall-tile__name { font-size: 1.25rem; }
+  .wall-tile__quote p { font-size: 0.95rem; }
+  .wall-tile__labels { padding: 16px 48px 16px 16px; }
+  .wall-tile__read { bottom: 16px; right: 16px; font-size: 0.8rem; }
+
+  .wall-top { padding-top: 40px; }
+  .wall-search-wrap { margin: 16px auto 24px; }
+}
+
+/* ── Touch devices: disable hover animations ── */
+
+@media (hover: none) {
+  .wall-tile:hover,
+  .wall-tile:focus-visible {
+    transform: none;
+  }
+
+  .wall-tile:hover .wall-tile__quote { opacity: 0; }
+  .wall-tile:hover .wall-tile__read  { opacity: 0; }
+  .wall-tile:hover .wall-tile__img   { filter: none; }
+  .wall-tile:hover::before           { opacity: 0; }
+  .wall-tile:hover::after            { opacity: 0; }
+}
+
+/* ── Reduced motion ── */
+
+@media (prefers-reduced-motion: reduce) {
+  .wall-tile {
+    transition: none;
+    will-change: auto;
+  }
+
+  .wall-tile::before,
+  .wall-tile::after,
+  .wall-tile__img,
+  .wall-tile__quote,
+  .wall-tile__read {
+    transition: none;
+  }
+
+  .wall-tile:hover,
+  .wall-tile:focus-visible {
+    transform: none;
+  }
+
+  .wall-tile:hover .wall-tile__read,
+  .wall-tile:focus-visible .wall-tile__read {
+    transform: none;
+  }
+}

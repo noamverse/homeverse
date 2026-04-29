@@ -1,139 +1,140 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { features } from "@/content/features";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function formatDate(dateStr) {
-  if (!dateStr || dateStr.startsWith("[")) return dateStr;
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "long",
-    year: "numeric",
-  });
+function matchesSearch(f, q) {
+  const text = [
+    f.name,
+    f.title,
+    f.category,
+    f.excerpt,
+    f.pullQuote,
+    Array.isArray(f.body) ? f.body.join(" ") : "",
+  ]
+    .join(" ")
+    .toLowerCase();
+  return text.includes(q.toLowerCase());
 }
 
-// ── Derived data ──────────────────────────────────────────────────────────────
+// Only published features, sorted newest first (computed once at module level)
+const publishedSorted = [...features]
+  .filter((f) => f.published === true)
+  .sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate));
 
-const founderSpotlight = features.find(
-  (f) => f.type === "founder" && f.status === "featured"
-);
-const founderRows = features.filter(
-  (f) => f.type === "founder" && f.status === "standard"
-);
-const companySpotlight = features.find(
-  (f) => f.type === "company" && f.status === "featured"
-);
-const companyRows = features.filter(
-  (f) => f.type === "company" && f.status === "standard"
-);
+// ── Wall Tile ─────────────────────────────────────────────────────────────────
 
-// ── Sub-components ────────────────────────────────────────────────────────────
+function WallTile({ feature, delay, preRevealed }) {
+  const cls = [
+    "wall-tile",
+    "home-reveal",
+    preRevealed ? "home-revealed" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-function SectionBand({ headline, subtext }) {
   return (
-    <div className="feat-section-band home-reveal">
-      <div className="feat-section-rule" aria-hidden="true" />
-      <span className="feat-eyebrow">Featured</span>
-      <h2 className="feat-headline">{headline}</h2>
-      <p className="feat-subtext">{subtext}</p>
-      <div className="feat-section-rule" aria-hidden="true" />
-    </div>
-  );
-}
-
-function SpotlightCard({ item, variant }) {
-  const isCompany = variant === "company";
-  return (
-    <article className={`feat-spotlight-card feat-spotlight-card--${variant} home-glass`}>
-      {/* TODO: Replace with actual photo (founder) or logo area (company) */}
-      <div className={`feat-spotlight-image${isCompany ? " feat-spotlight-image--warm" : ""}`}>
-        <div className="feat-spotlight-image__overlay" />
-      </div>
-
-      <div className="feat-spotlight-body">
-        {/* Editorial chrome: FEATURE tag + read time */}
-        <div className="feat-spotlight-header">
-          <span className="feat-feature-tag">Feature</span>
-          <span className="feat-read-time">{item.readTime}</span>
-        </div>
-
-        <div>
-          <p className="feat-spotlight-eyebrow">Newest Feature</p>
-          <h3 className="feat-spotlight-name">{item.name}</h3>
-          <p className="feat-byline">{item.byline}</p>
-        </div>
-
-        <p className="feat-spotlight-role">{item.title}</p>
-        <p className="feat-spotlight-quote">{item.pullQuote}</p>
-        <p className="feat-spotlight-excerpt">{item.excerpt}</p>
-        <Link href={`/featured/${item.slug}`} className="feat-read-link">
-          Read the feature →
-        </Link>
-      </div>
-    </article>
-  );
-}
-
-function EditorialRow({ item, warm, delay }) {
-  return (
-    <article
-      className="feat-row home-reveal"
+    <Link
+      href={`/featured/${feature.slug}`}
+      className={cls}
+      aria-label={`Read ${feature.name}'s feature`}
+      data-slug={feature.slug}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div className="feat-row-left">
-        <span className="feat-row-category">{item.category}</span>
-        <div className={`feat-row-image${warm ? " feat-row-image--warm" : ""}`} />
+      <div className="wall-tile__inner">
+        {/* Image layer */}
+        <div
+          className="wall-tile__img"
+          style={
+            feature.heroImage
+              ? { backgroundImage: `url(${feature.heroImage})` }
+              : undefined
+          }
+        />
+
+        {/* Dark gradient overlay */}
+        <div className="wall-tile__veil" aria-hidden="true" />
+
+        {/* Pull quote — reveals on hover/focus */}
+        <div className="wall-tile__quote">
+          <p>{feature.pullQuote}</p>
+        </div>
+
+        {/* Persistent editorial labels */}
+        <div className="wall-tile__labels">
+          <span className="wall-tile__cat">{feature.category}</span>
+          <p className="wall-tile__name">{feature.name}</p>
+          <p className="wall-tile__role">{feature.title}</p>
+          <p className="wall-tile__byline">{feature.byline}</p>
+        </div>
+
+        {/* Read affordance — reveals on hover/focus */}
+        <span className="wall-tile__read" aria-hidden="true">
+          Read →
+        </span>
       </div>
-      <div className="feat-row-content">
-        <p className="feat-row-date">{formatDate(item.publishedDate)}</p>
-        <p className="feat-row-name">{item.name}</p>
-        <p className="feat-row-desc">{item.excerpt}</p>
-      </div>
-      <Link href={`/featured/${item.slug}`} className="feat-row-link">
-        Read →
-      </Link>
-    </article>
+    </Link>
   );
 }
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function FeaturedPage() {
-  // Reveal on scroll — respects prefers-reduced-motion
+  const [query, setQuery] = useState("");
+  // Tracks slugs that have been revealed — persists across filter changes
+  const revealedRef = useRef(new Set());
+  const [, forceReveal] = useState(0);
+
+  // Derived: published features matching current search query
+  const filtered = query
+    ? publishedSorted.filter((f) => matchesSearch(f, query))
+    : publishedSorted;
+
+  // Reveal on scroll — initial page load only, respects prefers-reduced-motion
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
+        let changed = false;
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("home-revealed");
-            observer.unobserve(entry.target);
+            const slug = entry.target.dataset.slug;
+            if (slug && !revealedRef.current.has(slug)) {
+              revealedRef.current.add(slug);
+              changed = true;
+              observer.unobserve(entry.target);
+            }
           }
         });
+        if (changed) forceReveal((n) => n + 1);
       },
-      { rootMargin: "-100px 0px 0px 0px", threshold: 0 }
+      { rootMargin: "-40px 0px 0px 0px", threshold: 0 }
     );
 
-    document.querySelectorAll(".home-reveal").forEach((el) => observer.observe(el));
+    document.querySelectorAll(".wall-tile[data-slug]").forEach((el) => {
+      if (!revealedRef.current.has(el.dataset.slug)) {
+        observer.observe(el);
+      }
+    });
+
     return () => observer.disconnect();
-  }, []);
+  }, []); // Mount-only: initial reveal, never re-runs on filter changes
 
   // Scroll progress bar
   useEffect(() => {
     const bar = document.getElementById("feat-progress-bar");
     if (!bar) return;
-
     const update = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
       bar.style.width = `${pct}%`;
     };
-
     window.addEventListener("scroll", update, { passive: true });
     update();
     return () => window.removeEventListener("scroll", update);
@@ -142,87 +143,91 @@ export default function FeaturedPage() {
   return (
     <main className="page-main featured-page" style={{ position: "relative" }}>
 
-      {/* ── Scroll progress — thin multi-color bar at viewport top ── */}
+      {/* Scroll progress — thin multi-color bar at viewport top */}
       <div className="feat-progress-track" aria-hidden="true">
         <div id="feat-progress-bar" className="feat-progress-bar" />
       </div>
 
-      {/* ── Grain texture overlay (fixed, viewport-wide) ── */}
+      {/* Grain texture overlay */}
       <div className="home-grain" aria-hidden="true" />
 
-      {/* ── Atmospheric blooms — fixed so they read as ambient weather ── */}
-      <div
-        className="home-bloom-cool"
-        aria-hidden="true"
-        style={{ top: "-5vh", left: "-10vw" }}
-      />
-      <div
-        className="home-bloom-warm"
-        aria-hidden="true"
-        style={{ top: "35vh", right: "-5vw" }}
-      />
-      <div
-        className="home-bloom-gold"
-        aria-hidden="true"
-        style={{ bottom: "5vh", left: "10vw" }}
-      />
+      {/* Atmospheric blooms */}
+      <div className="home-bloom-cool" aria-hidden="true" style={{ top: "-5vh", left: "-10vw" }} />
+      <div className="home-bloom-warm" aria-hidden="true" style={{ top: "35vh", right: "-5vw" }} />
+      <div className="home-bloom-gold" aria-hidden="true" style={{ bottom: "5vh", left: "10vw" }} />
 
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
 
-        {/* ── HERO — clean spacing, no overlap class ── */}
-        <section className="featured-intro">
-          <div>
-            <p className="home-section-label">Featured</p>
-            <h1 className="featured-intro__title">Featured</h1>
-          </div>
-          <p className="featured-intro__line">
-            People, companies, creators, and operators worth knowing through the editorial world of HOME.
+        {/* ── COLLAPSED TOP BAND ── */}
+        <section className="wall-top">
+          <p className="wall-top__eyebrow">FEATURED</p>
+          <h1 className="wall-top__headline">The Family</h1>
+          <p className="wall-top__sub">
+            Founders, companies, and minds we believe in. Each face is a story. Each story is an
+            invitation to know them.
           </p>
         </section>
 
-        {/* ── FOUNDERS SECTION ── */}
-        <section className="feat-section feat-section--first">
-          <SectionBand
-            headline="Founders"
-            subtext="The people building a more relational world. New features published regularly."
-          />
+        {/* ── SEARCH BAR ── */}
+        <div className="wall-search-wrap">
+          <div className="wall-search-field">
+            <svg
+              className="wall-search-icon"
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.4" />
+              <line
+                x1="9.5"
+                y1="9.5"
+                x2="13"
+                y2="13"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+              />
+            </svg>
+            <input
+              type="text"
+              className="wall-search-input"
+              placeholder="Search by name, role, or keyword"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              aria-label="Search features"
+            />
+          </div>
+        </div>
 
-          {founderSpotlight && (
-            <div className="feat-spotlight-wrap home-reveal">
-              <div className="feat-spotlight-glow feat-spotlight-glow--cool" aria-hidden="true" />
-              <SpotlightCard item={founderSpotlight} variant="founder" />
-            </div>
-          )}
+        {/* ── ZERO PUBLISHED FEATURES STATE ── */}
+        {publishedSorted.length === 0 && (
+          <p className="wall-empty-build">
+            The wall is being built. The first features arrive soon.
+          </p>
+        )}
 
-          <div className="feat-editorial-list">
-            {founderRows.map((row, i) => (
-              <EditorialRow key={row.slug} item={row} warm={false} delay={i * 120} />
+        {/* ── EMPTY SEARCH STATE ── */}
+        {publishedSorted.length > 0 && query && filtered.length === 0 && (
+          <p className="wall-empty">Nothing here yet — try another word.</p>
+        )}
+
+        {/* ── WALL OF FACES ── */}
+        {filtered.length > 0 && (
+          <div className="wall-grid">
+            {filtered.map((f, i) => (
+              <WallTile
+                key={f.slug}
+                feature={f}
+                delay={i * 100}
+                preRevealed={revealedRef.current.has(f.slug)}
+              />
             ))}
           </div>
-        </section>
+        )}
 
-        {/* ── COMPANIES SECTION ── */}
-        <section className="feat-section">
-          <SectionBand
-            headline="Companies"
-            subtext="The ventures building the relational future. New features published regularly."
-          />
-
-          {companySpotlight && (
-            <div className="feat-spotlight-wrap home-reveal">
-              <div className="feat-spotlight-glow feat-spotlight-glow--warm" aria-hidden="true" />
-              <SpotlightCard item={companySpotlight} variant="company" />
-            </div>
-          )}
-
-          <div className="feat-editorial-list">
-            {companyRows.map((row, i) => (
-              <EditorialRow key={row.slug} item={row} warm={true} delay={i * 120} />
-            ))}
-          </div>
-        </section>
-
-        {/* ── CLOSING NOTE ── */}
+        {/* ── CLOSING NOTE (preserved) ── */}
         <section className="feat-closing home-reveal">
           <p className="feat-closing-text">
             Want to be featured? We publish the people and companies we are already in relationship
