@@ -40,9 +40,9 @@ export default function PhilosophyPage() {
             Human beings should relate to one another as family, rather than transactions.
           </blockquote>
           <p className="phil-core__body">
-            The modern world is largely built on transactions — networking, selling, status,
-            performance, optimization, persuasion, metrics. The paradigm we are building is the
-            opposite: relationship first, transaction second, or sometimes not at all.
+            The modern world is foundationalized on transactions rather than trust — networking, selling, status,
+            performance, optimization, persuasion, metrics. The paradigm we are building is the opposite premise:
+            the next generation of institutions will be the ones making people feel more human, more connected, and more at home.
           </p>
         </div>
       </section>
