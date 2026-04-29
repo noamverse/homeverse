@@ -105,7 +105,7 @@ export default function FeatureArticleClient({ feature, related }) {
           </blockquote>
         </header>
 
-        {/* Hero image — dark charcoal fallback with gradient overlay */}
+        {/* Hero image — wide action photo preferred, headshot as fallback */}
         <div className="home-reveal" style={{
           maxWidth: "860px",
           margin: "0 auto 4rem",
@@ -116,13 +116,21 @@ export default function FeatureArticleClient({ feature, related }) {
           background: "linear-gradient(135deg, #1a1815 0%, #201e1a 50%, #1a1815 100%)",
           position: "relative",
         }}>
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse at 25% 40%, rgba(74,127,207,0.1) 0%, transparent 55%), " +
-              "radial-gradient(ellipse at 75% 60%, rgba(201,168,76,0.07) 0%, transparent 55%)",
-          }} />
+          {(feature.heroImageWide || feature.heroImage) ? (
+            <img
+              src={feature.heroImageWide || feature.heroImage}
+              alt={feature.name}
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+          ) : (
+            <div style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "radial-gradient(ellipse at 25% 40%, rgba(74,127,207,0.1) 0%, transparent 55%), " +
+                "radial-gradient(ellipse at 75% 60%, rgba(201,168,76,0.07) 0%, transparent 55%)",
+            }} />
+          )}
         </div>
 
         {/* Body */}
