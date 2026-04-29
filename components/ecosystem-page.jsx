@@ -12,9 +12,9 @@ const BRANCHES = [
     name: "HOME Ventures",
     status: "ACTIVE",
     tone: "active",
-    thesis: "Capital for founders building belonging.",
+    thesis: "Capital for a more human world.",
     description:
-      "A venture studio investing in, developing, and amplifying founders and companies who bring people together and help scale belonging. Includes The HOME Fund and The Feminine Fund.",
+      "A venture studio investing in, developing, and amplifying founders and companies who make life feel mor human, relational, and alive. Includes The HOME Fund and The Feminine Fund.",
     anchor: "#ventures",
   },
   {
@@ -24,7 +24,7 @@ const BRANCHES = [
     tone: "emerging",
     thesis: "Incubation for creative founders beyond tech.",
     description:
-      "An institutional partner for founders outside the tech canon — CPG, food, hospitality, brand. Resources, relationships, and runway, in exchange for small, meaningful equity.",
+      "An institutional partner designed to equip founders and builders with the resources, systems, relationships, education, and strategic support they need to scale with clarity and power.",
     anchor: "#engine",
   },
   {
@@ -32,9 +32,9 @@ const BRANCHES = [
     name: "HOME Fellowship",
     status: "ACTIVE",
     tone: "active",
-    thesis: "Gatherings where people leave their masks at the door.",
+    thesis: "Come as you are, leave even more yourself.",
     description:
-      "Dinners, retreats, game nights, and galas built on one principle: come as you are, leave even more yourself. No obligations. No agendas. Just family.",
+      "Dinners, retreats, game nights, summits, and galas built on one principle: come as you are, leave even more yourself. No obligations. No agendas. Just family.",
     anchor: "#fellowship",
   },
   {
@@ -42,7 +42,7 @@ const BRANCHES = [
     name: "HOME Hospitality",
     status: "FORMING",
     tone: "forming",
-    thesis: "Restaurants and concepts that feel like home.",
+    thesis: "The flavor of HOME.",
     description:
       "A portfolio of hospitality brands — fine dining, neighborhood concepts, and experiences — designed so every room feels like a place you belong.",
     anchor: "#hospitality",
@@ -52,7 +52,7 @@ const BRANCHES = [
     name: "HOME AI",
     status: "ACTIVE",
     tone: "active",
-    thesis: "Applied AI built in service of relationship.",
+    thesis: "Intelligence, made human.",
     description:
       "Our AI studio. We build the tools that make every other arm of the ecosystem more intelligent, more efficient, and more deeply relational.",
     anchor: "#ai",
@@ -77,12 +77,12 @@ const COMPOUND_NODES = [
   },
   {
     label: "STORY",
-    desc: "We see them, and tell their story publicly.",
+    desc: "We see them, listen to them, and relate to them.",
     color: "#7c5cbf",
   },
   {
     label: "DISTRIBUTION",
-    desc: "The story travels through our platform and community.",
+    desc: "Their story travels through our platform and ecosystem.",
     color: "#d4763b",
   },
   {
@@ -113,8 +113,8 @@ const BUILDING_NOW = [
     desc: "The publishing and distribution layer you are standing in.",
   },
   {
-    name: "HOME Fellowship (first cohort)",
-    desc: "Small dinners and gatherings forming the core community.",
+    name: "HOME Fellowship",
+    desc: "Dinners and gatherings forming the core community.",
   },
   {
     name: "HOME Ventures (initial deployments)",
