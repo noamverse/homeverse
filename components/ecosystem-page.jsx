@@ -14,7 +14,7 @@ const BRANCHES = [
     tone: "active",
     thesis: "Capital for a more human world.",
     description:
-      "A venture studio investing in, developing, and amplifying founders and companies who make life feel mor human, relational, and alive. Includes The HOME Fund and The Feminine Fund.",
+      "A venture studio investing in, developing, and amplifying founders and companies who make life feel more human, relational, and alive. Includes The HOME Fund and The Feminine Fund.",
     anchor: "#ventures",
   },
   {
