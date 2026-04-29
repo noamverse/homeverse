@@ -131,7 +131,7 @@ export default function HomePage() {
         <section className="hp-section hp-profiles" aria-labelledby="profiles-heading">
           <div className="hp-section__header">
             <h2 className="hp-section__title" id="profiles-heading">
-              People and institutions with rooms inside them.
+              People creating the future of the Relational Economy.
             </h2>
             <Link href="/featured" className="hp-section__link">
               View all featured &rarr;
