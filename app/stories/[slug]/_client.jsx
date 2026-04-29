@@ -171,7 +171,17 @@ export default function StoryArticleClient({ story, related }) {
                     background: "var(--surface-hi)",
                     borderRadius: "2px",
                     marginBottom: "0.25rem",
-                  }} />
+                    overflow: "hidden",
+                    position: "relative",
+                  }}>
+                    {(rel.heroImageWide || rel.heroImage) && (
+                      <img
+                        src={rel.heroImageWide || rel.heroImage}
+                        alt={rel.title}
+                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                      />
+                    )}
+                  </div>
                   <p style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "0.68rem",
