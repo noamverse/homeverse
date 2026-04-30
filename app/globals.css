@@ -5202,6 +5202,63 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 4px;
 }
 
+/* ── Feature Preview Blocks (home page) ── */
+
+.hp-feat-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.hp-feat-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hp-feat-preview__hairline {
+  height: 3px;
+  width: 100%;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, var(--blue) 0%, var(--purple) 33%, var(--orange) 66%, var(--gold) 100%);
+  margin-bottom: 12px;
+}
+
+.hp-feat-preview__cat {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.78);
+  margin-bottom: 4px;
+}
+
+.hp-feat-preview__name {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  line-height: 1.1;
+  color: var(--ink);
+  margin: 0;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.22s ease;
+}
+
+.hp-feat-preview:hover .hp-feat-preview__name {
+  text-decoration-color: rgba(201, 168, 76, 0.55);
+}
+
+.hp-feat-preview__title {
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(240, 237, 232, 0.60);
+  margin: 0;
+}
+
 /* ── Featured Stories ── */
 
 .hp-stories__layout {
@@ -5581,6 +5638,11 @@ h1, h2, h3, h4, h5, h6 {
 
   .hp-profiles__grid {
     grid-template-columns: 1fr;
+  }
+
+  .hp-feat-preview-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 
   .hp-hero__inner {
@@ -6288,7 +6350,7 @@ h1, h2, h3, h4, h5, h6 {
 .eco-branch-row {
   position: relative;
   display: grid;
-  grid-template-columns: 160px 1fr auto;
+  grid-template-columns: 160px 1fr;
   gap: 0 32px;
   align-items: center;
   padding: 28px 0;
@@ -6766,7 +6828,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ── Responsive ── */
 @media (max-width: 1024px) {
   .eco-branch-row {
-    grid-template-columns: 140px 1fr auto;
+    grid-template-columns: 140px 1fr;
     gap: 0 20px;
   }
 }
@@ -7663,9 +7725,12 @@ h1, h2, h3, h4, h5, h6 {
     gap: 0;
   }
 
-  .wall-tile__name { font-size: 1.25rem; }
+  .wall-tile__cat    { font-size: 0.6rem; }
+  .wall-tile__name   { font-size: 1.05rem; }
+  .wall-tile__role   { font-size: 0.75rem; }
+  .wall-tile__byline { font-size: 0.7rem; }
   .wall-tile__quote p { font-size: 1.1rem; }
-  .wall-tile__labels { padding: 16px 48px 16px 16px; }
+  .wall-tile__labels { padding: 16px; }
   .wall-tile__read { bottom: 16px; right: 16px; font-size: 0.8rem; }
 
   .wall-top { padding-top: 40px; }

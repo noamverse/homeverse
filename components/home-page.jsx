@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  getFeaturedProfiles,
   getFeaturedStories,
   homePhilosophyStrip,
   homePillars,
@@ -9,24 +8,21 @@ import {
   welcomeHomeBlock,
 } from "@/lib/content";
 
-function ProfileCard({ profile }) {
+import { features } from "@/content/features";
+
+const recentFeatures = [...features]
+  .filter((f) => f.published === true)
+  .sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate))
+  .slice(0, 3);
+
+function FeaturePreviewBlock({ feature }) {
   return (
-    <article className="hp-profile-card">
-      <div className="hp-profile-card__accent" />
-      <div className="hp-profile-card__body">
-        <p className="hp-card-kicker">{profile.category}</p>
-        <h3 className="hp-card-title">{profile.title}</h3>
-        <p className="hp-card-copy">{profile.excerpt}</p>
-        <div className="hp-card-meta">
-          <span>{profile.author}</span>
-          <span>&middot;</span>
-          <span>{profile.readTime}</span>
-        </div>
-        <Link href={`/articles/${profile.slug}`} className="hp-card-link">
-          Read profile &rarr;
-        </Link>
-      </div>
-    </article>
+    <Link href={`/featured/${feature.slug}`} className="hp-feat-preview">
+      <div className="hp-feat-preview__hairline" aria-hidden="true" />
+      <span className="hp-feat-preview__cat">{feature.category}</span>
+      <p className="hp-feat-preview__name">{feature.name}</p>
+      <p className="hp-feat-preview__title">{feature.title}</p>
+    </Link>
   );
 }
 
@@ -79,7 +75,6 @@ function StoryCard({ story, lead = false }) {
 }
 
 export default function HomePage() {
-  const profiles = getFeaturedProfiles();
   const [leadStory, ...storyList] = getFeaturedStories();
 
   return (
@@ -98,9 +93,6 @@ export default function HomePage() {
           />
           <p className="hp-hero__tagline">{siteTagline}</p>
           <hr className="hp-hero__rule" aria-hidden="true" />
-          <Link href="/welcome" className="hp-hero__cta">
-            Enter HOME
-          </Link>
         </div>
       </section>
 
@@ -134,13 +126,13 @@ export default function HomePage() {
               People creating the future of the Relational Economy.
             </h2>
             <Link href="/featured" className="hp-section__link">
-              View all featured &rarr;
+              View All Features &rarr;
             </Link>
           </div>
 
-          <div className="hp-profiles__grid">
-            {profiles.map((profile) => (
-              <ProfileCard key={profile.slug} profile={profile} />
+          <div className="hp-feat-preview-grid">
+            {recentFeatures.map((feature) => (
+              <FeaturePreviewBlock key={feature.slug} feature={feature} />
             ))}
           </div>
         </section>
@@ -188,9 +180,6 @@ export default function HomePage() {
           </h2>
           <p className="hp-cta__body">{welcomeHomeBlock.body}</p>
           <div className="hp-cta__actions">
-            <Link href="/welcome" className="hp-hero__cta">
-              Begin here
-            </Link>
             <Link href="/ecosystem" className="hp-section__link">
               Explore the ecosystem &rarr;
             </Link>

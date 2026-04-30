@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
 import HomeFlywheel from "./home-flywheel";
 
 // ── Data ─────────────────────────────────────────────────────────────────────
@@ -269,9 +268,6 @@ export default function EcosystemPage() {
                     <p className="eco-branch-thesis">{branch.thesis}</p>
                     <p className="eco-branch-desc">{branch.description}</p>
                   </div>
-                  <Link href={branch.anchor} className="eco-branch-link">
-                    Learn more →
-                  </Link>
                 </article>
               ))}
             </div>
