@@ -45,7 +45,6 @@ export const stories = [
     ],
   },
   {
-    {
   slug: "the-shift-from-prompting-ai-to-operating-intelligence",
   kind: "essay",
   title: "The Shift From Prompting AI to Operating Intelligence",
