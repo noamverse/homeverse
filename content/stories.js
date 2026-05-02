@@ -1,6 +1,15 @@
+// IMAGE CONVENTION FOR STORIES
+// Each story uses ONE image: heroImage.
+// Recommended dimensions: 1200x900px or 1600x1200px (4:3 ratio).
+// Place files in /public/images/stories/ and reference as
+// "/images/stories/your-slug.png" or .jpg
+// The cover image is used in three places automatically:
+//   1. The lead/secondary/grid card on /stories
+//   2. The article hero image on /stories/[slug]
+//   3. The "More Stories" card at the bottom of other articles
+// One image per story. Simple workflow.
+
 // TODO: Replace all placeholder content with real stories as they are published.
-// The first story in the array renders as the featured story on the Stories index.
-// Remaining stories populate the curated collection and reading paths.
 
 export const stories = [
 

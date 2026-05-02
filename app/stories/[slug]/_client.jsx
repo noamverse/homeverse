@@ -53,7 +53,6 @@ export default function StoryArticleClient({ story, related }) {
 
         {/* Article header */}
         <header style={{ textAlign: "center", maxWidth: "65ch", margin: "4rem auto 0" }}>
-
           <p className="home-reveal" style={{
             fontFamily: "Inter, sans-serif",
             fontSize: "0.75rem",
@@ -90,25 +89,16 @@ export default function StoryArticleClient({ story, related }) {
           </p>
         </header>
 
-        {/* Hero image — dark charcoal fallback with gradient overlay */}
-        <div className="home-reveal" style={{
-          maxWidth: "860px",
-          margin: "0 auto 4rem",
-          borderRadius: "2px",
-          overflow: "hidden",
-          border: "1px solid rgba(201,168,76,0.12)",
-          aspectRatio: "16 / 9",
-          background: "linear-gradient(135deg, #1a1815 0%, #201e1a 50%, #1a1815 100%)",
-          position: "relative",
-        }}>
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse at 30% 45%, rgba(124,92,191,0.1) 0%, transparent 55%), " +
-              "radial-gradient(ellipse at 70% 55%, rgba(201,168,76,0.07) 0%, transparent 55%)",
-          }} />
-        </div>
+        {/* Hero image — natural aspect ratio, gradient border */}
+        {story.heroImage && (
+          <div className="home-reveal story-article-hero">
+            <img
+              src={story.heroImage}
+              alt={story.title}
+              className="story-article-hero__img"
+            />
+          </div>
+        )}
 
         {/* Body */}
         <div style={{ maxWidth: "65ch", margin: "0 auto" }}>
@@ -132,7 +122,6 @@ export default function StoryArticleClient({ story, related }) {
           margin: "4rem auto",
           height: "1px",
           background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)",
-          opacity: 0.4,
         }} />
 
         {/* More Stories */}
@@ -150,70 +139,28 @@ export default function StoryArticleClient({ story, related }) {
             }}>
               More Stories
             </p>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-              gap: "1.25rem",
-            }}>
+            <div className="story-more-grid">
               {related.map((rel) => (
-                <article key={rel.slug} style={{
-                  background: "var(--surface)",
-                  border: "1px solid var(--line)",
-                  borderRadius: "4px",
-                  padding: "1.5rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.6rem",
-                }}>
-                  <div style={{
-                    width: "100%",
-                    aspectRatio: "16 / 9",
-                    background: "var(--surface-hi)",
-                    borderRadius: "2px",
-                    marginBottom: "0.25rem",
-                    overflow: "hidden",
-                    position: "relative",
-                  }}>
-                    {(rel.heroImageWide || rel.heroImage) && (
+                <Link
+                  key={rel.slug}
+                  href={`/stories/${rel.slug}`}
+                  className="story-more-card"
+                  aria-label={`Read "${rel.title}"`}
+                >
+                  <div className="story-more-card__image">
+                    {rel.heroImage && (
                       <img
-                        src={rel.heroImageWide || rel.heroImage}
+                        src={rel.heroImage}
                         alt={rel.title}
-                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                       />
                     )}
                   </div>
-                  <p style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "0.68rem",
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase",
-                    color: "var(--gold)",
-                    opacity: 0.6,
-                    margin: 0,
-                  }}>
-                    {rel.category}
-                  </p>
-                  <p style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: "1rem",
-                    fontWeight: 600,
-                    color: "var(--ink)",
-                    lineHeight: 1.35,
-                    flexGrow: 1,
-                    margin: 0,
-                  }}>
-                    {rel.title}
-                  </p>
-                  <Link href={`/stories/${rel.slug}`} style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "0.85rem",
-                    color: "var(--gold)",
-                    letterSpacing: "0.04em",
-                    marginTop: "0.25rem",
-                  }}>
-                    Read →
-                  </Link>
-                </article>
+                  <div className="story-more-card__body">
+                    <p className="story-more-card__category">{rel.category}</p>
+                    <p className="story-more-card__title">{rel.title}</p>
+                    <span className="story-more-card__read" aria-hidden="true">Read →</span>
+                  </div>
+                </Link>
               ))}
             </div>
           </section>
