@@ -1,6 +1,6 @@
 // IMAGE CONVENTION FOR STORIES
 // Each story uses ONE image: heroImage.
-// Recommended dimensions: 1200x900px or 1600x1200px (4:3 ratio).
+// Recommended dimensions: 1200x800px or 1600x1067px (3:2 ratio).
 // Place files in /public/images/stories/ and reference as
 // "/images/stories/your-slug.png" or .jpg
 // The cover image is used in three places automatically:
