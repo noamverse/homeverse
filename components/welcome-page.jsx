@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,8 +27,6 @@ function useScrollReveal() {
 export default function WelcomePage() {
   const prefersReduced = useReducedMotion();
   const scrollHintRef = useRef(null);
-  const [listEmail, setListEmail] = useState("");
-  const [listConfirmed, setListConfirmed] = useState(false);
   useScrollReveal();
 
   // Fade the scroll hint out as user begins to scroll
@@ -201,47 +199,6 @@ export default function WelcomePage() {
           <a href="mailto:hello@homeverse.family" className="wh-text-link wh-text-link--lg">
             hello@homeverse.family &rarr;
           </a>
-        </div>
-      </section>
-
-      {/* ── SECTION 4.5: QUIET LIST INVITATION ── */}
-      <section className="wh-list-invite">
-        <div className="wh-list-invite__inner home-reveal">
-          <p className="wh-list-invite__eyebrow">And if you want to be written to</p>
-          <h3 className="wh-list-invite__headline">
-            We write from time to time. No schedule. No selling.
-          </h3>
-          <p className="wh-list-invite__body">
-            Essays, reflections, and dispatches from the ecosystem, sent only when there is something real to share.
-            You can leave if it ever stops being real.
-          </p>
-          <form
-            className="wh-list-invite__form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              // TODO: Wire to email list provider (Buttondown recommended) once account is set up. Endpoint goes here.
-              console.log("List email:", listEmail);
-              setListConfirmed(true);
-            }}
-          >
-            <input
-              className="wh-list-invite__input"
-              type="email"
-              value={listEmail}
-              onChange={(e) => setListEmail(e.target.value)}
-              placeholder="your email"
-              aria-label="Your email address"
-              required
-            />
-            <button type="submit" className="wh-list-invite__btn">
-              Come inside
-            </button>
-          </form>
-          {listConfirmed && (
-            <p className="wh-list-invite__confirm">
-              Thank you. We&rsquo;ll be in touch when there&rsquo;s something real to share.
-            </p>
-          )}
         </div>
       </section>
 

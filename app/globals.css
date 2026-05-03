@@ -5028,8 +5028,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .hp-section {
   padding: 130px 0;
-  border-top: 1px solid transparent;
-  border-image: linear-gradient(90deg, transparent 0%, rgba(201, 168, 76, 0.30) 50%, transparent 100%) 1;
 }
 
 .hp-section__header {
@@ -5438,14 +5436,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .hp-manifesto {
   padding: 150px 0;
-  border-top: 1px solid rgba(201, 168, 76, 0.14);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.14);
   text-align: center;
   position: relative;
   background:
     radial-gradient(ellipse 80% 70% at 50% 50%, rgba(201, 168, 76, 0.06), transparent 68%),
-    radial-gradient(ellipse 48% 36% at 50% 50%, rgba(82, 44, 155, 0.08), transparent 55%),
-    var(--bg);
+    radial-gradient(ellipse 48% 36% at 50% 50%, rgba(82, 44, 155, 0.08), transparent 55%);
 }
 
 .hp-manifesto__glow {
@@ -9392,4 +9387,239 @@ h1, h2, h3, h4, h5, h6 {
   .hp-hero--v2 .hero-mission {
     font-size: clamp(1.2rem, 2.2vw, 1.7rem);
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   HOME PAGE — UNIFIED ATMOSPHERE (FIX 1)
+   Page-wide ambient blooms that create continuous atmospheric environment
+   from top to bottom. Positioned absolutely within .hp-main so they move
+   with page scroll, distributed across the full page height.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.hp-main {
+  position: relative;
+  background: var(--bg);
+}
+
+.hp-page-atm {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hp-page-bloom {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Upper-left cool — sits below hero, transitions into first section */
+.hp-page-bloom--a {
+  width: 100vw;
+  height: 100vw;
+  top: 8%;
+  left: -22vw;
+  background: radial-gradient(
+    circle,
+    rgba(74, 127, 207, 0.18) 0%,
+    rgba(124, 92, 191, 0.10) 38%,
+    transparent 65%
+  );
+  filter: blur(120px);
+}
+
+/* Right-side warm — mid-upper page */
+.hp-page-bloom--b {
+  width: 110vw;
+  height: 110vw;
+  top: 32%;
+  right: -28vw;
+  background: radial-gradient(
+    circle,
+    rgba(212, 118, 59, 0.16) 0%,
+    transparent 62%
+  );
+  filter: blur(130px);
+}
+
+/* Center gold — mid page, behind manifesto area */
+.hp-page-bloom--c {
+  width: 90vw;
+  height: 90vw;
+  top: 60%;
+  left: 50%;
+  margin-left: -45vw;
+  background: radial-gradient(
+    circle,
+    rgba(201, 168, 76, 0.22) 0%,
+    transparent 60%
+  );
+  filter: blur(140px);
+}
+
+/* Lower-left cool violet — bottom of page */
+.hp-page-bloom--d {
+  width: 100vw;
+  height: 100vw;
+  bottom: 0;
+  left: -18vw;
+  background: radial-gradient(
+    circle,
+    rgba(124, 92, 191, 0.12) 0%,
+    transparent 62%
+  );
+  filter: blur(120px);
+}
+
+/* All sections above the page atmosphere */
+.hp-main > .container,
+.hp-main > section,
+.hp-main > .hp-manifesto {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-page-bloom {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FEATURE VISUAL CARDS (FIX 2)
+   3-column portrait-ratio image tiles replacing text-only preview blocks.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.hp-feat-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+.hp-feat-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  text-decoration: none;
+  background: rgba(26, 24, 21, 0.60);
+  transition: transform 350ms ease, border-color 350ms ease, box-shadow 350ms ease;
+}
+
+.hp-feat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(201, 168, 76, 0.70);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.55),
+    0 0 40px rgba(201, 168, 76, 0.08);
+}
+
+.hp-feat-card__img-wrap {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--surface);
+  flex-shrink: 0;
+}
+
+.hp-feat-card__img {
+  object-fit: cover;
+  object-position: center top;
+  transition: filter 350ms ease;
+}
+
+.hp-feat-card:hover .hp-feat-card__img {
+  filter: saturate(1.15) brightness(1.04);
+}
+
+.hp-feat-card__body {
+  padding: 16px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hp-feat-card__cat {
+  font-family: "Inter", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.78);
+}
+
+.hp-feat-card__name {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  line-height: 1.1;
+  color: var(--ink);
+  margin: 0;
+}
+
+.hp-feat-card__role {
+  font-family: "Inter", sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: rgba(240, 237, 232, 0.70);
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .hp-feat-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .hp-feat-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   STORIES — LIVE DATA (FIX 3)
+   Real images from stories.js, correct /stories/[slug] links,
+   graceful empty states.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.hp-story-lead__img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.hp-story-card__img {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Right-column placeholder when fewer than 2 side stories */
+.hp-story-aside {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+}
+
+.hp-story-aside__text {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: rgba(201, 168, 76, 0.52);
+  text-align: center;
+  max-width: 18ch;
+  line-height: 1.6;
+}
+
+.hp-stories__empty {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 80px 0;
 }

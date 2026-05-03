@@ -405,15 +405,6 @@ export default function EcosystemPage() {
                     <em className="eco-pathway__condition">{pathway.condition}:</em>{" "}
                     {pathway.body}
                   </p>
-                  {pathway.external ? (
-                    <a href={pathway.href} className="eco-pathway__link" target="_blank" rel="noopener noreferrer">
-                      {pathway.linkLabel}
-                    </a>
-                  ) : (
-                    <a href={pathway.href} className="eco-pathway__link">
-                      {pathway.linkLabel}
-                    </a>
-                  )}
                 </div>
               ))}
             </div>

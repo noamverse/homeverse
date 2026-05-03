@@ -64,13 +64,6 @@ export default function SiteFooter() {
         <a href="mailto:hello@homeverse.family" className="sf-bottom__contact">
           Write to us — hello@homeverse.family
         </a>
-        <div className="sf-bottom__social">
-          <a href="https://www.threads.com/@noamverse" className="sf-bottom__social-link" target="_blank" rel="noopener noreferrer">Threads</a>
-          <span className="sf-bottom__dot" aria-hidden="true">·</span>
-          <a href="https://www.instagram.com/homemultiverse" className="sf-bottom__social-link" target="_blank" rel="noopener noreferrer">Instagram</a>
-          <span className="sf-bottom__dot" aria-hidden="true">·</span>
-          <a href="https://www.linkedin.com/company/homemultiverse/" className="sf-bottom__social-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
         <p className="sf-bottom__copy">© 2026 HOME. Built with love.</p>
       </div>
 

@@ -5,27 +5,41 @@ import Link from "next/link";
 import { motion, useAnimation, useReducedMotion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import {
-  getFeaturedStories,
   homePhilosophyStrip,
   homePillars,
-  siteTagline,
   welcomeHomeBlock,
 } from "@/lib/content";
 
 import { features } from "@/content/features";
+import { stories } from "@/content/stories";
 
 const recentFeatures = [...features]
   .filter((f) => f.published === true)
   .sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate))
   .slice(0, 3);
 
-function FeaturePreviewBlock({ feature }) {
+const recentStories = [...stories]
+  .filter((s) => !s.slug.startsWith("placeholder"))
+  .sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate))
+  .slice(0, 3);
+
+function FeatureCard({ feature }) {
   return (
-    <Link href={`/featured/${feature.slug}`} className="hp-feat-preview">
-      <div className="hp-feat-preview__hairline" aria-hidden="true" />
-      <span className="hp-feat-preview__cat">{feature.category}</span>
-      <p className="hp-feat-preview__name">{feature.name}</p>
-      <p className="hp-feat-preview__title">{feature.title}</p>
+    <Link href={`/featured/${feature.slug}`} className="hp-feat-card">
+      <div className="hp-feat-card__img-wrap">
+        <Image
+          src={feature.heroImage}
+          alt={feature.name}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="hp-feat-card__img"
+        />
+      </div>
+      <div className="hp-feat-card__body">
+        <span className="hp-feat-card__cat">{feature.category}</span>
+        <p className="hp-feat-card__name">{feature.name}</p>
+        <p className="hp-feat-card__role">{feature.title}</p>
+      </div>
     </Link>
   );
 }
@@ -33,9 +47,15 @@ function FeaturePreviewBlock({ feature }) {
 function StoryCard({ story, lead = false }) {
   if (lead) {
     return (
-      <article className="hp-story-lead">
+      <Link href={`/stories/${story.slug}`} className="hp-story-lead">
         <div className="hp-story-lead__cover">
-          <div className="hp-story-lead__cover-tone" style={{ backgroundImage: story.tone }} />
+          <Image
+            src={story.heroImage}
+            alt={story.title}
+            fill
+            sizes="(max-width: 1100px) 100vw, 60vw"
+            className="hp-story-lead__img"
+          />
           <div className="hp-story-lead__cover-inner">
             <p className="hp-card-kicker">{story.category}</p>
             <h3 className="hp-story-lead__cover-title">{story.title}</h3>
@@ -44,37 +64,37 @@ function StoryCard({ story, lead = false }) {
         <div className="hp-story-lead__body">
           <p className="hp-card-copy">{story.excerpt}</p>
           <div className="hp-card-meta">
-            <span>{story.author}</span>
+            <span>{story.byline}</span>
             <span>&middot;</span>
-            <span>{story.date}</span>
+            <span>{story.readTime}</span>
           </div>
-          <Link href={`/articles/${story.slug}`} className="hp-card-link">
-            Read story &rarr;
-          </Link>
         </div>
-      </article>
+      </Link>
     );
   }
 
   return (
-    <article className="hp-story-card">
+    <Link href={`/stories/${story.slug}`} className="hp-story-card">
       <div className="hp-story-card__accent">
-        <div className="hp-story-card__accent-tone" style={{ backgroundImage: story.tone }} />
+        <Image
+          src={story.heroImage}
+          alt={story.title}
+          fill
+          sizes="(max-width: 1100px) 100vw, 40vw"
+          className="hp-story-card__img"
+        />
       </div>
       <div className="hp-story-card__body">
         <p className="hp-card-kicker">{story.category}</p>
-        <h3 className="hp-card-title">{story.title}</h3>
+        <h3 className="hp-story-card__title">{story.title}</h3>
         <p className="hp-card-copy">{story.excerpt}</p>
         <div className="hp-card-meta">
-          <span>{story.author}</span>
+          <span>{story.byline}</span>
           <span>&middot;</span>
-          <span>{story.date}</span>
+          <span>{story.readTime}</span>
         </div>
-        <Link href={`/articles/${story.slug}`} className="hp-card-link">
-          Read story &rarr;
-        </Link>
       </div>
-    </article>
+    </Link>
   );
 }
 
@@ -137,10 +157,9 @@ function StarField({ refs }) {
 }
 
 export default function HomePage() {
-  const [leadStory, ...storyList] = getFeaturedStories();
+  const [leadStory, ...sideStories] = recentStories;
   const reduce = useReducedMotion();
 
-  // DOM refs for RAF-driven parallax (no re-renders)
   const bloomCoolRef = useRef(null);
   const bloomWarmRef = useRef(null);
   const bloomGoldRef = useRef(null);
@@ -153,7 +172,6 @@ export default function HomePage() {
   const logoControls = useAnimation();
   const haloControls = useAnimation();
 
-  // RAF loop: parallax (mouse) + bloom drift (sine waves)
   useEffect(() => {
     if (reduce) return;
 
@@ -179,7 +197,6 @@ export default function HomePage() {
       const px = cur.x, py = cur.y;
       const t  = performance.now() / 1000;
 
-      // Bloom drift (long sine-wave cycles) + parallax
       tx(bloomCoolRef.current,
         px * 8  + Math.sin(t / 30) * 14,
         py * 8  + Math.cos(t / 37) * 11);
@@ -190,12 +207,10 @@ export default function HomePage() {
         px * 5  + Math.sin(t / 33) * 9,
         py * 5  + Math.cos(t / 40) * 8);
 
-      // Star layers — 3 depths
       tx(starRefFar.current,  px * 5,  py * 5);
       tx(starRefMid.current,  px * 10, py * 10);
       tx(starRefNear.current, px * 18, py * 18);
 
-      // Logo area + typography
       tx(logoAreaRef.current, px * 4,   py * 4);
       tx(typoRef.current,     px * 1.5, py * 1.5);
 
@@ -213,7 +228,6 @@ export default function HomePage() {
     };
   }, [reduce]);
 
-  // Logo: reveal at 2500ms → breathe on 9s cycle
   useEffect(() => {
     const run = async () => {
       if (reduce) {
@@ -233,7 +247,6 @@ export default function HomePage() {
     run();
   }, [reduce, logoControls]);
 
-  // Halo: ramps in at 4000ms → breathes on 9s cycle (synced with logo)
   useEffect(() => {
     const run = async () => {
       if (reduce) {
@@ -255,13 +268,19 @@ export default function HomePage() {
   }, [reduce, haloControls]);
 
   return (
-    <main>
+    <main className="hp-main">
+      {/* Page-wide ambient atmosphere — lower intensity than hero blooms */}
+      <div className="home-grain" aria-hidden="true" />
+      <div className="hp-page-atm" aria-hidden="true">
+        <div className="hp-page-bloom hp-page-bloom--a" />
+        <div className="hp-page-bloom hp-page-bloom--b" />
+        <div className="hp-page-bloom hp-page-bloom--c" />
+        <div className="hp-page-bloom hp-page-bloom--d" />
+      </div>
+
       {/* ═══════════════════════════════ HERO ═══════════════════════════════ */}
       <section className="hp-hero hp-hero--v2" aria-label="Welcome to HOME">
 
-        {/* Layer 1 — Atmosphere wrapper bleeds 80px above (behind nav) and
-            200px below (into the next section). Three blooms only:
-            cool upper-left, warm lower-right, gold centered halo. */}
         <div className="hero-atmosphere" aria-hidden="true">
           <motion.div
             className="hero-bloom hero-bloom-cool"
@@ -286,13 +305,10 @@ export default function HomePage() {
           />
         </div>
 
-        {/* Layer 2 — Star field (3 depth layers: far / mid / near) */}
         <StarField refs={[starRefFar, starRefMid, starRefNear]} />
 
-        {/* Layers 3 + 4 — Logo lockup + typography */}
         <div className="hp-hero__inner">
 
-          {/* WELCOME eyebrow — reveals at 1500ms */}
           <motion.p
             className="hero-eyebrow"
             initial={{ opacity: 0, y: reduce ? 0 : -8 }}
@@ -302,9 +318,6 @@ export default function HomePage() {
             WELCOME
           </motion.p>
 
-          {/* Logo area — full HOME lockup (H emblem + "home" wordmark).
-              Halo sits BEHIND the image via grid stacking; offset bias toward
-              the LEFT so the H reads as the light source. No mix-blend-mode. */}
           <div className="hero-logo-area" ref={logoAreaRef}>
 
             <motion.div
@@ -332,7 +345,6 @@ export default function HomePage() {
             </motion.div>
           </div>
 
-          {/* Typography — mission line (bold) + quiet subline */}
           <div className="hero-typo" ref={typoRef}>
             <motion.p
               className="hero-mission"
@@ -354,10 +366,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Bottom atmosphere fade — blends hero seamlessly into next section */}
         <div className="hero-fade-bottom" aria-hidden="true" />
 
-        {/* Scroll indicator */}
         <div className="hero-scroll-wrapper" aria-hidden="true">
           <motion.div
             className="hero-scroll-indicator"
@@ -374,7 +384,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════ Everything below hero — unchanged ═══════════════ */}
+      {/* ═══════════════ Below hero — atmospheric sections ═══════════════ */}
       <div className="container">
         {/* Pillars */}
         <section className="hp-section hp-pillars" aria-labelledby="pillars-heading">
@@ -397,7 +407,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Featured Profiles */}
+        {/* Featured Profiles — visual image tiles */}
         <section className="hp-section hp-profiles" aria-labelledby="profiles-heading">
           <div className="hp-section__header">
             <h2 className="hp-section__title" id="profiles-heading">
@@ -407,14 +417,14 @@ export default function HomePage() {
               View All Features &rarr;
             </Link>
           </div>
-          <div className="hp-feat-preview-grid">
+          <div className="hp-feat-card-grid">
             {recentFeatures.map((feature) => (
-              <FeaturePreviewBlock key={feature.slug} feature={feature} />
+              <FeatureCard key={feature.slug} feature={feature} />
             ))}
           </div>
         </section>
 
-        {/* Featured Stories */}
+        {/* Featured Stories — live from stories.js */}
         <section className="hp-section hp-stories" aria-labelledby="stories-heading">
           <div className="hp-section__header">
             <h2 className="hp-section__title" id="stories-heading">
@@ -424,14 +434,24 @@ export default function HomePage() {
               View all stories &rarr;
             </Link>
           </div>
-          <div className="hp-stories__layout">
-            {leadStory ? <StoryCard story={leadStory} lead /> : null}
-            <div className="hp-story-rail">
-              {storyList.map((story) => (
-                <StoryCard key={story.slug} story={story} />
-              ))}
+          {recentStories.length === 0 ? (
+            <p className="hp-stories__empty">Stories arrive soon.</p>
+          ) : (
+            <div className="hp-stories__layout">
+              {leadStory && <StoryCard story={leadStory} lead />}
+              {sideStories.length > 0 ? (
+                <div className="hp-story-rail">
+                  {sideStories.map((story) => (
+                    <StoryCard key={story.slug} story={story} />
+                  ))}
+                </div>
+              ) : (
+                <aside className="hp-story-aside" aria-hidden="true">
+                  <p className="hp-story-aside__text">More stories arriving soon.</p>
+                </aside>
+              )}
             </div>
-          </div>
+          )}
         </section>
       </div>
 
