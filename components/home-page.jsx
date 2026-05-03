@@ -418,7 +418,7 @@ export default function HomePage() {
         <section className="hp-section hp-stories" aria-labelledby="stories-heading">
           <div className="hp-section__header">
             <h2 className="hp-section__title" id="stories-heading">
-              Stories that move with a different rhythm.
+              Stories that relate and resonate.
             </h2>
             <Link href="/stories" className="hp-section__link">
               View all stories &rarr;
