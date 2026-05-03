@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const navItems = [
@@ -15,9 +16,11 @@ const navItems = [
 
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   return (
-    <header className="site-header">
+    <header className={`site-header${isHome ? " site-header--transparent" : ""}`}>
       <div className="site-header__inner">
         <Link href="/" className="brand" aria-label="HOME — return to home">
           <Image

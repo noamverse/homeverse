@@ -7899,13 +7899,11 @@ h1, h2, h3, h4, h5, h6 {
 .stories-lead__image-col {
   position: relative;
   overflow: hidden;
-  min-height: 360px;
 }
 
 .stories-lead__img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 3 / 2;
   object-fit: cover;
   display: block;
   transition: transform 350ms ease;
@@ -8453,19 +8451,14 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: 1fr;
   }
 
+  .stories-lead__image-col {
+    aspect-ratio: 3 / 2;
+  }
+
   .stories-lead__label-col {
     border-left: none;
     border-top: 1px solid rgba(201, 168, 76, 0.07);
     padding: 32px;
-  }
-
-  .stories-lead__img {
-    aspect-ratio: 3 / 2;
-    height: auto;
-  }
-
-  .stories-lead__image-col {
-    min-height: auto;
   }
 
   .stories-grid {
@@ -8524,5 +8517,879 @@ h1, h2, h3, h4, h5, h6 {
   .stories-secondary-card__image::after,
   .stories-grid-card__image::after {
     transition: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   THE THRESHOLD — Hero Atmosphere (Sistine rebuild)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Keyframes ── */
+
+/* Bloom drift is handled by the RAF loop (mouse parallax + sine drift).
+   No CSS transform animation on blooms — avoids inline-style conflicts. */
+
+@keyframes heroStarTwinkle {
+  0%, 100% { opacity: var(--op-min, 0.08); }
+  50%       { opacity: var(--op-max, 0.35); }
+}
+
+@keyframes heroRaysRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Hero section ── */
+
+.hp-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ── Layer 1 — Atmospheric blooms ──
+   Transform driven by RAF (parallax + sine drift). Opacity revealed by
+   Framer Motion. No CSS animation on transform — one system per property. */
+
+.hero-bloom {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero-bloom-cool {
+  width: 160vw;
+  height: 160vw;
+  top: -60vw;
+  left: -60vw;
+  background: radial-gradient(
+    circle,
+    rgba(74, 127, 207, 0.30) 0%,
+    rgba(124, 92, 191, 0.20) 35%,
+    transparent 65%
+  );
+  filter: blur(120px);
+}
+
+.hero-bloom-warm {
+  width: 160vw;
+  height: 160vw;
+  bottom: -310px;   /* bleed 250px below hero */
+  right: -60vw;
+  background: radial-gradient(
+    circle,
+    rgba(212, 118, 59, 0.28) 0%,
+    rgba(180, 80, 40, 0.18) 35%,
+    transparent 65%
+  );
+  filter: blur(120px);
+}
+
+.hero-bloom-gold {
+  width: 120vw;
+  height: 120vw;
+  top: calc(50% - 60vw);
+  left: calc(50% - 60vw);
+  background: radial-gradient(
+    circle,
+    rgba(201, 168, 76, 0.50) 0%,
+    rgba(201, 168, 76, 0.25) 30%,
+    transparent 60%
+  );
+  filter: blur(150px);
+}
+
+.hero-bloom-purple {
+  width: 120vw;
+  height: 120vw;
+  top: -40vw;
+  right: -50vw;
+  background: radial-gradient(
+    circle,
+    rgba(111, 62, 255, 0.20) 0%,
+    rgba(90, 40, 180, 0.12) 40%,
+    transparent 65%
+  );
+  filter: blur(120px);
+}
+
+/* ── Layer 2 — Volumetric rays ──
+   Parallax wrapper: RAF sets translate.
+   Center anchor: positions rays at emblem location.
+   Rotor: CSS rotation (transform) — on a different element from the
+   parallax wrapper, so no inline-style conflict. */
+
+.hero-rays-wrapper {
+  position: absolute;
+  inset: 0;
+  bottom: -250px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero-rays-center {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.hero-rays-rotor {
+  position: absolute;
+  width: 1600px;
+  height: 1600px;
+  top: -800px;
+  left: -800px;
+  background: conic-gradient(
+    from 0deg,
+    transparent           0deg,
+    rgba(74,127,207,0.16) 8deg,
+    transparent           18deg,
+    transparent           38deg,
+    rgba(111,62,255,0.13) 46deg,
+    transparent           56deg,
+    transparent           72deg,
+    rgba(255,140,42,0.15) 80deg,
+    transparent           92deg,
+    transparent           112deg,
+    rgba(201,168,76,0.14) 120deg,
+    transparent           132deg,
+    transparent           152deg,
+    rgba(255,77,42,0.12)  160deg,
+    transparent           172deg,
+    transparent           192deg,
+    rgba(74,127,207,0.11) 200deg,
+    transparent           212deg,
+    transparent           232deg,
+    rgba(111,62,255,0.12) 240deg,
+    transparent           252deg,
+    transparent           272deg,
+    rgba(255,140,42,0.14) 280deg,
+    transparent           294deg,
+    transparent           315deg,
+    rgba(201,168,76,0.11) 323deg,
+    transparent           338deg,
+    transparent           360deg
+  );
+  filter: blur(70px);
+  mix-blend-mode: screen;
+  animation: heroRaysRotate 75s linear infinite;
+  will-change: transform;
+}
+
+/* ── Layer 3 — Star field ──
+   Four depth layers; each div translated by RAF for parallax.
+   Stars twinkle via CSS animation using --op-min / --op-max custom props. */
+
+.hero-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-star-layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.hero-star {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(245, 242, 237, 0.9);
+  animation: heroStarTwinkle ease-in-out infinite;
+  will-change: opacity;
+}
+
+/* ── Layer 4 — Inner layout ── */
+
+.hp-hero .hp-hero__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 0 24px;
+  /* push content slightly above vertical center */
+  padding-bottom: 8vh;
+}
+
+/* ── Eyebrow ── */
+
+.hero-eyebrow {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.65);
+  margin: 0 0 40px;
+}
+
+/* ── Emblem area — relative container for halo + image ── */
+
+/* Grid stacking: halo and image share one cell so neither needs position/z-index.
+   This keeps mix-blend-mode: screen on the image out of any isolation group,
+   letting it blend directly against the dark page and atmospheric layers. */
+.hero-emblem-area {
+  display: grid;
+  place-items: center;
+}
+
+/* Inner halo — first in DOM → paints behind image via grid stacking order */
+.hero-emblem-halo {
+  grid-area: 1 / 1;
+  width: clamp(420px, 56vw, 760px);
+  height: clamp(420px, 56vw, 760px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(74,  127, 207, 0.35) 0%,
+    rgba(111,  62, 255, 0.30) 20%,
+    rgba(255, 140,  42, 0.25) 40%,
+    rgba(201, 168,  76, 0.18) 55%,
+    transparent 70%
+  );
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+/* Emblem wrapper — second in DOM → paints above halo */
+.hero-emblem-img-wrapper {
+  grid-area: 1 / 1;
+  line-height: 0;
+}
+
+/* The emblem PNG — mix-blend-mode: screen dissolves the black background */
+.hero-emblem-img {
+  width: clamp(240px, 30vw, 520px);
+  height: auto;
+  display: block;
+  mix-blend-mode: screen;
+  filter:
+    brightness(1.1)
+    drop-shadow(0 0 30px rgba(74,  127, 207, 0.60))
+    drop-shadow(0 0 60px rgba(111,  62, 255, 0.50))
+    drop-shadow(0 0 90px rgba(255, 140,  42, 0.40))
+    drop-shadow(0 0 140px rgba(201, 168,  76, 0.25));
+}
+
+/* ── Layer 5 — Typography ── */
+
+.hero-typo {
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  will-change: transform;
+}
+
+.hero-mission {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  line-height: 1.5;
+  color: rgba(240, 237, 232, 0.85);
+  max-width: 50ch;
+  margin: 0;
+  text-align: center;
+}
+
+.hero-subline {
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(240, 237, 232, 0.50);
+  max-width: 48ch;
+  margin: 20px 0 0;
+  text-align: center;
+}
+
+/* ── Bottom atmosphere fade ──
+   Gradient from transparent → page bg so hero bleeds into next section.
+   Blooms extend 250px below via bottom: -310px on hero-bloom-warm. */
+
+.hero-fade-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent 0%, #0f0e0d 100%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Layer 6 — Scroll indicator ── */
+
+.hero-scroll-wrapper {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 11;
+}
+
+.hero-scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-scroll-line {
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--blue)   0%,
+    var(--purple) 33%,
+    var(--orange) 66%,
+    var(--gold)   100%
+  );
+  opacity: 0.50;
+}
+
+.hero-scroll-label {
+  font-family: "Inter", sans-serif;
+  font-style: italic;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: rgba(201, 168, 76, 0.65);
+}
+
+/* ── Mobile responsive ── */
+
+@media (max-width: 768px) {
+  .hero-bloom-cool,
+  .hero-bloom-warm {
+    width: 220vw;
+    height: 220vw;
+  }
+
+  .hero-bloom-gold {
+    width: 160vw;
+    height: 160vw;
+    top: calc(50% - 80vw);
+    left: calc(50% - 80vw);
+  }
+
+  .hero-bloom-purple {
+    width: 160vw;
+    height: 160vw;
+  }
+
+  .hero-emblem-halo {
+    width: clamp(280px, 80vw, 420px);
+    height: clamp(280px, 80vw, 420px);
+  }
+
+  .hero-rays-rotor {
+    width: 900px;
+    height: 900px;
+    top: -450px;
+    left: -450px;
+  }
+
+  .hero-mission {
+    font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+  }
+
+  .hp-hero .hp-hero__inner {
+    padding-bottom: 12vh;
+  }
+}
+
+/* ── prefers-reduced-motion ── */
+
+@media (prefers-reduced-motion: reduce) {
+  /* RAF is skipped (reduce check in JS), so no parallax or drift.
+     Rays rotation and star twinkle disabled via CSS. */
+
+  .hero-rays-rotor {
+    animation: none;
+  }
+
+  .hero-star {
+    animation: none;
+    opacity: 0.12;
+  }
+
+  /* Scroll indicator stays static */
+  .hero-scroll-indicator {
+    animation: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   HOME HERO V2 — full-logo lockup, blended nav, top + bottom bleed
+   ═══════════════════════════════════════════════════════════════════════
+   Overrides the v1 hero rules above for the home page only. Scoped via
+   .hp-hero--v2 so other pages and the older test markup stay untouched.
+   No mix-blend-mode anywhere. No volumetric rays. Three blooms only. */
+
+/* Hero must allow the atmosphere wrapper to bleed above (behind nav) and
+   below (into the next section). .site-shell already has overflow:clip,
+   so no horizontal scrollbars escape. */
+.hp-hero--v2 {
+  overflow: visible;
+  background: var(--bg);
+}
+
+/* Atmosphere wrapper — extends 80px above the hero (behind the sticky nav)
+   and 200px below (into the section beneath). Its own overflow:hidden keeps
+   the very wide blooms from spilling sideways. z-index:0 keeps it under the
+   nav (z-index:40) and under content (z-index:2). */
+.hp-hero--v2 .hero-atmosphere {
+  position: absolute;
+  top: -80px;
+  left: 0;
+  right: 0;
+  bottom: -200px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Three atmospheric blooms — positioned relative to the atmosphere wrapper.
+   Cool upper-left, warm lower-right, gold centered (slightly left so the
+   halo's brightest point sits behind the H specifically). */
+.hp-hero--v2 .hero-bloom {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hp-hero--v2 .hero-bloom-cool {
+  width: 140vw;
+  height: 140vw;
+  top: -55vw;
+  left: -50vw;
+  background: radial-gradient(
+    circle,
+    rgba(74, 127, 207, 0.32) 0%,
+    rgba(124, 92, 191, 0.18) 35%,
+    transparent 68%
+  );
+  filter: blur(120px);
+}
+
+.hp-hero--v2 .hero-bloom-warm {
+  width: 140vw;
+  height: 140vw;
+  bottom: -55vw;
+  right: -50vw;
+  top: auto;
+  left: auto;
+  background: radial-gradient(
+    circle,
+    rgba(212, 118, 59, 0.30) 0%,
+    rgba(180, 80, 40, 0.18) 35%,
+    transparent 68%
+  );
+  filter: blur(120px);
+}
+
+.hp-hero--v2 .hero-bloom-gold {
+  width: 100vw;
+  height: 100vw;
+  top: 50%;
+  left: 47%;
+  margin-top: -50vw;
+  margin-left: -50vw;
+  background: radial-gradient(
+    circle,
+    rgba(201, 168, 76, 0.42) 0%,
+    rgba(201, 168, 76, 0.22) 30%,
+    transparent 62%
+  );
+  filter: blur(140px);
+}
+
+/* Stars sit inside the hero proper (not in the atmosphere wrapper) so they
+   don't extend behind the nav or into the next section. */
+.hp-hero--v2 .hero-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Inner content stack sits above atmosphere + stars. */
+.hp-hero--v2 .hp-hero__inner {
+  position: relative;
+  z-index: 2;
+  padding: 0 24px;
+  padding-bottom: 6vh;
+}
+
+/* Eyebrow — tighten spacing above the now-larger logo lockup. */
+.hp-hero--v2 .hero-eyebrow {
+  margin: 0 0 32px;
+  color: rgba(201, 168, 76, 0.65);
+}
+
+/* ── The HOME logo lockup ─────────────────────────────────────────────────
+   Wide horizontal lockup (~3:1 ratio). Generous size: ~60rem desktop,
+   ~36rem tablet, ~22rem mobile. Halo behind via grid stacking. */
+
+.hp-hero--v2 .hero-logo-area {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(22rem, 62vw, 60rem);
+  will-change: transform;
+}
+
+/* Halo — radial gradient with multi-color palette, biased LEFT so the
+   brightest point sits behind the H (which lives on the left of the lockup).
+   Sized to extend ~25% beyond the logo edges. The whole halo opacity is
+   driven by Framer Motion (haloControls). */
+.hp-hero--v2 .hero-logo-halo {
+  grid-area: 1 / 1;
+  width: 130%;
+  aspect-ratio: 1 / 0.78;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 32% 50%,
+    rgba(74,  127, 207, 0.55) 0%,
+    rgba(111,  62, 255, 0.42) 16%,
+    rgba(255,  77,  42, 0.32) 34%,
+    rgba(255, 140,  42, 0.22) 50%,
+    rgba(201, 168,  76, 0.12) 65%,
+    transparent 80%
+  );
+  filter: blur(95px);
+  pointer-events: none;
+  will-change: opacity, transform;
+  transform: translateX(-4%);
+}
+
+/* Logo image wrapper — second in DOM so it stacks above halo via grid. */
+.hp-hero--v2 .hero-logo-img-wrapper {
+  grid-area: 1 / 1;
+  width: 100%;
+  display: block;
+  line-height: 0;
+  position: relative;
+  will-change: opacity, transform;
+}
+
+/* The logo PNG itself. Critical: NO mix-blend-mode. The transparent PNG
+   sits naturally on the dark page atmosphere. A subtle warm drop-shadow
+   gives it a quiet sense of floating slightly above the surface. */
+.hp-hero--v2 .hero-logo-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 24px rgba(255, 220, 180, 0.15));
+}
+
+/* ── Typography ── */
+.hp-hero--v2 .hero-typo {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  will-change: transform;
+}
+
+.hp-hero--v2 .hero-mission {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.6vw, 2.0rem);
+  line-height: 1.3;
+  color: rgba(245, 240, 232, 0.94);
+  max-width: 50ch;
+  margin: 0;
+  text-align: center;
+}
+
+.hp-hero--v2 .hero-subline {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(240, 237, 232, 0.55);
+  max-width: 60ch;
+  margin: 24px 0 0;
+  text-align: center;
+}
+
+/* ── Bottom blend into next section ──
+   Fade transparent → page bg over 150-200px so the hero dissolves into
+   whatever section comes next. The atmosphere wrapper's blooms also bleed
+   200px past the hero's bottom edge for a continuous atmospheric transition. */
+.hp-hero--v2 .hero-fade-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 180px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(15, 14, 13, 0.45) 55%,
+    rgba(15, 14, 13, 1) 100%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ── Nav blend on home page only ──
+   The site header is sticky at z-index:40. On the home page we make it
+   transparent so the atmosphere bleeding up behind it shows through; no
+   visible line between nav and hero. Other pages keep the original solid
+   header background. */
+.site-header--transparent {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: none;
+}
+
+/* ── Mobile responsive ── */
+@media (max-width: 768px) {
+  .hp-hero--v2 .hero-logo-area {
+    width: clamp(16rem, 88vw, 22rem);
+  }
+  .hp-hero--v2 .hero-typo {
+    margin-top: 56px;
+  }
+  .hp-hero--v2 .hero-mission {
+    font-size: clamp(1.05rem, 5vw, 1.4rem);
+    max-width: 22ch;
+  }
+  .hp-hero--v2 .hero-subline {
+    font-size: 0.92rem;
+    max-width: 32ch;
+  }
+  .hp-hero--v2 .hero-bloom-cool,
+  .hp-hero--v2 .hero-bloom-warm {
+    width: 200vw;
+    height: 200vw;
+  }
+  .hp-hero--v2 .hero-bloom-gold {
+    width: 160vw;
+    height: 160vw;
+    margin-top: -80vw;
+    margin-left: -80vw;
+  }
+  .hp-hero--v2 .hero-logo-halo {
+    filter: blur(70px);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hp-hero--v2 .hero-logo-area {
+    width: clamp(28rem, 70vw, 36rem);
+  }
+}
+
+/* ── Reduced motion ──
+   Disable bloom drift / parallax (handled in JS via `reduce` early return),
+   freeze star twinkle, freeze logo scale breathing. Halo can still pulse
+   gently without movement. */
+@media (prefers-reduced-motion: reduce) {
+  .hp-hero--v2 .hero-logo-img-wrapper,
+  .hp-hero--v2 .hero-logo-area,
+  .hp-hero--v2 .hero-bloom {
+    transform: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   HOME HERO V2 — surgical fixes (loaded last → highest specificity wins)
+   - Logo rendering: no drop-shadow, crisp rendering, halo pushed back
+   - Vertical layout: nav-aware height, tighter gaps, content centered
+   - Scroll indicator: lifted off the typography
+   - Bottom blend: kill the gold-hairline border on the next section
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Hero box accounts for the nav so the 100vh content sits in the
+   actually-visible area on a 1366×768 laptop without overflow. */
+.hp-hero--v2 {
+  min-height: calc(100vh - 72px);
+}
+
+/* Atmosphere bleeds 250px past the hero's bottom edge so warm + gold
+   bloom colors carry into the section below. */
+.hp-hero--v2 .hero-atmosphere {
+  bottom: -250px;
+}
+
+/* Inner content stack: vertically centered, tighter top/bottom padding so
+   the eyebrow doesn't crash into the nav and the subline doesn't crash
+   into the scroll indicator. justify-content:center is inherited from
+   .hp-hero (display:flex, flex-direction:column). */
+.hp-hero--v2 .hp-hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px 120px;
+  gap: 0;
+}
+
+/* Eyebrow → 32px gap to logo (per spec). */
+.hp-hero--v2 .hero-eyebrow {
+  margin: 0 0 32px;
+}
+
+/* ── Logo area: explicit positioning, halo as absolute sibling ──
+   No grid stacking — halo is a true sibling positioned absolutely behind
+   the logo at z-index 0. Logo wrapper is z-index 1 so its pixels paint
+   above the halo's blurred light. */
+.hp-hero--v2 .hero-logo-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(20rem, 54vw, 52rem);
+  /* override grid stacking from base v2 rule */
+  display: flex;
+}
+
+/* Halo: absolute, behind the logo, much further blurred so it reads as
+   ambient atmosphere — not as a tinted backdrop on the image's pixels. */
+.hp-hero--v2 .hero-logo-halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 145%;
+  height: 0;
+  padding-bottom: 95%;
+  margin-top: -47.5%;
+  margin-left: -72.5%;
+  border-radius: 50%;
+  z-index: 0;
+  filter: blur(135px);
+  background: radial-gradient(
+    ellipse at 32% 50%,
+    rgba(74,  127, 207, 0.42) 0%,
+    rgba(111,  62, 255, 0.32) 18%,
+    rgba(255,  77,  42, 0.22) 36%,
+    rgba(255, 140,  42, 0.15) 52%,
+    rgba(201, 168,  76, 0.08) 66%,
+    transparent 80%
+  );
+  /* aspect-ratio is overridden via padding-bottom trick above to keep
+     wide-elliptical halo independent of image height */
+  aspect-ratio: auto;
+  /* halo's translateX bias from base v2 rule cleared — bias is now baked
+     into the radial-gradient anchor (32% 50%) and margin offset above */
+  transform: none;
+}
+
+/* Logo wrapper: relative, on top of halo. */
+.hp-hero--v2 .hero-logo-img-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: block;
+  line-height: 0;
+  transform-origin: 50% 50%;
+}
+
+/* The logo image itself: NO drop-shadow filter (was causing edge fuzz),
+   crisp rendering hint, no blend mode. Backface-visibility hidden plus
+   translateZ(0) keeps the breathing-scale interpolation pixel-stable. */
+.hp-hero--v2 .hero-logo-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: none;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Typography spacing per spec: 48px gap from logo, 20px gap to subline. */
+.hp-hero--v2 .hero-typo {
+  margin-top: 48px;
+}
+
+.hp-hero--v2 .hero-subline {
+  margin-top: 20px;
+}
+
+/* Scroll indicator: absolute at bottom: 64px, well clear of the typo
+   stack. z-index above the fade overlay. */
+.hp-hero--v2 .hero-scroll-wrapper {
+  bottom: 64px;
+  z-index: 4;
+}
+
+/* Bottom fade sits above atmosphere/stars but below the inner content +
+   scroll indicator. */
+.hp-hero--v2 .hero-fade-bottom {
+  z-index: 1;
+  height: 200px;
+}
+
+/* ── Kill the gold hairline border on the section directly below the
+   hero. Other .hp-section blocks keep their hairline for visual
+   separation between mid-page sections. */
+.hp-section.hp-pillars {
+  border-top: none;
+  border-image: none;
+  padding-top: 100px;
+}
+
+/* ── Mobile + small laptop overrides ── */
+@media (max-width: 768px) {
+  .hp-hero--v2 {
+    min-height: calc(100svh - 72px);
+  }
+  .hp-hero--v2 .hp-hero__inner {
+    padding: 56px 20px 96px;
+  }
+  .hp-hero--v2 .hero-logo-area {
+    width: clamp(15rem, 88vw, 22rem);
+  }
+  .hp-hero--v2 .hero-eyebrow {
+    margin-bottom: 24px;
+  }
+  .hp-hero--v2 .hero-typo {
+    margin-top: 36px;
+  }
+  .hp-hero--v2 .hero-subline {
+    margin-top: 16px;
+  }
+  .hp-hero--v2 .hero-scroll-wrapper {
+    bottom: 40px;
+  }
+}
+
+/* Common laptop screen — keep logo from running into the typo on 768px
+   tall viewports. */
+@media (max-height: 800px) and (min-width: 769px) {
+  .hp-hero--v2 .hero-logo-area {
+    width: clamp(20rem, 46vw, 44rem);
+  }
+  .hp-hero--v2 .hp-hero__inner {
+    padding: 56px 24px 96px;
+  }
+  .hp-hero--v2 .hero-typo {
+    margin-top: 40px;
+  }
+  .hp-hero--v2 .hero-mission {
+    font-size: clamp(1.2rem, 2.2vw, 1.7rem);
   }
 }
