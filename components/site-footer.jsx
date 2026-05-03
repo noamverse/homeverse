@@ -11,11 +11,11 @@ const exploreLinks = [
 
 const ecosystemLinks = [
   { href: "/ecosystem#ventures",   label: "HOME Ventures" },
-  { href: "/ecosystem#ai",         label: "HOME AI" },
+  { href: "/ecosystem#engine",         label: "HOME Engine" },
   { href: "/ecosystem#fellowship", label: "HOME Fellowship" },
-  { href: "/ecosystem#base",       label: "HOME Base" },
-  { href: "/ecosystem",            label: "HOME Media" },
-  { href: "/ecosystem#ventures",   label: "HOME Fund" },
+  { href: "/ecosystem#hospitality",       label: "HOME Hospitality" },
+  { href: "/ecosystem#ai",            label: "HOME AI" },
+  { href: "/ecosystem#base",   label: "HOME Base" },
 ];
 
 export default function SiteFooter() {
