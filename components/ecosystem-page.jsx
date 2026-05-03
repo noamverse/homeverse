@@ -113,15 +113,15 @@ const BUILDING_NOW = [
   },
   {
     name: "HOME Fellowship",
-    desc: "Dinners and gatherings forming the core community.",
+    desc: "Dinners, gatherings, and events forming the core community.",
   },
   {
-    name: "HOME Ventures (initial deployments)",
+    name: "HOME Ventures",
     desc: "First syndicate investments in aligned founders.",
   },
   {
-    name: "HOME AI (internal tools)",
-    desc: "The tools that power every other arm.",
+    name: "HOME AI",
+    desc: "The tools that power every other arm and distribute the roots of our ecosystem.",
   },
 ];
 
@@ -163,7 +163,7 @@ const PATHWAYS = [
   },
   {
     condition: "If you gather",
-    body: "Fellowship is how HOME lives in the world. You are welcome at the table.",
+    body: "Fellowship is how HOME lives in the world. You are always welcome at our table.",
     linkLabel: "Join a gathering →",
     // TODO: Verify email is active once Cloudflare Email Routing is configured
     href: "mailto:hello@homeverse.family?subject=Fellowship Gathering",
@@ -171,7 +171,7 @@ const PATHWAYS = [
   },
   {
     condition: "If you're becoming",
-    body: "HOME is a way of being before it is anywhere you go. Read, subscribe, and keep reading.",
+    body: "HOME is a way of being before it is anywhere you go. Read, relate, and keep reading.",
     linkLabel: "Follow along →",
     href: "https://www.threads.com/@noamverse",
     external: true,
