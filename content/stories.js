@@ -162,7 +162,7 @@ export const stories = [
 
 "What if everything you're searching for is you?", 
 
-"What if your existence is not about searching..",.
+"What if your existence is not about searching...",
 "But allowing yourself to be found?",
 
 "Will you allow yourself to be found?",
