@@ -80,7 +80,7 @@ export const stories = [
 
     "Welcome HOME.",
   ]
-}
+},
 
 
   // ── CURATED COLLECTION ───────────────────────────────────────────────────────
