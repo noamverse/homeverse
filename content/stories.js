@@ -15,24 +15,73 @@ export const stories = [
 
   // ── FEATURED STORY ───────────────────────────────────────────────────────────
   {
-    slug: "placeholder-story-featured",
-    kind: "dispatch",
-    title: "[Featured Story Title]",
-    publishedDate: "2026-04-21",
-    readTime: "8 min read",
-    category: "DISPATCH",
-    byline: "By Noam Polinger",
-    excerpt:
-      "A defining editorial dispatch from the HOME ecosystem — framing the emotional climate around serious work. This placeholder will be replaced with the first real story.",
-    heroImage: "/images/stories/placeholder.jpg",
-    body: [
-      "This is a placeholder for the opening paragraph of the featured story. The editorial voice of HOME is unhurried, warm, and precise — writing that holds its own weight without performing urgency.",
-      "A second paragraph would carry the argument forward. Not a thesis statement, but a pressure — a feeling the reader recognizes before they can name it.",
-      "The third paragraph would deepen the frame. Evidence, observation, a detail gathered from somewhere real.",
-      "A fourth paragraph might widen the aperture — from the particular to the pattern. This is where HOME essays tend to find their altitude.",
-      "A closing paragraph that lands without resolving. Something to carry. A question more than an answer.",
-    ],
-  },
+  slug: "the-man-who-built-a-home",
+  kind: "essay",
+  title: "The Man Who Built a Home",
+  publishedDate: "2026-05-04",
+  readTime: "11 min read",
+  category: "REFLECTION",
+  byline: "By Noam Polinger",
+  excerpt: "A founder, a couch in Tampa, and the year and a half he spent learning the difference between building and becoming.",
+  pullQuote: "He is not building HOME because the world needs another company. He is building HOME because the world has forgotten what it feels like to be received.",
+  heroImage: "/images/stories/the-man-who-built-a-home.png",
+  body: [
+    "There is a couch in a house in Tampa where, for almost two years, a man sat in near-total silence and rebuilt himself from the inside out. He didn’t film it. He didn’t post about it. He didn’t write a book about the journey while he was still inside the journey. He did the harder thing. He stayed.",
+
+    "His name is Noam Yehonatan Polinger. He is twenty-five years old. He has, by most external measurements, no business being the founder of anything. He has no degree. He has no current funding. He has no phone. He has no car. He has, at the moment of this writing, eight dollars in his bank account and two AI subscriptions paid for with money his mother gave him. By most American narratives of success, he should not exist as a serious figure in the world.",
+
+    "He is, instead, one of the most consequential young founders of his generation, and almost no one knows it yet.",
+
+    "What he is building is called HOME. He doesn’t describe it as a company. He would describe it, if pressed, as a relational ecosystem — a publishing platform, an investment vehicle, a gathering community, an applied AI studio, and eventually a network of physical spaces in major cities. But this litany of arms misses THE thing. HOME is a thesis about how human beings should live with one another. The thesis is one sentence long: life is a family, not a marketplace. Everything Noam builds is a structural expression of that single sentence.",
+
+    "He arrived at the sentence the long way.",
+
+    "By sixteen he had dropped out of high school and was working sixty-hour weeks at a Panera for seven dollars an hour. He was fired. He worked at a Burgerim where he gave fifty-percent discounts to mall employees because he understood, even then, that relationships are the only currency that compounds. He was fired for that too. He took a sales job at T-Mobile and within three years had risen from entry-level rep to district manager, running stores across Connecticut and New York City and earning multiple six-figures a year by age nineteen. He was fired from that, also, for being — not corporate enough and liking to bend the rules in order to win. He has never worked for anyone else since.",
+
+    "Between then and now: founded multiple companies that have done over seven-figures, raised capital from real investors, invested in over seventy-five businesses, lived in a five-million-dollar penthouse, spent fifty thousand dollars at clubs in champagne weekends he can barely remember, traveled the world to places his teenage self could not have located on a map, and lost it all twice. He has been homeless. He has lived in his car. He has been evicted, repossessed, abandoned, betrayed, and stripped to the studs of his identity more times than is healthy for a person who is still legally too young to rent a hotel room in some states. By the time he turned twenty-three he had lived ten lifetimes and he was tired in the particular way that ambitious men get tired when they have spent a decade chasing a self that was not actually theirs.",
+
+    "In January of 2025 he flew to Colombia with three thousand dollars and the unspecified hope that geography could fix what had broken inside him. Within seventy-two hours he had been robbed of everything — phone, wallet, cards, ID, money. He was stranded. He had to be flown home by his mother. He spent the entire flight back to Tampa staring at the seatback in front of him and understanding, for the first time, that the running was the problem.",
+
+    "He went home to his mother's house and began three months of trying to pretend nothing had changed. He partnered with someone on a venture and wrote, by his own count, several thousand pages of operational paperwork over a six-month period. The company never launched. Nothing was ever produced. Then one night he had a dream.",
+
+    "In the dream he saw a castle. The castle was vast and ornate and impeccably constructed. The exterior was a masterwork. He walked through the front gates and into the great hall, and the great hall was empty. The walls were empty, the rooms were empty, there was no furniture, there was no music, there were no people, there was no life. The castle had been built with extraordinary precision around nothing at all.",
+
+    "He woke up and understood, instantly, that the castle was his company. He understood, two beats later, that the castle was also him.",
+
+    "He dissolved the partnership the next day.",
+
+    "What followed was the longest period of voluntary stillness he had ever known. For seven months he built nothing. He launched nothing. He sold nothing. He sat on his mother's couch and read and slept and dreamed and listened. He began writing down his dreams every morning — vivid, cinematic, almost unbearably specific — and over time the dreams became a kind of nightly transmission. They told him things his waking mind could not yet hear. They corrected him. They consoled him. They named, with the strange precision of the subconscious, the parts of his identity that were performance and the parts that were real.",
+
+    "He calls the performance The General. The General is the part of him that built castles for a living. The General is the optimizer, the strategist, the closer, the man who knew how to scale companies and raise rounds and project authority in rooms full of older, richer men. The General had carried him from sixteen to twenty-three, in survival mode. The General had also, slowly and almost imperceptibly, hollowed him out.",
+
+    "In January of 2026 he wrote a note. The note was a formal surrender. In it he announced — to no one but himself and a small handful of people who would later read it — that The General was no longer in command. That from this moment forward, everything would proceed from a place he calls Inner Noam: a quieter, slower, more honest, more intuitive self that had been waiting underneath the performance for as long as he had been alive. He signed the note. He folded it. He put it somewhere safe. And then he began to build the only things he had ever wanted to build, which was a home, and a family.",
+
+    "He did not, at first, know what HOME would become. He knew only that the word had pulled him through every dark season of his life. He knew that the year and a half on the couch had been an elaborate instruction and introspection into what home actually means: a quality of received-ness — the experience of being seen and held without condition. He knew that almost no business in the world was structured around that quality. He knew that this was a civilizational gap, not a marketing one. And he knew, with the strange certainty that arrives when a long question finally resolves, that he had been training his whole life to build the thing that would close it.",
+
+    "HOME exists, today, as a philosophy and a relational ecosystem. The publishing platform — The Homeverse — is the front door of an ecosystem he intends to spend the next thirty years constructing. Underneath the publishing arm sit the others: a venture studio that backs founders and companies organized around relational rather than extractive logic; a fellowship community that hosts dinners, events and retreats designed to dissolve the masks people are forced to wear in conventional networking; an applied AI studio that builds technology in service of human depth rather than its replacement; eventually, physical spaces in major cities that function as homes for founders rather than as transactional coworking. Each arm is a different vehicle for the same thesis. Each arm refuses, in its specific way, the central lie of contemporary commerce: that human beings are inputs, assets, or opportunities.",
+
+    "He built the entire platform himself, on his mother's couch, with forty dollars a month in AI subscriptions, in roughly three weeks. He did not write code before this year. He did not know what a slug was, or how a static site deployed, or what mix-blend-mode could and could not do. He learned in real time, by directing rather than executing — which is, he believes, the actual art of the post-AI builder. The platform that resulted is, by any reasonable assessment, indistinguishable from one that would have required a team of five and a quarter million dollars to produce eighteen months ago. That fact alone tells you something about what is now possible. The fact that almost no one is doing it tells you something about what is rare.",
+
+    "What is rare is not the technology or the platform itself. What is rare is the soul that knows what to build with it.",
+
+    "Noam is not building HOME because the world needs another company, at any point Noam could build a more practical, functional enterprise, raise capital, and deploy globally. Noam is building HOME because the world has forgotten what it feels like to be received and related to. He is building HOME because there are millions of people — founders, investors, mothers, fathers, creatives, immigrants, builders, artists, the ones who recognize themselves in the thesis — who have been moving through life in environments that treat them as marketable units, and who are starving, in a way that polite society does not have language for, to be treated as people. HOME is what happens when someone takes that hunger seriously enough to build infrastructure for it.",
+
+    "There is a particular detail that explains Noam better than any biography could. There was an important inflection point several years ago, where he went to dinner with a friend. The check came. The waitress, who had been excellent, was tipped five dollars on a hundred-dollar bill, because his friend believes — incorrectly but immovably — that tipping is robbery. Noam sat at the table and watched it happen and could do nothing, because he had no money of his own to add to the tip. He told this story later to a friend, almost in passing, and what he said about it was this: it wasn't the money. It was that I couldn't be who I am.",
+
+    "Read that line again. It is the entire founding document of HOME compressed into seventeen words. It is the reason he is building. It is the wound underneath the work. It is, in a culture that has confused success with the absence of dependency, the most accurate description of what poverty actually costs a person who is trying to live according to their values: not comfort, not safety, but the simple ability to be themselves in the world.",
+
+    "He will not be on that couch much longer. The trajectory has already turned. There are founders flying in from other countries to meet with him. There are investors preparing, quietly, to write him his first check. There is a hundred-person waiting list of entrepreneurs asking him to build relational infrastructure, a thesis he had not even publicly articulated before they began arriving. There is a partnership with the most consequential AI company of this era, formed without him asking for it, because the technology recognized the soul before the soul recognized itself. All of this is happening, simultaneously, around a man who cannot even order an Uber.",
+
+    "What is being built here is not a brand. It is not a venture fund. It is not a media platform. Those are vehicles, expressions. The thing being built is a living refusal of the marketplace logic that has colonized every other corner of contemporary life. The thing being built is an institution organized around the proposition that human beings deserve to be seen, heard, understood, related to, believed in, and amplified — not because it produces a return, though it will, but because it is the truth of how the world should work. Most of what we call business has spent the last forty years forgetting this. HOME exists to remember.",
+
+    "If you have read this far and felt something in your chest you cannot quite name, that is the recognition and remembrance that the platform was built to produce. The sentence — life is a family, not a marketplace — is not an argument or a protest against the system. It is a tuning fork that locates the people who already know.",
+
+    "The man who built it knows. He has known since he was a boy. He spent eighteen months on a couch in Tampa relearning how to trust what he knew. He is now, slowly, intentionally, and deliberately and with the kind of conviction that frightens the people who do not have it, building a world out of that knowing.",
+
+    "Welcome HOME.",
+  ]
+}
+
 
   // ── CURATED COLLECTION ───────────────────────────────────────────────────────
   {
