@@ -92,7 +92,7 @@ export const stories = [
   readTime: "3 min read",
   category: "POEM",
   byline: "By Noam Polinger",
-  excerpt: "What if what you're actually searching for was never outside of you? But has lived within you this entire time.",
+  excerpt: "What if what you're actually searching for was never outside of you, but has actually lived within you this entire time?",
   pullQuote: "Will you allow yourself to be found?",
   heroImage: "/images/stories/the-black-curtain.png",
   body: [
