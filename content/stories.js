@@ -22,7 +22,7 @@ export const stories = [
   readTime: "11 min read",
   category: "REFLECTION",
   byline: "By Noam Polinger",
-  excerpt: "A founder, a couch in Tampa, and the year and a half he spent learning the difference between building and becoming.",
+  excerpt: "A founder, a couch in Tampa, and the years he spent learning the difference between building and becoming.",
   pullQuote: "He is not building HOME because the world needs another company. He is building HOME because the world has forgotten what it feels like to be received.",
   heroImage: "/images/stories/the-man-who-built-a-home.png",
   body: [
