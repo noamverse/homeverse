@@ -84,24 +84,92 @@ export const stories = [
 
 
   // ── CURATED COLLECTION ───────────────────────────────────────────────────────
-  {
-    slug: "placeholder-story-reflection-one",
-    kind: "reflection",
-    title: "[Founder Story Title]",
-    publishedDate: "2026-04-16",
-    readTime: "7 min read",
-    category: "REFLECTION",
-    byline: "By Noam Polinger",
-    excerpt:
-      "A founder portrait about the rooms institutions create and the moral texture of welcome.",
-    heroImage: "/images/stories/placeholder.jpg",
-    body: [
-      "This is a placeholder for the first paragraph of a founder reflection. A close portrait — not a profile, but a reckoning with what it means to build a room for others.",
-      "A second paragraph where the founder's inner life becomes visible. The doubt they don't talk about in public. The thing that keeps them at the table.",
-      "A third paragraph that asks: what kind of institution do they want to be? Not as a values statement, but as a daily practice.",
-      "A closing paragraph that earns the reader's care rather than demanding it.",
-    ],
-  },
+ {
+  slug: "the-black-curtain",
+  kind: "poem",
+  title: "The Black Curtain",
+  publishedDate: "2026-05-04",
+  readTime: "3 min read",
+  category: "POEM",
+  byline: "By Noam Polinger",
+  excerpt: "What if what you're actually searching for was never outside of you? But has lived within you this entire time.",
+  pullQuote: "Will you allow yourself to be found?",
+  heroImage: "/images/stories/the-black-curtain.png",
+  body: [
+    "We search.",
+
+    "We search for family.",
+
+    "We search for friends.",
+
+    "We search for wealth.",
+
+    "We search for success",
+
+    "We search for validation.",
+
+    "We search for answers.",
+
+    "We search for completion.",
+
+    "We search for acceptance.",
+
+    "We search for understanding.",
+
+    "We search for relationship.",
+
+    "We search for health.",
+
+    "We search for home.",
+
+    "We search for love.",
+
+    "We search for life.",
+
+    "We search for ourselves.",
+
+    "But what if...",
+
+    "Everything we're searching for is right there in front of us the entire time?",
+
+"Just behind the black curtain of fear, doubt, shame, anxiety, and negativity.",
+
+"What if somewhere in that curtain there's a shimmer of light?", 
+
+"The tiniest of cracks in an endless abyss of darkness.",
+
+"What if all we have to do is climb through that opening?", 
+"Unsure of what's on the other side.",
+"Trusting in the smallest of glimmers.",
+"A mustard seed worth of faith.",
+
+"What if on the other side…", 
+"Is everything you've ever searched for...and more?",
+
+"More than you could imagine.",
+"Beyond anything the mind can comprehend.",
+
+"What if what you're actually searching for was never outside of you?",
+"But has lived within you this entire time.",
+"Waiting.",
+
+"Waiting for the moment you find the small crack of light.",
+"And discover yourself.",
+
+"Never abandoning you.",
+"Never betraying you.",
+"Never ceasing to shine while you keep searching.",
+
+"What if everything you're searching for is you?", 
+
+"What if your existence is not about searching..",.
+"But allowing yourself to be found?",
+
+"Will you allow yourself to be found?",
+
+  ],
+},
+
   {
   slug: "the-shift-from-prompting-ai-to-operating-intelligence",
   kind: "essay",
