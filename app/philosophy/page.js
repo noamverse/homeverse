@@ -41,7 +41,7 @@ export default function PhilosophyPage() {
           </blockquote>
           <p className="phil-core__body">
             The modern world is foundationalized on transactions rather than trust — networking, selling, status,
-            performance, optimization, persuasion, metrics. The paradigm we are building is the opposite premise:
+            performance, optimization, persuasion, metrics. The paradigm we are building is of a different premise:
             the next generation of institutions will be the ones making people feel more human, more connected, and more at home.
           </p>
         </div>
