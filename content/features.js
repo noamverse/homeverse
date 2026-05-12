@@ -107,7 +107,7 @@ export const features = [
   byline: "Profile by Noam Polinger",
   excerpt: "Jade Rouby is twenty-three, moved in San Francisco, and building the future of preventive health from the inside of a loss most founders will never be able to translate.",
   pullQuote: "'I'm not careful. I have an absolute, measured conviction that this mission is mine. Not because I chose it — because it chose me.'",
-  heroImage: "/images/features/jade-rouby.jpg",
+  heroImage: "/images/features/jade-rouby.png",
   heroImageWide: "/images/features/jade-rouby-feature.png",
   body: [
 "There is a particular thing Jade Rouby said that the rest of this conversation has to be read against. A mentor she respected told her the next step for her first company was to sign contracts at corporate dinners. And something inside her, she says, went completely quiet.",
