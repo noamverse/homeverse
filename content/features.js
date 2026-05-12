@@ -134,9 +134,7 @@ export const features = [
 
   ]
 },
-
-    ],
-  },
+  
   {
     slug: "placeholder-founder-four",
     type: "founder",
