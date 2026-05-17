@@ -149,7 +149,6 @@ const PATHWAYS = [
     condition: "If you build",
     body: "We feature founders and companies we believe in. Start a relationship.",
     linkLabel: "Write to us →",
-    // TODO: Verify email is active once Cloudflare Email Routing is configured
     href: "mailto:hello@homeverse.family",
     external: false,
   },
@@ -157,7 +156,6 @@ const PATHWAYS = [
     condition: "If you invest",
     body: "We work with aligned capital. Share what you believe in, and why.",
     linkLabel: "Tell us your thesis →",
-    // TODO: Verify email is active once Cloudflare Email Routing is configured
     href: "mailto:hello@homeverse.family?subject=Investment Thesis",
     external: false,
   },
@@ -165,7 +163,6 @@ const PATHWAYS = [
     condition: "If you gather",
     body: "Fellowship is how HOME lives in the world. You are always welcome at our table.",
     linkLabel: "Join a gathering →",
-    // TODO: Verify email is active once Cloudflare Email Routing is configured
     href: "mailto:hello@homeverse.family?subject=Fellowship Gathering",
     external: false,
   },

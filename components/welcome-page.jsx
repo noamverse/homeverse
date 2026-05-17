@@ -195,7 +195,6 @@ export default function WelcomePage() {
             There are no forms here. No pressure. Just an email address, and a human on the other end who will read
             what you send. That&rsquo;s how HOME has always worked. It&rsquo;s how it always will.
           </p>
-          {/* TODO: Verify email is active once Cloudflare Email Routing is configured */}
           <a href="mailto:hello@homeverse.family" className="wh-text-link wh-text-link--lg">
             hello@homeverse.family &rarr;
           </a>

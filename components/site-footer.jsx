@@ -60,7 +60,6 @@ export default function SiteFooter() {
 
       {/* 3. Connective tissue — the closing whisper */}
       <div className="sf-bottom">
-        {/* TODO: Verify email is active once Cloudflare Email Routing is configured */}
         <a href="mailto:hello@homeverse.family" className="sf-bottom__contact">
           Write to us — hello@homeverse.family
         </a>
