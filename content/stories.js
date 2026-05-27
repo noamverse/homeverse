@@ -81,7 +81,11 @@ export const stories = [
     "Welcome HOME.",
   ]
 },
-{
+
+
+
+  // ── CURATED COLLECTION ───────────────────────────────────────────────────────
+ {
   slug: "the-seventy-mile-walk",
   kind: "essay",
   title: "The Seventy-Mile Walk",
@@ -150,10 +154,9 @@ export const stories = [
      "Hurry now — not from fear, but from identity.", 
   ]
 },
-
-
-  // ── CURATED COLLECTION ───────────────────────────────────────────────────────
- {
+  
+  
+  {
   slug: "the-black-curtain",
   kind: "poem",
   title: "The Black Curtain",
