@@ -149,7 +149,7 @@ export const stories = [
      "Waiting for you." ,
      "Hurry now — not from fear, but from identity.", 
   ]
-}
+},
 
 
   // ── CURATED COLLECTION ───────────────────────────────────────────────────────
