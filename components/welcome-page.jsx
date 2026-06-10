@@ -164,9 +164,9 @@ export default function WelcomePage() {
           <p className="wh-eyebrow">If you came to meet</p>
           <h3 className="wh-doorway__title">The people we&rsquo;re featuring.</h3>
           <p className="wh-doorway__body">
-            Start with Featured. The founders and companies we&rsquo;re currently amplifying.
+            Start with Family. The founders and companies we&rsquo;re currently amplifying.
           </p>
-          <Link href="/featured" className="wh-text-link">Begin with Featured &rarr;</Link>
+          <Link href="/family" className="wh-text-link">Begin with Family &rarr;</Link>
         </div>
 
         <div className="wh-doorway home-reveal">

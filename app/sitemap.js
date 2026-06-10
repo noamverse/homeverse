@@ -4,7 +4,7 @@ import stories from "@/content/stories";
 export default function sitemap() {
   const baseUrl = "https://homeverse.family";
 
-  const staticRoutes = ["", "/philosophy", "/featured", "/stories", "/ecosystem", "/welcome"].map(
+  const staticRoutes = ["", "/philosophy", "/family", "/stories", "/ecosystem", "/welcome"].map(
     (route) => ({
       url: `${baseUrl}${route}`,
       lastModified: new Date(),
@@ -20,6 +20,15 @@ export default function sitemap() {
     priority: 0.7,
   }));
 
+  const familyRoutes = features
+    .filter((f) => f.published === true)
+    .map((f) => ({
+      url: `${baseUrl}/family/${f.slug}`,
+      lastModified: new Date(f.publishedDate),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    }));
+
   const storyRoutes = stories.map((s) => ({
     url: `${baseUrl}/stories/${s.slug}`,
     lastModified: new Date(s.publishedDate),
@@ -27,5 +36,5 @@ export default function sitemap() {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...featureRoutes, ...storyRoutes];
+  return [...staticRoutes, ...featureRoutes, ...familyRoutes, ...storyRoutes];
 }

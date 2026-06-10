@@ -4,7 +4,7 @@ import Link from "next/link";
 const exploreLinks = [
   { href: "/welcome", label: "Welcome" },
   { href: "/philosophy", label: "Philosophy" },
-  { href: "/featured", label: "Featured" },
+  { href: "/family", label: "Family" },
   { href: "/stories", label: "Stories" },
   { href: "/ecosystem", label: "Ecosystem" },
 ];

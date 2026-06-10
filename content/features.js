@@ -1,6 +1,25 @@
 // Set 'published: true' to make a feature appear on the live Featured page.
 // Set 'published: false' (or omit) to keep it as a draft.
 
+// ── OPTIONAL FIELDS (any subset may be added to any entry) ───────────────────
+// These fields are supported by the Family modal and render with graceful
+// fallbacks — existing entries without them display cleanly.
+//
+//   company:    ""          Display name of the person's company
+//   companyUrl: ""          URL for the company link in the modal
+//   gift:       ""          One-line descriptor of their defining gift/craft
+//   location:   ""          City or region
+//   socials: {
+//     instagram: "",        Full URL (e.g. "https://instagram.com/handle")
+//     linkedin:  "",
+//     x:         "",
+//     website:   "",
+//   }
+//
+// Fields made optional (existing entries work without them):
+//   body, excerpt, pullQuote, readTime, byline, category
+// A lightweight entry needs only: slug, type, name, heroImage, published: true
+
 export const features = [
 
   // ── FOUNDER SPOTLIGHT ────────────────────────────────────────────────────────

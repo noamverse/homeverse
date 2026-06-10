@@ -25,7 +25,7 @@ const recentStories = [...stories]
 
 function FeatureCard({ feature }) {
   return (
-    <Link href={`/featured/${feature.slug}`} className="hp-feat-card">
+    <Link href={`/family/${feature.slug}`} className="hp-feat-card">
       <div className="hp-feat-card__img-wrap">
         <Image
           src={feature.heroImage}
@@ -413,8 +413,8 @@ export default function HomePage() {
             <h2 className="hp-section__title" id="profiles-heading">
               People creating the future of the Relational Economy.
             </h2>
-            <Link href="/featured" className="hp-section__link">
-              View All Features &rarr;
+            <Link href="/family" className="hp-section__link">
+              View All &rarr;
             </Link>
           </div>
           <div className="hp-feat-card-grid">
