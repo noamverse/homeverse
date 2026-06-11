@@ -58,7 +58,6 @@ export const features = [
   publishedDate: "2026-04-29",
   readTime: "6 min read",
   category: "FOUNDER",
-  byline: "Profile by Noam Polinger",
   excerpt: "Jose's Superpower: The ability to see and bring to life the story within any human being.",
   pullQuote: "'I'm a steward, building with what I've been trusted with.'",
   heroImage: "/images/features/jose-virella-headshot.png",
