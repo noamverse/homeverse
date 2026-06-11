@@ -7,7 +7,7 @@
 //
 //   company:    ""          Display name of the person's company
 //   companyUrl: ""          URL for the company link in the modal
-//   gift:       ""          One-line descriptor of their defining gift/craft
+//   superpower:       ""          One-line descriptor of their defining gift/craft
 //   location:   ""          City or region
 //   socials: {
 //     instagram: "",        Full URL (e.g. "https://instagram.com/handle")
@@ -63,6 +63,15 @@ export const features = [
   pullQuote: "'I'm a steward, building with what I've been trusted with.'",
   heroImage: "/images/features/jose-virella-headshot.png",
   heroImageWide: "/images/features/jose-feature.png",
+  company:    "Samson Videography",          
+  companyUrl: "https://samsonvideography.com/",          
+  superpower: "The ability to see and bring to life the story within any human being.",         
+  location:   "Headquartered in Tampa, Florida",          
+socials: {
+     instagram: "https://www.instagram.com/joselvirella/",        
+     linkedin:  "https://www.linkedin.com/in/jose-l-virella-1b46a436a/",
+     website:   "https://samsonvideography.com/",
+   },
   body: [
     "There is a particular kind of person you only recognize once you've spent time around them. Quiet at first. Reserved. Easy to potentially overlook in a room full of louder voices selling louder things. And then, slowly, you notice the work. You notice that every frame they shoot is composed like a sentence in a sermon. You notice that they don't have the most 'followers', don't 'brand' much, don't perform much — and yet the people they work with come back, and come back, and come back. You notice that they never once told you how good they are, because they didn't need to.",
     "Jose Virella is that person. He is the founder of Samson Videography — though calling Samson a videography company is a bit like calling a cathedral 'just a building'. Technically, it's true. Functionally it doesn't begin to describe the full story. Out of Tampa, Jose has been quietly building a body of work that has reached coaches, consultants, and ministry leaders across the country and the world, including some of the biggest names in their categories. He wouldn't tell you that part. He'd tell you he serves people who have a message and need help bringing it to life. Which is true. It is also a profound understatement.",
