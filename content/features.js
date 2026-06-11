@@ -57,9 +57,9 @@ export const features = [
   title: "The Man Behind the Lens",
   publishedDate: "2026-04-29",
   readTime: "6 min read",
-  category: "FOUNDER PROFILE",
+  category: "FOUNDER",
   byline: "Profile by Noam Polinger",
-  excerpt: "Elite in his craft, he sees the world through a way of meticulousness that changes everyone he encounters.",
+  excerpt: "Jose's Superpower: The ability to see and bring to life the story within any human being.",
   pullQuote: "'I'm a steward, building with what I've been trusted with.'",
   heroImage: "/images/features/jose-virella-headshot.png",
   heroImageWide: "/images/features/jose-feature.png",
@@ -70,7 +70,6 @@ export const features = [
 socials: {
      instagram: "https://www.instagram.com/joselvirella/",        
      linkedin:  "https://www.linkedin.com/in/jose-l-virella-1b46a436a/",
-     website:   "https://samsonvideography.com/",
    },
   body: [
     "There is a particular kind of person you only recognize once you've spent time around them. Quiet at first. Reserved. Easy to potentially overlook in a room full of louder voices selling louder things. And then, slowly, you notice the work. You notice that every frame they shoot is composed like a sentence in a sermon. You notice that they don't have the most 'followers', don't 'brand' much, don't perform much — and yet the people they work with come back, and come back, and come back. You notice that they never once told you how good they are, because they didn't need to.",
