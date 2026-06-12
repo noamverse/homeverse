@@ -163,8 +163,7 @@ export default function FeaturedPage() {
           <p className="wall-top__eyebrow">FEATURED</p>
           <h1 className="wall-top__headline">The Family</h1>
           <p className="wall-top__sub">
-            Founders, companies, and minds we believe in. Each face is a story. Each story is an
-            invitation to know them.
+            Founders, companies, and minds we believe in. Our Family.
           </p>
         </section>
 
