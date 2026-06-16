@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { isImmersiveRoute } from "@/lib/immersive-routes";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -18,6 +19,8 @@ export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
+
+  if (isImmersiveRoute(pathname)) return null;
 
   return (
     <header className={`site-header${isHome ? " site-header--transparent" : ""}`}>
