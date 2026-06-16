@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
-export default function Guestbook({ desk }) {
-  const [open, setOpen] = useState(false);
+export default function Guestbook({ desk, hideTrigger = false, open: openProp, onOpenChange }) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = hideTrigger ? openProp : internalOpen;
+  const setOpen = hideTrigger ? (onOpenChange ?? (() => {})) : setInternalOpen;
   const [values, setValues] = useState({});
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
   const reduce = useReducedMotion();
@@ -15,7 +17,7 @@ export default function Guestbook({ desk }) {
 
   const toggleOpen = () => {
     navigator.vibrate?.(14);
-    setOpen((o) => !o);
+    setOpen(!open);
   };
 
   const handleSubmit = async (e) => {
@@ -37,18 +39,24 @@ export default function Guestbook({ desk }) {
   };
 
   return (
-    <div className="guestbook depth-layer" style={{ "--depth": 0.75 }}>
-      <button
-        type="button"
-        className={`guestbook__book${open ? " is-open" : ""}`}
-        aria-label={open ? "Close the guestbook" : "Open the guestbook"}
-        aria-expanded={open}
-        onClick={toggleOpen}
-      >
-        <span className="guestbook__book-glow" aria-hidden="true" />
-        <span className="guestbook__book-spine" aria-hidden="true" />
-        <span className="guestbook__hint">{desk.eyebrow}</span>
-      </button>
+    <div
+      className={hideTrigger ? `guestbook${open ? " guestbook--modal" : ""}` : "guestbook depth-layer"}
+      style={hideTrigger ? undefined : { "--depth": 0.75 }}
+      onClick={hideTrigger ? (e) => e.target === e.currentTarget && toggleOpen() : undefined}
+    >
+      {!hideTrigger && (
+        <button
+          type="button"
+          className={`guestbook__book${open ? " is-open" : ""}`}
+          aria-label={open ? "Close the guestbook" : "Open the guestbook"}
+          aria-expanded={open}
+          onClick={toggleOpen}
+        >
+          <span className="guestbook__book-glow" aria-hidden="true" />
+          <span className="guestbook__book-spine" aria-hidden="true" />
+          <span className="guestbook__hint">{desk.eyebrow}</span>
+        </button>
+      )}
 
       <AnimatePresence>
         {open && (
@@ -59,6 +67,11 @@ export default function Guestbook({ desk }) {
             exit={{ opacity: 0, y: reduce ? 0 : 10, scale: reduce ? 1 : 0.97 }}
             transition={{ duration: reduce ? 0.2 : 0.5, ease: "easeOut" }}
           >
+            {hideTrigger && (
+              <button type="button" className="guestbook__dismiss" aria-label="Close the guestbook" onClick={toggleOpen}>
+                &times;
+              </button>
+            )}
             {status === "success" ? (
               <p className="guestbook__status guestbook__status--ok">{desk.confirmation}</p>
             ) : (

@@ -6,11 +6,21 @@ import RoomAtmosphere from "./RoomAtmosphere";
 import FamilyWall from "./FamilyWall";
 import RoomFurniture from "./RoomFurniture";
 import Guestbook from "./Guestbook";
+import BelongRoom from "./BelongRoom";
 import useRoomParallax from "./useRoomParallax";
 
 export default function Room({ room }) {
   const reduce = useReducedMotion();
   const parallaxRef = useRoomParallax();
+
+  if (room.slug === "belong") {
+    return (
+      <div className={`theme-lobby room-${room.slug}`}>
+        <LobbyMark />
+        <BelongRoom room={room} />
+      </div>
+    );
+  }
 
   return (
     <div className={`theme-lobby room-${room.slug}`} ref={parallaxRef}>
