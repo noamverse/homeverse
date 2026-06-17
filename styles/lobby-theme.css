@@ -906,7 +906,20 @@
   bottom: auto;
   left: auto;
   transform: none;
-  width: min(340px, 90vw);
+  width: min(480px, 92vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+
+.guestbook--modal .guestbook__panel::-webkit-scrollbar {
+  width: 4px;
+}
+
+.guestbook--modal .guestbook__panel::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
 }
 
 .guestbook__dismiss {
@@ -1101,8 +1114,8 @@
 
 .belong-room__book {
   position: relative;
-  width: 96px;
-  height: 64px;
+  width: 110px;
+  height: 74px;
   border: none;
   background: none;
   padding: 0;
@@ -1165,9 +1178,9 @@
 .belong-room__prompt {
   font-family: "Playfair Display", serif;
   font-style: italic;
-  font-size: 1.02rem;
+  font-size: 1.08rem;
   color: var(--room-accent-bright);
-  opacity: 0.85;
+  opacity: 0.9;
   margin: 0;
   transition: opacity 0.3s ease;
 }
@@ -1222,6 +1235,65 @@
   .belong-room__inscriptions {
     display: none;
   }
+}
+
+/* ── Guestbook multi-select pills ────────────────────────── */
+
+.guestbook__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.guestbook__pill {
+  font-family: "Inter", sans-serif;
+  font-size: 0.78rem;
+  line-height: 1;
+  color: var(--mute);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 6px 13px;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.guestbook__pill:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: var(--bone);
+}
+
+.guestbook__pill.is-selected {
+  background: var(--room-accent);
+  border-color: var(--room-accent-bright);
+  color: var(--ink);
+}
+
+/* ── Book pages: stacked pages edge on the right ────────── */
+
+.belong-room__book-pages {
+  position: absolute;
+  right: -5px;
+  top: 6px;
+  bottom: 6px;
+  width: 7px;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(244, 236, 216, 0.75) 0px,
+    rgba(244, 236, 216, 0.75) 2px,
+    rgba(180, 140, 70, 0.45) 2px,
+    rgba(180, 140, 70, 0.45) 4px
+  );
+  border-radius: 0 2px 2px 0;
+  pointer-events: none;
+}
+
+/* ── Prompt always visible ───────────────────────────────── */
+
+.belong-room__prompt {
+  opacity: 1;
 }
 
 @media (max-width: 720px) {

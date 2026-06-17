@@ -15,6 +15,18 @@ export default function Guestbook({ desk, hideTrigger = false, open: openProp, o
     setValues((v) => ({ ...v, [name]: e.target.value }));
   };
 
+  const handleToggle = (name, option) => {
+    setValues((v) => {
+      const current = Array.isArray(v[name]) ? v[name] : [];
+      return {
+        ...v,
+        [name]: current.includes(option)
+          ? current.filter((o) => o !== option)
+          : [...current, option],
+      };
+    });
+  };
+
   const toggleOpen = () => {
     navigator.vibrate?.(14);
     setOpen(!open);
@@ -22,20 +34,85 @@ export default function Guestbook({ desk, hideTrigger = false, open: openProp, o
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (e.target.elements._gotcha?.value) return; // honeypot tripped
+    const honeypot = e.target.elements._gotcha?.value ?? "";
+    if (honeypot) return; // client-side honeypot check
 
     setStatus("submitting");
+
     try {
+      // Separate top-level fields (name, email, city) from answers
+      const topKeys = new Set(desk.fields.filter((f) => f.top).map((f) => f.name));
+      const topLevel = {};
+      const answers = {};
+      for (const [k, v] of Object.entries(values)) {
+        if (topKeys.has(k)) topLevel[k] = v;
+        else answers[k] = v;
+      }
+
+      const payload = {
+        room: desk.tag,
+        ...topLevel,
+        answers,
+        source: typeof window !== "undefined" ? window.location.pathname : null,
+        _h: honeypot, // server-side honeypot check
+      };
+
       const res = await fetch("/api/enter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tag: desk.tag, ...values }),
+        body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error("request failed");
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || "request failed");
+
       setStatus("success");
     } catch {
       setStatus("error");
     }
+  };
+
+  const renderField = (field) => {
+    if (field.type === "multiselect") {
+      const selected = Array.isArray(values[field.name]) ? values[field.name] : [];
+      return (
+        <div className="guestbook__pills">
+          {field.options.map((opt) => (
+            <button
+              key={opt}
+              type="button"
+              className={`guestbook__pill${selected.includes(opt) ? " is-selected" : ""}`}
+              onClick={() => handleToggle(field.name, opt)}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      );
+    }
+
+    if (field.type === "textarea") {
+      return (
+        <textarea
+          id={field.name}
+          name={field.name}
+          required={field.required}
+          value={values[field.name] || ""}
+          onChange={handleChange(field.name)}
+        />
+      );
+    }
+
+    return (
+      <input
+        type={field.type}
+        id={field.name}
+        name={field.name}
+        required={field.required}
+        value={values[field.name] || ""}
+        onChange={handleChange(field.name)}
+      />
+    );
   };
 
   return (
@@ -68,10 +145,16 @@ export default function Guestbook({ desk, hideTrigger = false, open: openProp, o
             transition={{ duration: reduce ? 0.2 : 0.5, ease: "easeOut" }}
           >
             {hideTrigger && (
-              <button type="button" className="guestbook__dismiss" aria-label="Close the guestbook" onClick={toggleOpen}>
+              <button
+                type="button"
+                className="guestbook__dismiss"
+                aria-label="Close the guestbook"
+                onClick={toggleOpen}
+              >
                 &times;
               </button>
             )}
+
             {status === "success" ? (
               <p className="guestbook__status guestbook__status--ok">{desk.confirmation}</p>
             ) : (
@@ -85,30 +168,19 @@ export default function Guestbook({ desk, hideTrigger = false, open: openProp, o
 
                 {desk.fields.map((field) => (
                   <div className="guestbook__field" key={field.name}>
-                    <label htmlFor={field.name}>{field.label}</label>
-                    {field.type === "textarea" ? (
-                      <textarea
-                        id={field.name}
-                        name={field.name}
-                        required={field.required}
-                        value={values[field.name] || ""}
-                        onChange={handleChange(field.name)}
-                      />
-                    ) : (
-                      <input
-                        type={field.type}
-                        id={field.name}
-                        name={field.name}
-                        required={field.required}
-                        value={values[field.name] || ""}
-                        onChange={handleChange(field.name)}
-                      />
-                    )}
+                    <label htmlFor={field.type !== "multiselect" ? field.name : undefined}>
+                      {field.label}
+                    </label>
+                    {renderField(field)}
                   </div>
                 ))}
 
                 <div className="guestbook__actions">
-                  <button type="submit" className="guestbook__submit" disabled={status === "submitting"}>
+                  <button
+                    type="submit"
+                    className="guestbook__submit"
+                    disabled={status === "submitting"}
+                  >
                     {status === "submitting" ? "Sending…" : desk.submitLabel}
                   </button>
                   <button type="button" className="guestbook__close" onClick={toggleOpen}>

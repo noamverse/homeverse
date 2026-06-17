@@ -23,10 +23,6 @@ export default function BelongRoom({ room }) {
 
   useEffect(() => setMounted(true), []);
 
-  const inscriptions = room.exploration ?? [];
-  const left = inscriptions.slice(0, 2);
-  const right = inscriptions.slice(2, 4);
-
   const openGuestbook = () => {
     navigator.vibrate?.(14);
     setOpen(true);
@@ -57,25 +53,6 @@ export default function BelongRoom({ room }) {
             />
           ))}
       </div>
-
-      {left.length > 0 && (
-        <div className="belong-room__inscriptions belong-room__inscriptions--left" aria-hidden="true">
-          {left.map((item) => (
-            <p className="belong-room__inscription" key={item.label}>
-              {item.title}
-            </p>
-          ))}
-        </div>
-      )}
-      {right.length > 0 && (
-        <div className="belong-room__inscriptions belong-room__inscriptions--right" aria-hidden="true">
-          {right.map((item) => (
-            <p className="belong-room__inscription" key={item.label}>
-              {item.title}
-            </p>
-          ))}
-        </div>
-      )}
 
       <div className="belong-room__content">
         <div className="belong-room__title">
@@ -128,8 +105,9 @@ export default function BelongRoom({ room }) {
           >
             <span className="belong-room__book-glow" aria-hidden="true" />
             <span className="belong-room__book-cover" aria-hidden="true" />
+            <span className="belong-room__book-pages" aria-hidden="true" />
           </button>
-          <p className="belong-room__prompt">Put my name in the guestbook.</p>
+          <p className="belong-room__prompt">Open the guestbook.</p>
         </motion.div>
       </div>
 
