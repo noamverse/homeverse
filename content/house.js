@@ -15,9 +15,9 @@ export const house = {
     // ── The five doors off the Lobby ─────────────────────────────
     { name: "Belong",      role: "living room",       href: "/belong",     status: "open", tier: "door" },
     { name: "Build",       role: "workshop",          href: "/build",      status: "open", tier: "door" },
-    { name: "Bring",       role: "salon",             href: null,          status: "soon", tier: "door" },
-    { name: "Seed",        role: "garden",            href: null,          status: "soon", tier: "door" },
-    { name: "Partner",     role: "boardroom",         href: null,          status: "soon", tier: "door" },
+    { name: "Bring",       role: "salon",             href: "/bring",      status: "open", tier: "door" },
+    { name: "Seed",        role: "garden",            href: "/seed",       status: "open", tier: "door" },
+    { name: "Partner",     role: "boardroom",         href: "/partner",    status: "open", tier: "door" },
     // ── Root / Base ──────────────────────────────────────────────
     { name: "The Tree",    role: "the living ledger", href: null,          status: "soon", tier: "root" },
     // ── Public pages ─────────────────────────────────────────────

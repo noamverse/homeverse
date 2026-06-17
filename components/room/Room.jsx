@@ -7,6 +7,9 @@ import RoomFurniture from "./RoomFurniture";
 import Guestbook from "./Guestbook";
 import BelongRoom from "./BelongRoom";
 import BuildRoom from "./BuildRoom";
+import BringRoom from "./BringRoom";
+import SeedRoom from "./SeedRoom";
+import PartnerRoom from "./PartnerRoom";
 import useRoomParallax from "./useRoomParallax";
 
 export default function Room({ room }) {
@@ -25,6 +28,30 @@ export default function Room({ room }) {
     return (
       <div className={`theme-lobby room-${room.slug}`}>
         <BuildRoom room={room} />
+      </div>
+    );
+  }
+
+  if (room.slug === "bring") {
+    return (
+      <div className={`theme-lobby room-${room.slug}`}>
+        <BringRoom room={room} />
+      </div>
+    );
+  }
+
+  if (room.slug === "seed") {
+    return (
+      <div className={`theme-lobby room-${room.slug}`}>
+        <SeedRoom room={room} />
+      </div>
+    );
+  }
+
+  if (room.slug === "partner") {
+    return (
+      <div className={`theme-lobby room-${room.slug}`}>
+        <PartnerRoom room={room} />
       </div>
     );
   }

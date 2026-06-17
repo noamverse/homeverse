@@ -1,4 +1,141 @@
 export const rooms = {
+  bring: {
+    slug: "bring",
+    title: "Bring",
+    eyebrow: "THE OFFERING TABLE",
+    welcome: "There's a seat with your name on it.",
+    signature: "Bring who you are.",
+    identityBody:
+      "Every table has a place already set. The question is never whether there's room — it's whether you'll come with what you actually have. Your gift, your skill, your table, your network, your time. This is where those things find their right home.",
+    desk: {
+      eyebrow: "THE OFFERING TABLE",
+      heading: "Bring who you are.",
+      tag: "bring",
+      submitLabel: "Set your place",
+      confirmation: "Your place is set. We'll find where your gift belongs.",
+      fields: [
+        { name: "name",  label: "Your name", type: "text",  required: true, top: true },
+        { name: "email", label: "Email",      type: "email", required: true, top: true },
+        {
+          name: "what_bring",
+          label: "What do you bring?",
+          type: "multiselect",
+          required: false,
+          options: ["superpower", "skill", "resource", "room", "story", "venue", "talent", "network", "capacity"],
+        },
+        {
+          name: "how_contribute",
+          label: "How do you want to contribute?",
+          type: "textarea",
+          required: false,
+        },
+        {
+          name: "roles",
+          label: "How would you like to show up?",
+          type: "multiselect",
+          required: false,
+          options: ["host", "designer", "operator", "writer", "connector", "technologist", "artist", "investor", "venue owner", "chef", "producer"],
+        },
+      ],
+    },
+  },
+
+  seed: {
+    slug: "seed",
+    title: "Seed",
+    eyebrow: "PRIVATE",
+    welcome: "Some doors only open quietly.",
+    signature: "Seed the first rooms.",
+    identityBody:
+      "The most significant participation happens before the room fills. This is a private door — for those who move with intention, not urgency. No pitches. No decks. A quiet conversation.",
+    desk: {
+      eyebrow: "PRIVATE",
+      heading: "Open a private conversation.",
+      tag: "seed",
+      submitLabel: "Send privately",
+      confirmation: "Received, privately. We'll reach out directly.",
+      fields: [
+        { name: "name",  label: "Your name", type: "text",  required: true, top: true },
+        { name: "email", label: "Email",      type: "email", required: true, top: true },
+        {
+          name: "interest",
+          label: "Nature of interest",
+          type: "multiselect",
+          required: false,
+          options: ["patronage", "sponsorship", "investment", "partnership", "underwriting events", "seeding rooms", "backing the ecosystem"],
+        },
+        {
+          name: "participation_level",
+          label: "Level of participation",
+          type: "textarea",
+          required: false,
+        },
+        {
+          name: "entity",
+          label: "You are",
+          type: "select",
+          required: false,
+          options: ["individual", "family office", "fund", "brand", "institution"],
+        },
+        {
+          name: "private_conversation",
+          label: "Request a private conversation?",
+          type: "select",
+          required: false,
+          options: ["yes", "no"],
+        },
+      ],
+    },
+  },
+
+  partner: {
+    slug: "partner",
+    title: "Partner",
+    eyebrow: "THE EMBASSY",
+    welcome: "Every city is a door.",
+    signature: "Open a channel between houses.",
+    identityBody:
+      "HOME enters the world through aligned institutions, venues, and cities. If you hold space — physical, cultural, digital, civic — there may be a natural alignment here. Tell us about your world.",
+    desk: {
+      eyebrow: "THE EMBASSY",
+      heading: "Open a channel.",
+      tag: "partner",
+      submitLabel: "Open the channel",
+      confirmation: "The channel is open. We'll meet you there.",
+      fields: [
+        { name: "name",   label: "Your name",       type: "text",  required: true,  top: true },
+        { name: "org",    label: "Organization",     type: "text",  required: false, top: false },
+        { name: "email",  label: "Email",            type: "email", required: true,  top: true },
+        { name: "market", label: "City / market",    type: "text",  required: false, top: true },
+        {
+          name: "org_type",
+          label: "Who are you?",
+          type: "multiselect",
+          required: false,
+          options: ["founder", "creator", "venue", "brand", "city", "developer", "institution", "media", "hospitality", "school", "nonprofit", "cultural org"],
+        },
+        {
+          name: "partnership",
+          label: "What partnership do you imagine?",
+          type: "textarea",
+          required: false,
+        },
+        {
+          name: "assets",
+          label: "What assets do you hold?",
+          type: "textarea",
+          required: false,
+        },
+        {
+          name: "seeking",
+          label: "What are you seeking from HOME?",
+          type: "textarea",
+          required: false,
+        },
+      ],
+    },
+  },
+
   build: {
     slug: "build",
     title: "Build",
