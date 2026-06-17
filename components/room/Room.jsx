@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import LobbyMark from "../lobby/LobbyMark";
 import RoomAtmosphere from "./RoomAtmosphere";
 import FamilyWall from "./FamilyWall";
 import RoomFurniture from "./RoomFurniture";
@@ -16,7 +15,6 @@ export default function Room({ room }) {
   if (room.slug === "belong") {
     return (
       <div className={`theme-lobby room-${room.slug}`}>
-        <LobbyMark />
         <BelongRoom room={room} />
       </div>
     );
@@ -25,7 +23,6 @@ export default function Room({ room }) {
   return (
     <div className={`theme-lobby room-${room.slug}`} ref={parallaxRef}>
       <div className="room">
-        <LobbyMark />
         <RoomAtmosphere />
 
         <section className="room-arrival">

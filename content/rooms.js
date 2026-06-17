@@ -35,7 +35,7 @@ export const rooms = {
       heading: "Sign the guestbook.",
       tag: "belong",
       submitLabel: "Be received",
-      confirmation: "You've been received through Belong. We'll place this carefully.",
+      confirmation: "You've been received through Belong. We'll place this intentionally.",
       fields: [
         { name: "name",  label: "Your name", type: "text",  required: true,  top: true },
         { name: "email", label: "Email",      type: "email", required: true,  top: true },

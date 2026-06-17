@@ -1,8 +1,5 @@
-import WelcomePage from "@/components/welcome-page";
+import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: "Welcome HOME",
-  description: "You're here. A relational ecosystem awaits.",
-};
-
-export default WelcomePage;
+export default function WelcomePage() {
+  redirect("/");
+}

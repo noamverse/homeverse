@@ -1,6 +1,10 @@
 import "./globals.css";
+import "@/styles/house-nav.css";
 import SiteFooter from "@/components/site-footer";
 import SiteHeader from "@/components/site-header";
+import { HouseMapProvider } from "@/components/house-map/HouseMapProvider";
+import ImmersiveNav from "@/components/house-map/ImmersiveNav";
+import HouseMap from "@/components/house-map/HouseMap";
 
 export const metadata = {
   metadataBase: new URL("https://homeverse.family"),
@@ -55,11 +59,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="site-shell">
-          <SiteHeader />
-          {children}
-          <SiteFooter />
-        </div>
+        <HouseMapProvider>
+          <div className="site-shell">
+            <SiteHeader />
+            <ImmersiveNav />
+            <HouseMap />
+            {children}
+            <SiteFooter />
+          </div>
+        </HouseMapProvider>
       </body>
     </html>
   );

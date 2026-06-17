@@ -152,7 +152,7 @@ export async function POST(request) {
     try {
       const resend = new Resend(resendKey);
       await resend.emails.send({
-        from: "HOME <noreply@homeverse.family>",
+        from: "HOME <guestbook@enter.homeverse.family>",
         to: founderEmail,
         subject: `HOME / BELONG / ${body.name ?? "Anonymous"} / ${body.city ?? "Unknown"}`,
         text: buildEmailText(body, classification, routing, priority, id),

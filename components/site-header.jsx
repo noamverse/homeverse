@@ -3,29 +3,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { isImmersiveRoute } from "@/lib/immersive-routes";
+import { useHouseMap } from "@/components/house-map/HouseMapProvider";
 
 const navItems = [
-  { href: "/", label: "Home" },
+  { href: "/",           label: "Lobby" },
   { href: "/philosophy", label: "Philosophy" },
-  { href: "/family", label: "Family" },
-  { href: "/stories", label: "Stories" },
-  { href: "/ecosystem", label: "Ecosystem" },
-  { href: "/welcome", label: "Welcome HOME" },
+  { href: "/family",     label: "Family" },
+  { href: "/stories",    label: "Stories" },
+  { href: "/ecosystem",  label: "Ecosystem" },
 ];
 
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const { openMap } = useHouseMap();
+  const mapBtnRef = useRef(null);
 
   if (isImmersiveRoute(pathname)) return null;
 
   return (
-    <header className={`site-header${isHome ? " site-header--transparent" : ""}`}>
+    <header className="site-header">
       <div className="site-header__inner">
-        <Link href="/" className="brand" aria-label="HOME — return to home">
+        <Link href="/" className="brand" aria-label="HOME — return to the Lobby">
           <Image
             src="/home.png.png"
             alt="HOME"
@@ -43,6 +44,17 @@ export default function SiteHeader() {
             </Link>
           ))}
         </nav>
+
+        <button
+          ref={mapBtnRef}
+          type="button"
+          className="site-header__map-btn"
+          onClick={() => openMap(mapBtnRef.current)}
+          aria-label="Open House Map"
+          aria-haspopup="dialog"
+        >
+          House Map
+        </button>
 
         <button
           className={`nav-toggle${menuOpen ? " nav-toggle--open" : ""}`}

@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import Atmosphere from "./Atmosphere";
 import DoorWall from "./DoorWall";
-import LobbyMark from "./LobbyMark";
 
 export default function Lobby() {
   const reduce = useReducedMotion();
@@ -16,7 +15,6 @@ export default function Lobby() {
         animate={{ opacity: 1 }}
         transition={{ duration: reduce ? 0.4 : 1.4, ease: "easeOut" }}
       >
-        <LobbyMark />
         <Atmosphere />
 
         <div className="lobby-arrival">

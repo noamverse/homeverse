@@ -6,11 +6,11 @@ import { isImmersiveRoute } from "@/lib/immersive-routes";
 
 // TODO: Replace '#' with actual page URLs when those pages exist
 const exploreLinks = [
-  { href: "/welcome", label: "Welcome" },
+  { href: "/",           label: "Lobby" },
   { href: "/philosophy", label: "Philosophy" },
-  { href: "/family", label: "Family" },
-  { href: "/stories", label: "Stories" },
-  { href: "/ecosystem", label: "Ecosystem" },
+  { href: "/family",     label: "Family" },
+  { href: "/stories",    label: "Stories" },
+  { href: "/ecosystem",  label: "Ecosystem" },
 ];
 
 const ecosystemLinks = [

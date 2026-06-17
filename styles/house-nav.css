@@ -1,0 +1,588 @@
+/* ═══════════════════════════════════════════════════════════════
+   HOUSE NAV — ImmersiveNav + HouseMap overlay
+   Tokens: --gold #c9a84c  --bone #f4f1ea  --ink #0a0612
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Immersive Nav ──────────────────────────────────────────── */
+
+.immersive-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 24px;
+  /* invisible by default — hover/focus/scroll-up reveal it */
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+/* soft gradient so text stays legible when revealed */
+.immersive-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.32) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* hover or keyboard focus always reveals */
+.immersive-nav:hover,
+.immersive-nav:focus-within {
+  opacity: 1;
+}
+
+/* on the Lobby itself — slightly more present */
+.immersive-nav--lobby {
+  opacity: 0.7;
+}
+
+/* after scroll-up in rooms */
+.immersive-nav--revealed {
+  opacity: 0.9;
+}
+
+/* HOME mark */
+.immersive-nav__mark {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  border-radius: 4px;
+}
+
+.immersive-nav__mark:hover,
+.immersive-nav__mark:focus-visible {
+  opacity: 1;
+  transform: scale(1.06);
+  outline: none;
+}
+
+.immersive-nav__mark:focus-visible {
+  outline: 2px solid rgba(201, 168, 76, 0.7);
+  outline-offset: 4px;
+}
+
+/* "Return to Lobby" link */
+.immersive-nav__return {
+  position: relative;
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(244, 241, 234, 0.65);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.immersive-nav__return:hover,
+.immersive-nav__return:focus-visible {
+  color: rgba(244, 241, 234, 1);
+  outline: none;
+}
+
+.immersive-nav__return:focus-visible {
+  outline: 1px solid rgba(201, 168, 76, 0.6);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+/* House Map trigger — pushed to the right */
+.immersive-nav__map-btn {
+  position: relative;
+  margin-left: auto;
+  font-family: "Inter", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.75);
+  background: transparent;
+  border: 1px solid rgba(201, 168, 76, 0.28);
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  min-height: 32px;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.immersive-nav__map-btn:hover,
+.immersive-nav__map-btn:focus-visible {
+  color: rgba(201, 168, 76, 1);
+  border-color: rgba(201, 168, 76, 0.65);
+  background: rgba(201, 168, 76, 0.06);
+  outline: none;
+}
+
+.immersive-nav__map-btn:focus-visible {
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.4);
+}
+
+@media (max-width: 480px) {
+  .immersive-nav {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+  .immersive-nav__return {
+    font-size: 0.62rem;
+  }
+  .immersive-nav__map-btn {
+    font-size: 0.62rem;
+    padding: 5px 11px;
+  }
+}
+
+
+/* ── House Map Overlay ──────────────────────────────────────── */
+
+.hmap-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(10, 6, 3, 0.88);
+  backdrop-filter: blur(10px) saturate(130%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.hmap-panel {
+  position: relative;
+  width: min(560px, 100%);
+  background: linear-gradient(168deg, rgba(26, 18, 8, 0.99) 0%, rgba(12, 8, 3, 1) 100%);
+  border: 1px solid rgba(201, 168, 76, 0.18);
+  border-radius: 18px;
+  padding: 44px 32px 32px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.75);
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 168, 76, 0.2) transparent;
+}
+
+/* close × */
+.hmap-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(244, 241, 234, 0.55);
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.hmap-close:hover,
+.hmap-close:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(244, 241, 234, 1);
+  outline: none;
+}
+
+.hmap-close:focus-visible {
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.5);
+}
+
+/* "HOUSE MAP" eyebrow label */
+.hmap-eyebrow {
+  font-family: "Inter", sans-serif;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.45);
+  margin: 0 0 22px;
+  text-align: center;
+}
+
+
+/* ── Skyscraper tower ───────────────────────────────────────── */
+
+.hmap-tower {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 18px;
+}
+
+.hmap-tier {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Tapering widths create the skyscraper silhouette */
+.hmap-tier--penthouse  { max-width: 56%; }
+.hmap-tier--upper      { max-width: 74%; }
+.hmap-tier--fellowship { max-width: 86%; }
+.hmap-tier--lobby      { max-width: 100%; }
+.hmap-tier--root       { max-width: 100%; }
+
+
+/* ── Floor nodes ────────────────────────────────────────────── */
+
+.hmap-node {
+  position: relative;
+  flex: 1;
+  min-width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 10px 8px;
+  border-radius: 6px;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.hmap-node--open {
+  border: 1px solid rgba(201, 168, 76, 0.38);
+  background: rgba(201, 168, 76, 0.04);
+  color: #f4f1ea;
+  cursor: pointer;
+}
+
+.hmap-node--open:hover,
+.hmap-node--open:focus-visible {
+  background: rgba(201, 168, 76, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(201, 168, 76, 0.14);
+  outline: none;
+}
+
+.hmap-node--open:focus-visible {
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.6);
+}
+
+.hmap-node--soon {
+  border: 1px dashed rgba(120, 100, 60, 0.28);
+  background: transparent;
+  color: rgba(180, 165, 140, 0.42);
+  cursor: default;
+}
+
+.hmap-node--here {
+  border-color: rgba(201, 168, 76, 0.72);
+  box-shadow: 0 0 26px 4px rgba(201, 168, 76, 0.14);
+}
+
+/* status dot */
+.hmap-node__dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.hmap-node--open .hmap-node__dot { background: #c9a84c; }
+.hmap-node--soon .hmap-node__dot { border: 1.5px solid rgba(120, 100, 60, 0.42); }
+
+.hmap-node__name {
+  font-family: "Playfair Display", serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+.hmap-node__role {
+  font-family: "Inter", sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.48;
+}
+
+.hmap-node__here {
+  font-family: "Inter", sans-serif;
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  opacity: 0.85;
+}
+
+.hmap-node__soon-label {
+  font-family: "Inter", sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(180, 165, 140, 0.3);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.hmap-node--soon:hover .hmap-node__soon-label { opacity: 1; }
+
+
+/* ── Divider ────────────────────────────────────────────────── */
+
+.hmap-divider {
+  font-family: "Inter", sans-serif;
+  font-size: 0.6rem;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  color: rgba(160, 140, 100, 0.38);
+  text-align: center;
+  margin: 2px 0;
+  padding: 6px 0;
+  width: 100%;
+  border-top: 1px solid rgba(120, 100, 60, 0.14);
+  border-bottom: 1px solid rgba(120, 100, 60, 0.14);
+}
+
+
+/* ── Lobby floor ────────────────────────────────────────────── */
+
+.hmap-tier--lobby { padding: 0; }
+
+.hmap-lobby {
+  width: 100%;
+  border: 1px solid rgba(201, 168, 76, 0.38);
+  border-radius: 10px;
+  background: rgba(201, 168, 76, 0.025);
+  padding: 14px 16px;
+}
+
+.hmap-tier--here .hmap-lobby {
+  border-color: rgba(201, 168, 76, 0.62);
+  box-shadow: 0 0 32px 4px rgba(201, 168, 76, 0.1);
+}
+
+.hmap-lobby__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 11px;
+}
+
+.hmap-lobby__title {
+  font-family: "Playfair Display", serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.hmap-lobby__title:hover { opacity: 0.8; }
+.hmap-lobby__title:focus-visible { outline: 1px solid rgba(201, 168, 76, 0.6); outline-offset: 3px; border-radius: 2px; }
+
+.hmap-lobby__here {
+  font-family: "Inter", sans-serif;
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.75);
+}
+
+.hmap-lobby__doors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+
+/* ── Door chips ─────────────────────────────────────────────── */
+
+.hmap-door {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 13px;
+  border-radius: 20px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.hmap-door--open {
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  color: #f4f1ea;
+  background: rgba(201, 168, 76, 0.04);
+}
+
+.hmap-door--open:hover,
+.hmap-door--open:focus-visible {
+  background: rgba(201, 168, 76, 0.12);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.hmap-door--open:focus-visible {
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.5);
+}
+
+.hmap-door--soon {
+  border: 1px dashed rgba(120, 100, 60, 0.26);
+  color: rgba(180, 165, 140, 0.38);
+  cursor: default;
+}
+
+.hmap-door--here {
+  border-color: rgba(201, 168, 76, 0.65);
+  box-shadow: 0 0 12px rgba(201, 168, 76, 0.14);
+}
+
+.hmap-door__here { color: #c9a84c; margin-left: 3px; }
+
+
+/* ── Public pages row ───────────────────────────────────────── */
+
+.hmap-public {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(120, 100, 60, 0.14);
+  margin-bottom: 18px;
+}
+
+/* Public nodes render as compact horizontal pills */
+.hmap-public .hmap-node {
+  flex: none;
+  flex-direction: row;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 20px;
+  min-width: auto;
+  min-height: 36px;
+}
+
+.hmap-public .hmap-node__dot { width: 5px; height: 5px; }
+.hmap-public .hmap-node__name {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.hmap-public .hmap-node__role,
+.hmap-public .hmap-node__here,
+.hmap-public .hmap-node__soon-label { display: none; }
+
+
+/* ── Footer ─────────────────────────────────────────────────── */
+
+.hmap-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hmap-legend {
+  display: flex;
+  gap: 14px;
+  margin: 0;
+}
+
+.hmap-legend__item {
+  font-family: "Inter", sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hmap-legend__item--open { color: rgba(201, 168, 76, 0.7); }
+.hmap-legend__item--soon { color: rgba(180, 165, 140, 0.38); }
+
+.hmap-return {
+  font-family: "Inter", sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.hmap-return:hover,
+.hmap-return:focus-visible {
+  color: rgba(201, 168, 76, 1);
+  outline: none;
+}
+
+.hmap-return:focus-visible {
+  outline: 1px solid rgba(201, 168, 76, 0.5);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+/* ── Site header Map button ─────────────────────────────────── */
+
+.site-header__map-btn {
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.8);
+  background: transparent;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.site-header__map-btn:hover,
+.site-header__map-btn:focus-visible {
+  color: rgba(201, 168, 76, 1);
+  border-color: rgba(201, 168, 76, 0.65);
+  background: rgba(201, 168, 76, 0.06);
+  outline: none;
+}
+
+.site-header__map-btn:focus-visible {
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.4);
+}
+
+@media (max-width: 768px) {
+  .site-header__map-btn { display: none; }
+}
+
+/* ── Mobile ─────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .hmap-panel { padding: 40px 18px 24px; }
+  .hmap-tier--penthouse  { max-width: 70%; }
+  .hmap-tier--upper      { max-width: 88%; }
+  .hmap-tier--fellowship { max-width: 96%; }
+  .hmap-node { padding: 9px 8px 7px; min-width: 64px; }
+  .hmap-node__name { font-size: 0.7rem; }
+  .hmap-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .hmap-node--open:hover { transform: none; }
+  .hmap-door--open:hover { transform: none; }
+}
