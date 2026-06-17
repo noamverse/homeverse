@@ -15,9 +15,8 @@ export default function Door({ door, isOpen, onOpen }) {
   const flat = reduce || coarse;
 
   const handleOpen = () => {
-    if (isOpen) return;
     navigator.vibrate?.(16);
-    onOpen(door.key);
+    onOpen(isOpen ? null : door.key);
   };
 
   const handleKeyDown = (e) => {

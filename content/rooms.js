@@ -1,4 +1,53 @@
 export const rooms = {
+  build: {
+    slug: "build",
+    title: "Build",
+    eyebrow: "THE WORKSHOP",
+    welcome: "Bring what wants to become real.",
+    signature: "Show us what you're building.",
+    identityBody:
+      "Every real thing was once an incomplete idea on a table. This is the room where that table lives — cold light, clean surfaces, and the strange quiet of building. Whatever you're making is already real enough to place here.",
+    desk: {
+      eyebrow: "THE BUILD TABLE",
+      heading: "Place your build on the table.",
+      tag: "build",
+      submitLabel: "Place it on the table",
+      confirmation: "Your build is on the table. We'll receive it and route it intentionally.",
+      fields: [
+        { name: "name",  label: "Your name",   type: "text",  required: true,  top: true },
+        { name: "email", label: "Email",        type: "email", required: true,  top: true },
+        {
+          name: "what_building",
+          label: "What are you building?",
+          type: "textarea",
+          required: false,
+        },
+        {
+          name: "stage",
+          label: "What stage is it?",
+          type: "select",
+          required: false,
+          options: ["idea", "building", "launched", "scaling"],
+        },
+        {
+          name: "need_most",
+          label: "What do you need most?",
+          type: "multiselect",
+          required: false,
+          options: ["capital", "story", "product", "distribution", "team", "clarity", "partners"],
+        },
+        { name: "link", label: "Link / deck / demo (optional)", type: "text", required: false },
+        {
+          name: "looking_for",
+          label: "What are you looking for?",
+          type: "multiselect",
+          required: false,
+          options: ["Translation", "Studio", "Fund", "Fellowship", "Partners"],
+        },
+      ],
+    },
+  },
+
   belong: {
     slug: "belong",
     title: "Belong",

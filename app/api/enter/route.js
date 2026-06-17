@@ -7,7 +7,9 @@ function isValidEmail(str) {
   return typeof str === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str.trim());
 }
 
-function classify(body) {
+// ── Belong classification ─────────────────────────────────────
+
+function classifyBelong(body) {
   return {
     desired_rooms: body.answers?.room_types ?? [],
     invite_preference: body.answers?.invite_preference ?? [],
@@ -16,7 +18,7 @@ function classify(body) {
   };
 }
 
-function buildRouting(classification) {
+function routeBelong(classification) {
   const routing = ["Fellowship"];
   if (classification.desired_rooms.includes("faith/spiritual")) routing.push("Foundation");
   if (
@@ -28,7 +30,7 @@ function buildRouting(classification) {
   return routing;
 }
 
-function buildPriority(body, classification) {
+function prioritizeBelong(body, classification) {
   if (classification.desired_rooms.includes("founders")) return "high";
   const notes = (body.answers?.open_notes ?? "").toLowerCase();
   if (/\b(host|hosting|venue|capital|invest|fund|partner|partnership|strategic)\b/.test(notes))
@@ -36,7 +38,105 @@ function buildPriority(body, classification) {
   return "normal";
 }
 
-function buildEmailText(body, classification, routing, priority, id) {
+// ── Build classification ──────────────────────────────────────
+
+function classifyBuild(body) {
+  return {
+    stage: body.answers?.stage ?? null,
+    needs: body.answers?.need_most ?? [],
+    looking_for: body.answers?.looking_for ?? [],
+    has_link: !!(body.answers?.link),
+  };
+}
+
+function routeBuild(classification) {
+  const routing = ["Engine"];
+  if (classification.needs.includes("capital") || classification.looking_for.includes("Fund"))
+    routing.push("Fund");
+  if (
+    classification.needs.includes("story") ||
+    classification.needs.includes("clarity") ||
+    classification.looking_for.includes("Translation")
+  )
+    routing.push("Translation");
+  if (
+    classification.needs.includes("product") ||
+    classification.needs.includes("distribution") ||
+    classification.looking_for.includes("Studio")
+  )
+    routing.push("Studio");
+  if (classification.needs.includes("team") || classification.looking_for.includes("Fellowship"))
+    routing.push("Fellowship");
+  if (classification.needs.includes("partners") || classification.looking_for.includes("Partners"))
+    routing.push("Partner");
+  return routing;
+}
+
+function prioritizeBuild(body, classification) {
+  const advancedStage = ["launched", "scaling"].includes(classification.stage);
+  const hasCapital = classification.needs.includes("capital");
+  const hasLink = classification.has_link;
+  if (advancedStage && (hasCapital || hasLink)) return "high";
+  return "normal";
+}
+
+// ── Dispatchers ───────────────────────────────────────────────
+
+function classify(body) {
+  if (body.room === "build") return classifyBuild(body);
+  return classifyBelong(body);
+}
+
+function computeRouting(body, classification) {
+  if (body.room === "build") return routeBuild(classification);
+  return routeBelong(classification);
+}
+
+function computePriority(body, classification) {
+  if (body.room === "build") return prioritizeBuild(body, classification);
+  return prioritizeBelong(body, classification);
+}
+
+// ── Email helpers ─────────────────────────────────────────────
+
+function emailSubject(body) {
+  if (body.room === "build") return `HOME / BUILD / ${body.name ?? "Anonymous"}`;
+  return `HOME / BELONG / ${body.name ?? "Anonymous"} / ${body.city ?? "Unknown"}`;
+}
+
+function emailText(body, classification, routing, priority, id) {
+  const ts = new Date().toISOString();
+  const idLine = `Entry ID: ${id ?? "(not written — env vars missing)"}`;
+  const sourceLine = `Source: ${body.source ?? "—"}`;
+
+  if (body.room === "build") {
+    const a = body.answers ?? {};
+    return [
+      `Room: ${body.room}`,
+      `Name: ${body.name ?? "—"}`,
+      `Email: ${body.email}`,
+      ``,
+      `--- Classification ---`,
+      `Stage: ${classification.stage ?? "—"}`,
+      `Needs: ${classification.needs.join(", ") || "—"}`,
+      `Looking for: ${classification.looking_for.join(", ") || "—"}`,
+      `Has link/deck: ${classification.has_link ? "yes" : "no"}`,
+      ``,
+      `--- Routing ---`,
+      routing.join(", "),
+      `Priority: ${priority}`,
+      ``,
+      `--- What they're building ---`,
+      a.what_building ?? "—",
+      `Link: ${a.link ?? "—"}`,
+      ``,
+      sourceLine,
+      idLine,
+      `Timestamp: ${ts}`,
+    ].join("\n");
+  }
+
+  // Belong (default)
   const a = body.answers ?? {};
   return [
     `Room: ${body.room}`,
@@ -58,11 +158,13 @@ function buildEmailText(body, classification, routing, priority, id) {
     `What are you seeking? ${a.seeking ?? "—"}`,
     `Anything we should know? ${a.open_notes ?? "—"}`,
     ``,
-    `Source: ${body.source ?? "—"}`,
-    `Entry ID: ${id ?? "(not written — env vars missing)"}`,
-    `Timestamp: ${new Date().toISOString()}`,
+    sourceLine,
+    idLine,
+    `Timestamp: ${ts}`,
   ].join("\n");
 }
+
+// ── Route handler ─────────────────────────────────────────────
 
 export async function POST(request) {
   let body;
@@ -91,8 +193,8 @@ export async function POST(request) {
   }
 
   const classification = classify(body);
-  const routing = buildRouting(classification);
-  const priority = buildPriority(body, classification);
+  const routing = computeRouting(body, classification);
+  const priority = computePriority(body, classification);
 
   const entry = {
     room: body.room,
@@ -154,8 +256,8 @@ export async function POST(request) {
       await resend.emails.send({
         from: "HOME <guestbook@enter.homeverse.family>",
         to: founderEmail,
-        subject: `HOME / BELONG / ${body.name ?? "Anonymous"} / ${body.city ?? "Unknown"}`,
-        text: buildEmailText(body, classification, routing, priority, id),
+        subject: emailSubject(body),
+        text: emailText(body, classification, routing, priority, id),
       });
     } catch (emailErr) {
       console.error("[/api/enter] Resend error:", emailErr.message);

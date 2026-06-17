@@ -6,6 +6,7 @@ import FamilyWall from "./FamilyWall";
 import RoomFurniture from "./RoomFurniture";
 import Guestbook from "./Guestbook";
 import BelongRoom from "./BelongRoom";
+import BuildRoom from "./BuildRoom";
 import useRoomParallax from "./useRoomParallax";
 
 export default function Room({ room }) {
@@ -16,6 +17,14 @@ export default function Room({ room }) {
     return (
       <div className={`theme-lobby room-${room.slug}`}>
         <BelongRoom room={room} />
+      </div>
+    );
+  }
+
+  if (room.slug === "build") {
+    return (
+      <div className={`theme-lobby room-${room.slug}`}>
+        <BuildRoom room={room} />
       </div>
     );
   }

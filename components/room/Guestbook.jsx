@@ -73,6 +73,26 @@ export default function Guestbook({ desk, hideTrigger = false, open: openProp, o
   };
 
   const renderField = (field) => {
+    if (field.type === "select") {
+      const selected = values[field.name] ?? null;
+      return (
+        <div className="guestbook__pills">
+          {field.options.map((opt) => (
+            <button
+              key={opt}
+              type="button"
+              className={`guestbook__pill${selected === opt ? " is-selected" : ""}`}
+              onClick={() =>
+                setValues((v) => ({ ...v, [field.name]: v[field.name] === opt ? null : opt }))
+              }
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      );
+    }
+
     if (field.type === "multiselect") {
       const selected = Array.isArray(values[field.name]) ? values[field.name] : [];
       return (

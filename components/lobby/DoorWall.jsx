@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Door from "./Door";
 
@@ -50,9 +50,31 @@ const DOORS = [
 export default function DoorWall() {
   const [openKey, setOpenKey] = useState(null);
   const reduce = useReducedMotion();
+  const wallRef = useRef(null);
+
+  // Esc closes the open door
+  useEffect(() => {
+    if (!openKey) return;
+    const onKey = (e) => { if (e.key === "Escape") setOpenKey(null); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [openKey]);
+
+  // Click outside the door wall closes the open door
+  useEffect(() => {
+    if (!openKey) return;
+    const onClick = (e) => {
+      if (wallRef.current && !wallRef.current.contains(e.target)) {
+        setOpenKey(null);
+      }
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [openKey]);
 
   return (
     <div
+      ref={wallRef}
       className={`door-wall${openKey ? " door-wall--dimmed" : ""}`}
       role="group"
       aria-label="Choose a door"

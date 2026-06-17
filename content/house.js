@@ -14,7 +14,7 @@ export const house = {
     { name: "The Lobby",   role: "the center",        href: "/",           status: "open", tier: "lobby" },
     // ── The five doors off the Lobby ─────────────────────────────
     { name: "Belong",      role: "living room",       href: "/belong",     status: "open", tier: "door" },
-    { name: "Build",       role: "studio",            href: null,          status: "soon", tier: "door" },
+    { name: "Build",       role: "workshop",          href: "/build",      status: "open", tier: "door" },
     { name: "Bring",       role: "salon",             href: null,          status: "soon", tier: "door" },
     { name: "Seed",        role: "garden",            href: null,          status: "soon", tier: "door" },
     { name: "Partner",     role: "boardroom",         href: null,          status: "soon", tier: "door" },

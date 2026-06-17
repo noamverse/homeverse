@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,28 +10,8 @@ import { isImmersiveRoute } from "@/lib/immersive-routes";
 export default function ImmersiveNav() {
   const pathname = usePathname();
   const { openMap } = useHouseMap();
-  const [revealed, setRevealed] = useState(false);
-  const lastY = useRef(0);
   const btnRef = useRef(null);
   const isLobby = pathname === "/";
-
-  // Scroll-reveal: show on scroll-up, reset on scroll-down (rooms only)
-  useEffect(() => {
-    if (isLobby) return;
-    const onScroll = () => {
-      const y = window.scrollY;
-      if (y <= 60) {
-        setRevealed(false);
-      } else if (y < lastY.current - 10) {
-        setRevealed(true);
-      } else if (y > lastY.current + 10) {
-        setRevealed(false);
-      }
-      lastY.current = y;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [isLobby]);
 
   // M key shortcut — open map from anywhere in the room
   useEffect(() => {
@@ -53,7 +33,6 @@ export default function ImmersiveNav() {
   const cls = [
     "immersive-nav",
     isLobby && "immersive-nav--lobby",
-    revealed && "immersive-nav--revealed",
   ]
     .filter(Boolean)
     .join(" ");
