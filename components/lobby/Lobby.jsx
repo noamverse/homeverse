@@ -34,7 +34,24 @@ export default function Lobby() {
           >
             You found the door.
           </motion.h1>
+          <motion.p
+            className="lobby-premise"
+            initial={{ opacity: 0, y: reduce ? 0 : 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduce ? 0.3 : 1.1, ease: "easeOut", delay: reduce ? 0.3 : 1.3 }}
+          >
+            HOME starts with desire &mdash; what you want, who you are, and where you belong.
+          </motion.p>
         </div>
+
+        <motion.div
+          className="lobby-cue-row"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: reduce ? 0.3 : 0.9, ease: "easeOut", delay: reduce ? 0.4 : 1.55 }}
+        >
+          <p className="lobby-cue">Choose the door that resonates most.</p>
+        </motion.div>
 
         <DoorWall />
       </motion.div>

@@ -1,20 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
 
 export default function Door({ door, isOpen, onOpen }) {
-  const reduce = useReducedMotion();
-  const [coarse, setCoarse] = useState(false);
-
-  useEffect(() => {
-    setCoarse(window.matchMedia("(pointer: coarse)").matches);
-  }, []);
-
-  const flat = reduce || coarse;
-
-  const handleOpen = () => {
+  const handleToggle = () => {
     navigator.vibrate?.(16);
     onOpen(isOpen ? null : door.key);
   };
@@ -22,7 +11,7 @@ export default function Door({ door, isOpen, onOpen }) {
   const handleKeyDown = (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      handleOpen();
+      handleToggle();
     }
   };
 
@@ -30,31 +19,26 @@ export default function Door({ door, isOpen, onOpen }) {
     <div
       className={`door-slot${isOpen ? " door-slot--open" : ""}`}
       style={{ "--door-accent": door.accent, "--door-glow": door.glow }}
+      onClick={handleToggle}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label={`${door.verb} — ${door.line}`}
+      aria-expanded={isOpen}
     >
-      <div className="door__reveal-layer">
+      <div className="door-beyond">
         {isOpen && (
-          <Link href={door.href} className="door__enter">
+          <Link
+            href={door.href}
+            className="door__enter"
+            onClick={(e) => e.stopPropagation()}
+          >
             Enter &rarr;
           </Link>
         )}
       </div>
 
-      <motion.button
-        type="button"
-        className={`door${isOpen ? " door--open" : ""}`}
-        aria-label={`${door.verb} — ${door.line}`}
-        aria-expanded={isOpen}
-        onClick={handleOpen}
-        onKeyDown={handleKeyDown}
-        animate={
-          flat
-            ? { opacity: isOpen ? 0.3 : 1 }
-            : { rotateY: isOpen ? -80 : 0 }
-        }
-        whileHover={!isOpen && !flat ? { z: 36, scale: 1.03 } : undefined}
-        whileTap={!isOpen ? { scale: 0.96 } : undefined}
-        transition={{ type: "spring", stiffness: 70, damping: 15 }}
-      >
+      <div className={`door-panel${isOpen ? " is-open" : ""}`}>
         <div className="door__edge" aria-hidden="true" />
         <div className="door__light" aria-hidden="true" />
         <span className="door__handle" aria-hidden="true" />
@@ -62,7 +46,7 @@ export default function Door({ door, isOpen, onOpen }) {
           <h3 className="door__verb">{door.verb}</h3>
           <p className="door__line">{door.line}</p>
         </div>
-      </motion.button>
+      </div>
     </div>
   );
 }
