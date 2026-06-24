@@ -24,28 +24,31 @@ export const features = [
 
   // ── FOUNDER SPOTLIGHT ────────────────────────────────────────────────────────
   {
-    slug: "placeholder-founder-spotlight",
-    type: "founder",
-    status: "featured",
-    published: false,
-    name: "[Founder Name]",
-    title: "[Role], [Company]",
-    publishedDate: "2026-04-21",
-    readTime: "7 min read",
-    category: "FOUNDER PROFILE",
-    byline: "Profile by Noam Polinger",
-    excerpt:
-      "[Opening paragraph of the feature article — a few sentences that draw the reader into who this person is and why they are worth knowing. Keep the tone warm and editorial.]",
-    pullQuote:
-      "[A short resonant quote from the founder that captures their relational philosophy.]",
-    heroImage: "/images/features/placeholder.jpg",
-    body: [
-      "This is a placeholder for the first paragraph of the feature. The editorial voice of HOME is warm, precise, and unhurried — a portrait that respects both the subject and the reader.",
-      "A second paragraph would explore the founder's origin story: not the résumé version, but the real one. What made them start? What were they refusing to become?",
-      "The third paragraph would turn toward the work itself — not what it does, but what it means. Why does this company exist at this moment, and why does it matter that a human being made it?",
-      "A closing paragraph would leave the reader with something to carry. A tension, an image, a question. HOME features do not resolve neatly. They linger.",
-    ],
+  slug: "noam-polinger",
+  type: "founder",
+  status: "standard",
+  published: true,
+  name: "Noam Polinger",
+  title: "The Bringer of Wealth",
+  publishedDate: "2026-06-25",
+  readTime: "7 min read",
+  category: "FOUNDER",
+  excerpt: "Noam’s Superpower: Making the invisible visible. Translating hidden potential into language, structure, belonging, and momentum that people can resonate with.",
+  pullQuote: "'Life is a family, not a marketplace.'",
+  heroImage: "/images/features/noam-polinger-headshot.png",
+  heroImageWide: "/images/features/noam-polinger.png",
+  company: "HOME",
+  companyUrl: "https://www.homeverse.family/",
+  superpower: "Making the invisible visible. Translating hidden potential into language, structure, belonging, and momentum that people can resonate with.",
+  location: "Headquartered in San Juan, Puerto Rico",
+  socials: {
+    instagram: "https://www.instagram.com/noamverse/",
+    linkedin: "linkedin.com/in/noampolinger",
+    threads: "https://www.threads.com/@noamverse",
   },
+  body: [],
+},
+
 
   // ── FOUNDER ROWS ─────────────────────────────────────────────────────────────
   {
