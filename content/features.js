@@ -143,7 +143,7 @@ socials: {
   heroImageWide: "/images/features/jade-rouby-feature.png",
   company:    "Feroce AI",          
   companyUrl: "https://app.feroceai.com/",          
-  superpower: "The ability to think beyond, to envision and imagine what is possible and pull that out of others.",         
+  superpower: "The ability to think beyond, to envision, and imagine what is possible and pull that out of others.",         
   location:   "Headquartered in San Francisco, CA",          
 socials: {
      instagram: "https://www.instagram.com/jaderouby/",        
