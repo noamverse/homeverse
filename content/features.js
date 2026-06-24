@@ -168,7 +168,7 @@ socials: {
   ]
 },
   
-    {
+  {
   slug: "cleandy-gomez",
   type: "founder",
   status: "standard",
@@ -189,7 +189,7 @@ socials: {
 socials: {
      instagram: "https://www.instagram.com/cleandyg/",        
      linkedin:  "https://www.linkedin.com/in/cleandy-gomez-84676b129/",
-   }
+   },
 
   // ── COMPANY SPOTLIGHT ────────────────────────────────────────────────────────
   {
