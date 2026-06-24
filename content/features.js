@@ -167,6 +167,31 @@ socials: {
 
   ]
 },
+
+  {
+  slug: "cleandy-gomez",
+  type: "founder",
+  status: "standard",
+  published: true,
+  name: "Cleandy Gomez",
+  title: "The Machine",
+  publishedDate: "2026-06-24",
+  readTime: "5 min read",
+  category: "FOUNDER",
+  excerpt: "Cleandy’s Superpower: Super speed and efficiency.",
+  pullQuote: "'Strong opinions, loosely held. Fortune favors the bold.'",
+  heroImage: "/images/features/cleandy-gomez.png",
+  heroImageWide: "/images/features/cleandy-gomez-feature.png",
+  company: "Pomodoro Capital Group",
+  companyUrl: "https://pomodoroinvests.com/",
+  superpower: "Super speed and efficiency across all facets of business and life.",
+  location: "Headquartered in Tampa, Florida",
+  socials: {
+    instagram: "https://www.instagram.com/cleandyg/",
+    linkedin: "https://www.linkedin.com/in/cleandy-gomez-84676b129/",
+  },
+  body: [],
+},
   
   // ── COMPANY SPOTLIGHT ────────────────────────────────────────────────────────
   {
