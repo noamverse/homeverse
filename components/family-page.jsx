@@ -208,8 +208,7 @@ export default function FamilyPage({ initialOpenSlug }) {
           <p className="wall-top__eyebrow">FAMILY</p>
           <h1 className="wall-top__headline">The Family</h1>
           <p className="wall-top__sub">
-            Founders, companies, and minds we believe in. Each face is a story. Each story is an
-            invitation to know them.
+            Founders, creators, leaders, and friends who make HOME feel like home.
           </p>
         </section>
 
