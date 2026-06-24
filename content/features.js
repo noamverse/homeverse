@@ -134,7 +134,7 @@ socials: {
   published: true,
   name: "Jade Rouby",
   title: "L'Affranchie",
-  publishedDate: "2026–05-12",
+  publishedDate: "2026-05-12",
   readTime: "6 min read",
   category: "FOUNDER",
   excerpt: "Jade’s Superpower: The ability to think beyond, to envision and imagine what is possible and pull that out of others.",
