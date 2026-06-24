@@ -127,21 +127,28 @@ socials: {
   ]
 },
   
-  {
+    {
   slug: "jade-rouby",
   type: "founder",
   status: "standard",
   published: true,
   name: "Jade Rouby",
-  title: "S'affranchir du regard des autres",
-  publishedDate: "2026-05-12",
+  title: "L'Affranchie",
+  publishedDate: "2026–05-12",
   readTime: "6 min read",
-  category: "FOUNDER PROFILE",
-  byline: "Profile by Noam Polinger",
-  excerpt: "Jade Rouby is twenty-three, moved in San Francisco, and building the future of preventive health from the inside of a loss most founders will never be able to translate.",
+  category: "FOUNDER",
+  excerpt: "Jade’s Superpower: The ability to think beyond, to envision and imagine what is possible and pull that out of others.",
   pullQuote: "'I'm not careful. I have an absolute, measured conviction that this mission is mine. Not because I chose it — because it chose me.'",
   heroImage: "/images/features/jade-rouby.png",
   heroImageWide: "/images/features/jade-rouby-feature.png",
+  company:    "Feroce AI",          
+  companyUrl: "https://app.feroceai.com/",          
+  superpower: "The ability to think beyond, to envision and imagine what is possible and pull that out of others.",         
+  location:   "Headquartered in San Francisco, CA",          
+socials: {
+     instagram: "https://www.instagram.com/jaderouby/",        
+     linkedin:  "https://www.linkedin.com/in/jade-rouby-podcast-ceo",
+   },
   body: [
 "There is a particular thing Jade Rouby said that the rest of this conversation has to be read against. A mentor she respected told her the next step for her first company was to sign contracts at corporate dinners. And something inside her, she says, went completely quiet.",
 "That sentence is the whole story. Most twenty-three-year-old founders would have heard the advice, swallowed the quiet, and gone to the dinner. Jade Rouby dissolved the company.",
