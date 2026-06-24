@@ -241,7 +241,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 6px 14px 14px 6px;
-  background: radial-gradient(ellipse 80% 80% at 50% 50%, var(--door-glow, rgba(201, 168, 76, 0.4)), var(--charcoal) 80%);
+  background: radial-gradient(ellipse 95% 95% at 50% 45%, var(--door-glow, rgba(201, 168, 76, 0.55)) 0%, rgba(201, 168, 76, 0.1) 55%, transparent 80%);
 }
 
 .door {
@@ -313,6 +313,12 @@
   padding: 22px 14px 28px;
   text-align: center;
   backface-visibility: hidden;
+  transition: opacity 0.18s ease;
+}
+
+.door--open .door__face {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .door__verb {
@@ -1825,8 +1831,8 @@
 
 .bring-room__tray-btn {
   position: relative;
-  width: 180px;
-  height: 160px;
+  width: 200px;
+  height: 200px;
   border: none;
   background: none;
   padding: 0;
@@ -1839,80 +1845,133 @@
 
 .bring-room__tray-btn:hover,
 .bring-room__tray-btn:focus-visible {
-  transform: translateY(-8px) scale(1.05);
+  transform: translateY(-10px) scale(1.06);
   outline: none;
 }
 
 .bring-room__tray {
   position: relative;
-  width: 130px;
-  height: 96px;
+  width: 140px;
+  height: 130px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  animation: cloche-float 5.5s ease-in-out infinite;
+}
+
+.bring-room__tray-btn:hover .bring-room__tray,
+.bring-room__tray-btn:focus-visible .bring-room__tray {
+  animation-play-state: paused;
+  filter: brightness(1.22);
 }
 
 .bring-room__tray-base {
-  width: 112px;
-  height: 16px;
-  background: linear-gradient(180deg, rgba(201, 160, 76, 0.65) 0%, rgba(140, 100, 40, 0.5) 100%);
-  border-radius: 0 0 56px 56px / 0 0 10px 10px;
-  border: 1px solid rgba(201, 160, 76, 0.48);
+  width: 124px;
+  height: 14px;
+  background: linear-gradient(180deg, rgba(210, 170, 85, 0.72) 0%, rgba(145, 105, 42, 0.55) 100%);
+  border-radius: 0 0 62px 62px / 0 0 9px 9px;
+  border: 1px solid rgba(210, 170, 85, 0.54);
   border-top: none;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.38);
 }
 
 .bring-room__tray-lid {
   position: absolute;
-  bottom: 14px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 122px;
-  height: 54px;
+  width: 130px;
+  height: 82px;
   background: linear-gradient(
-    180deg,
-    rgba(220, 185, 100, 0.52) 0%,
-    rgba(180, 130, 55, 0.38) 60%,
-    rgba(150, 100, 35, 0.32) 100%
+    168deg,
+    rgba(238, 200, 115, 0.58) 0%,
+    rgba(200, 150, 65, 0.44) 48%,
+    rgba(160, 108, 38, 0.36) 100%
   );
-  border-radius: 61px 61px 8px 8px;
-  border: 1px solid rgba(220, 185, 100, 0.42);
+  border-radius: 65px 65px 5px 5px;
+  border: 1px solid rgba(230, 195, 105, 0.50);
   border-bottom: none;
   box-shadow:
-    inset 0 4px 20px rgba(244, 218, 160, 0.10),
-    0 8px 28px rgba(0, 0, 0, 0.38);
-  animation: tray-lid-breathe 6s ease-in-out infinite;
+    inset 0 5px 24px rgba(255, 240, 195, 0.13),
+    inset -8px 0 20px rgba(140, 100, 35, 0.12),
+    0 8px 30px rgba(0, 0, 0, 0.40);
+  animation: tray-lid-breathe 5.5s ease-in-out infinite;
+  overflow: hidden;
+}
+
+/* Warm highlight sheen on dome */
+.bring-room__tray-lid::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 18%;
+  width: 26px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255, 248, 215, 0.22), transparent 70%);
+  pointer-events: none;
+}
+
+/* Faint rising steam from the dome apex */
+.bring-room__tray-lid::after {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: calc(50% - 2px);
+  width: 4px;
+  height: 16px;
+  border-radius: 2px;
+  background: linear-gradient(to top, rgba(244, 225, 175, 0.30), transparent);
+  filter: blur(2.5px);
+  animation: cloche-steam 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cloche-steam {
+  0%, 100% { opacity: 0; transform: scaleY(0.6) translateY(0); }
+  25%       { opacity: 0.55; }
+  70%       { opacity: 0.2; transform: scaleY(1.15) translateY(-5px); }
 }
 
 @keyframes tray-lid-breathe {
-  0%, 100% { box-shadow: inset 0 4px 20px rgba(244, 218, 160, 0.10), 0 8px 28px rgba(0, 0, 0, 0.38); }
-  50%       { box-shadow: inset 0 4px 30px rgba(244, 218, 160, 0.20), 0 12px 36px rgba(0, 0, 0, 0.40); }
+  0%, 100% { box-shadow: inset 0 5px 24px rgba(255, 240, 195, 0.13), inset -8px 0 20px rgba(140, 100, 35, 0.12), 0 8px 30px rgba(0, 0, 0, 0.40); }
+  50%       { box-shadow: inset 0 5px 32px rgba(255, 240, 195, 0.24), inset -8px 0 24px rgba(140, 100, 35, 0.16), 0 14px 38px rgba(0, 0, 0, 0.42); }
 }
 
+/* Spherical finial knob */
 .bring-room__tray-handle {
   position: absolute;
-  bottom: 66px;
+  bottom: 92px;
   left: 50%;
   transform: translateX(-50%);
-  width: 22px;
-  height: 11px;
-  background: linear-gradient(180deg, rgba(220, 185, 100, 0.78) 0%, rgba(180, 130, 55, 0.58) 100%);
-  border-radius: 11px 11px 0 0;
-  border: 1px solid rgba(220, 185, 100, 0.52);
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle at 36% 32%, rgba(248, 228, 165, 0.95), rgba(185, 135, 52, 0.78));
+  border-radius: 50%;
+  border: 1px solid rgba(228, 192, 108, 0.58);
+  box-shadow:
+    0 2px 7px rgba(0, 0, 0, 0.32),
+    inset 0 -1px 3px rgba(0, 0, 0, 0.18);
+  z-index: 1;
+}
+
+@keyframes cloche-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
 }
 
 .bring-room__tray-glow {
   position: absolute;
-  inset: -40%;
-  background: radial-gradient(ellipse, rgba(179, 71, 63, 0.32), transparent 68%);
-  animation: bring-tray-glow 5.5s ease-in-out infinite;
+  inset: -42%;
+  background: radial-gradient(ellipse, rgba(200, 95, 65, 0.38) 0%, rgba(179, 71, 63, 0.18) 48%, transparent 72%);
+  animation: bring-tray-glow 5s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes bring-tray-glow {
-  0%, 100% { opacity: 0.45; }
-  50%       { opacity: 0.78; }
+  0%, 100% { opacity: 0.48; transform: scale(1); }
+  50%       { opacity: 0.85; transform: scale(1.06); }
 }
 
 .bring-room__tray-btn:hover .bring-room__tray-glow,
@@ -1949,7 +2008,9 @@
 @media (prefers-reduced-motion: reduce) {
   .bring-room__pool,
   .bring-room__tray-glow,
-  .bring-room__tray-lid { animation: none; opacity: 0.85; }
+  .bring-room__tray-lid,
+  .bring-room__tray { animation: none; opacity: 0.85; }
+  .bring-room__tray-lid::after { display: none; }
   .bring-room__ember    { display: none; }
 }
 
@@ -2092,17 +2153,39 @@
   position: relative;
   width: 160px;
   height: 110px;
+  animation: seed-envelope-float 8s ease-in-out infinite;
 }
 
 .seed-room__envelope-body {
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(22, 36, 22, 0.95) 0%, rgba(15, 25, 15, 0.98) 100%);
-  border: 1px solid rgba(90, 120, 70, 0.32);
+  background: linear-gradient(160deg, rgba(44, 70, 40, 0.97) 0%, rgba(30, 52, 28, 0.98) 100%);
+  border: 1px solid rgba(100, 148, 78, 0.48);
   border-radius: 3px 3px 4px 4px;
   box-shadow:
-    inset 0 0 30px rgba(70, 100, 50, 0.05),
-    0 10px 40px rgba(0, 0, 0, 0.55);
+    inset 0 0 36px rgba(80, 130, 58, 0.08),
+    0 12px 44px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+/* Subtle diagonal sheen across the envelope face */
+.seed-room__envelope-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 30%,
+    rgba(160, 210, 130, 0.05) 48%,
+    transparent 66%
+  );
+  pointer-events: none;
+  animation: seed-sheen 9s ease-in-out infinite;
+}
+
+@keyframes seed-sheen {
+  0%, 100% { opacity: 0; }
+  40%, 60%  { opacity: 1; }
 }
 
 .seed-room__envelope-flap {
@@ -2111,8 +2194,8 @@
   left: 0;
   right: 0;
   height: 58px;
-  background: linear-gradient(180deg, rgba(25, 40, 25, 0.92) 0%, rgba(18, 30, 18, 0.88) 100%);
-  border: 1px solid rgba(90, 120, 70, 0.28);
+  background: linear-gradient(180deg, rgba(50, 80, 46, 0.94) 0%, rgba(36, 60, 32, 0.90) 100%);
+  border: 1px solid rgba(100, 148, 78, 0.36);
   border-bottom: none;
   border-radius: 3px 3px 0 0;
   clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
@@ -2123,31 +2206,36 @@
   left: 50%;
   top: 50px;
   transform: translateX(-50%);
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(184, 154, 78, 0.52) 0%, rgba(140, 110, 50, 0.36) 100%);
-  border: 1px solid rgba(184, 154, 78, 0.42);
-  animation: seal-glow 10s ease-in-out infinite;
+  background: radial-gradient(ellipse at 40% 38%, rgba(220, 190, 100, 0.68) 0%, rgba(165, 128, 55, 0.48) 100%);
+  border: 1px solid rgba(200, 168, 82, 0.55);
+  animation: seal-glow 7s ease-in-out infinite;
   z-index: 1;
 }
 
 @keyframes seal-glow {
-  0%, 100% { box-shadow: 0 0 10px 1px rgba(184, 154, 78, 0.10); opacity: 0.72; }
-  50%       { box-shadow: 0 0 18px 4px rgba(184, 154, 78, 0.20); opacity: 1; }
+  0%, 100% { box-shadow: 0 0 12px 2px rgba(184, 154, 78, 0.18); opacity: 0.78; }
+  50%       { box-shadow: 0 0 26px 6px rgba(200, 170, 85, 0.40); opacity: 1; }
+}
+
+@keyframes seed-envelope-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
 }
 
 .seed-room__envelope-glow {
   position: absolute;
   inset: -50%;
-  background: radial-gradient(ellipse, rgba(90, 130, 70, 0.10), transparent 68%);
-  animation: seed-envelope-glow 12s ease-in-out infinite;
+  background: radial-gradient(ellipse, rgba(100, 148, 72, 0.16) 0%, rgba(90, 130, 70, 0.06) 50%, transparent 72%);
+  animation: seed-envelope-glow 10s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes seed-envelope-glow {
-  0%, 100% { opacity: 0.5; }
-  50%       { opacity: 1; }
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%       { opacity: 1; transform: scale(1.05); }
 }
 
 .seed-room__envelope-btn:hover .seed-room__envelope-glow,
@@ -2183,7 +2271,9 @@
 @media (prefers-reduced-motion: reduce) {
   .seed-room__glow,
   .seed-room__envelope-glow,
-  .seed-room__envelope-seal { animation: none; opacity: 0.8; }
+  .seed-room__envelope-seal,
+  .seed-room__envelope { animation: none; opacity: 0.8; }
+  .seed-room__envelope-body::before { display: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -2205,27 +2295,53 @@
 
 .partner-room__wall {
   background:
-    radial-gradient(ellipse 60% 35% at 50% 5%, rgba(110, 200, 220, 0.04), transparent 60%),
+    radial-gradient(ellipse 60% 35% at 50% 5%, rgba(110, 200, 220, 0.05), transparent 60%),
+    radial-gradient(ellipse 80% 50% at 20% 80%, rgba(124, 92, 191, 0.03), transparent 50%),
     linear-gradient(180deg, #091416 0%, #060d10 50%, #030708 100%);
 }
 
+/* Straight latitude lines */
 .partner-room__graticule {
   background-image:
     repeating-linear-gradient(
       90deg,
       transparent 0,
       transparent calc(7vw - 1px),
-      rgba(63, 126, 147, 0.06) calc(7vw - 1px),
-      rgba(63, 126, 147, 0.06) 7vw
+      rgba(63, 126, 147, 0.07) calc(7vw - 1px),
+      rgba(63, 126, 147, 0.07) 7vw
     ),
     repeating-linear-gradient(
       0deg,
       transparent 0,
       transparent calc(7vh - 1px),
-      rgba(63, 126, 147, 0.05) calc(7vh - 1px),
-      rgba(63, 126, 147, 0.05) 7vh
+      rgba(63, 126, 147, 0.055) calc(7vh - 1px),
+      rgba(63, 126, 147, 0.055) 7vh
     );
-  opacity: 0.7;
+  mask-image: radial-gradient(ellipse 88% 80% at 50% 50%, black 20%, rgba(0,0,0,0.6) 55%, transparent 82%);
+  -webkit-mask-image: radial-gradient(ellipse 88% 80% at 50% 50%, black 20%, rgba(0,0,0,0.6) 55%, transparent 82%);
+  opacity: 0.85;
+  animation: partner-graticule-drift 60s linear infinite;
+}
+
+@keyframes partner-graticule-drift {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 7vw 7vh, 7vw 7vh; }
+}
+
+/* Scattered city dots — absolutely inside the fixed backdrop */
+.partner-room__city-dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(110, 190, 215, 0.55);
+  box-shadow: 0 0 4px 1px rgba(80, 170, 205, 0.4);
+  animation: city-dot-pulse 6s ease-in-out infinite;
+}
+
+@keyframes city-dot-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%       { opacity: 0.72; transform: scale(1.5); }
 }
 
 .partner-room__pool {
@@ -2342,24 +2458,32 @@
   display: block;
 }
 
+/* Arcs — base */
 .partner-room__arc {
-  stroke: rgba(63, 126, 147, 0.35);
   stroke-width: 1;
   stroke-dasharray: 4 7;
+  fill: none;
   animation: arc-shimmer 6s ease-in-out infinite;
 }
 
+/* Multi-color arc palette */
+.partner-room__arc--teal   { stroke: rgba(50, 162, 195, 0.45); }
+.partner-room__arc--gold   { stroke: rgba(201, 168, 76, 0.38); }
+.partner-room__arc--violet { stroke: rgba(124, 92, 191, 0.32); }
+
 @keyframes arc-shimmer {
-  0%, 100% { stroke-opacity: 0.35; }
-  50%       { stroke-opacity: 0.62; }
+  0%, 100% { stroke-opacity: 0.6; }
+  50%       { stroke-opacity: 1; }
 }
 
 .partner-room__map-btn:hover .partner-room__arc,
 .partner-room__map-btn:focus-visible .partner-room__arc {
-  stroke-opacity: 0.88;
-  animation: none;
+  stroke-opacity: 1 !important;
+  animation: none !important;
+  stroke-dasharray: 4 4;
 }
 
+/* Standard node pulse */
 .partner-room__node-pulse {
   fill: none;
   stroke: var(--room-accent);
@@ -2373,10 +2497,30 @@
   100% { r: 13;  opacity: 0; }
 }
 
+/* Hub node — the central click target */
+.partner-room__node-pulse--hub {
+  stroke: #6fb0c8;
+  stroke-width: 1.5;
+  animation: hub-pulse 2.4s ease-out infinite;
+}
+
+@keyframes hub-pulse {
+  0%   { r: 6;  opacity: 0.7; }
+  100% { r: 22; opacity: 0; }
+}
+
+/* Standard node */
 .partner-room__node {
   fill: var(--room-accent-bright);
   filter: drop-shadow(0 0 4px var(--room-accent));
   animation: node-breathe 4s ease-in-out infinite;
+}
+
+/* Hub node — larger, brighter, more prominent */
+.partner-room__node--hub {
+  fill: #c8ecf5;
+  filter: drop-shadow(0 0 8px rgba(79, 179, 201, 0.9)) drop-shadow(0 0 18px rgba(63, 126, 147, 0.5));
+  animation: hub-breathe 2.8s ease-in-out infinite;
 }
 
 @keyframes node-breathe {
@@ -2384,23 +2528,58 @@
   50%       { opacity: 1; }
 }
 
+@keyframes hub-breathe {
+  0%, 100% { opacity: 0.82; filter: drop-shadow(0 0 8px rgba(79, 179, 201, 0.9)); }
+  50%       { opacity: 1;    filter: drop-shadow(0 0 14px rgba(79, 179, 201, 1)) drop-shadow(0 0 28px rgba(63, 126, 147, 0.7)); }
+}
+
+.partner-room__map-btn:hover .partner-room__node,
+.partner-room__map-btn:focus-visible .partner-room__node {
+  opacity: 1;
+  filter: drop-shadow(0 0 7px var(--room-accent));
+  animation: none;
+}
+
+.partner-room__map-btn:hover .partner-room__node--hub,
+.partner-room__map-btn:focus-visible .partner-room__node--hub {
+  opacity: 1;
+  filter: drop-shadow(0 0 14px rgba(79, 179, 201, 1)) drop-shadow(0 0 30px rgba(63, 126, 147, 0.8));
+  animation: none;
+}
+
+/* Hub click-cue label */
+.partner-room__hub-cue {
+  font-family: "Inter", sans-serif;
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  fill: rgba(111, 176, 200, 0.72);
+  animation: cue-blink 3s ease-in-out infinite;
+}
+
+@keyframes cue-blink {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
 .partner-room__signal {
-  fill: var(--room-accent-bright);
-  filter: drop-shadow(0 0 5px var(--room-accent-bright));
-  opacity: 0.88;
+  fill: #b0e4f4;
+  filter: drop-shadow(0 0 6px rgba(111, 176, 200, 0.9));
+  opacity: 0.92;
 }
 
 .partner-room__map-glow {
   position: absolute;
-  inset: -30%;
-  background: radial-gradient(ellipse, rgba(63, 126, 147, 0.20), transparent 68%);
+  inset: -32%;
+  background: radial-gradient(ellipse, rgba(63, 126, 147, 0.22) 0%, rgba(124, 92, 191, 0.08) 40%, transparent 70%);
   animation: partner-map-glow 7s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes partner-map-glow {
   0%, 100% { opacity: 0.5; }
-  50%       { opacity: 0.88; }
+  50%       { opacity: 0.92; }
 }
 
 .partner-room__map-btn:hover .partner-room__map-glow,
@@ -2437,10 +2616,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .partner-room__pool,
-  .partner-room__map-glow   { animation: none; opacity: 0.8; }
-  .partner-room__arc        { animation: none; stroke-opacity: 0.5; }
-  .partner-room__node-pulse { display: none; }
-  .partner-room__node       { animation: none; opacity: 0.85; }
-  .partner-room__signal     { display: none; }
+  .partner-room__map-glow       { animation: none; opacity: 0.8; }
+  .partner-room__graticule      { animation: none; }
+  .partner-room__arc            { animation: none; stroke-opacity: 0.5; }
+  .partner-room__node-pulse,
+  .partner-room__node-pulse--hub { display: none; }
+  .partner-room__node,
+  .partner-room__node--hub      { animation: none; opacity: 0.85; }
+  .partner-room__signal         { display: none; }
+  .partner-room__city-dot       { animation: none; opacity: 0.4; }
+  .partner-room__hub-cue        { animation: none; opacity: 0.7; }
 }
 

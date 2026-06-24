@@ -10,7 +10,7 @@ const NODES = [
   { id: "b", cx: 165, cy: 46  },
   { id: "c", cx: 282, cy: 68  },
   { id: "d", cx: 338, cy: 138 },
-  { id: "e", cx: 200, cy: 158 },
+  { id: "e", cx: 200, cy: 158 }, // hub — central node
   { id: "f", cx: 88,  cy: 198 },
   { id: "g", cx: 312, cy: 218 },
   { id: "h", cx: 150, cy: 232 },
@@ -27,6 +27,30 @@ const ARCS = [
   { from: "b", to: "e" },
   { from: "a", to: "f" },
 ];
+
+// Assign arc colors across the teal/gold/violet palette
+const ARC_COLORS = ["teal", "gold", "teal", "violet", "teal", "gold", "violet", "teal", "gold"];
+
+// Wandering tour: varied route through arc indices
+const SIGNAL_TOUR = [7, 0, 1, 2, 3, 5, 8, 4, 6];
+
+// Scattered city dots — left/top as viewport percentages
+const CITY_DOTS = [
+  { left: "8%",  top: "14%", delay: 0 },
+  { left: "22%", top: "28%", delay: 1.4 },
+  { left: "38%", top: "10%", delay: 0.6 },
+  { left: "55%", top: "22%", delay: 2.1 },
+  { left: "72%", top: "15%", delay: 0.9 },
+  { left: "86%", top: "32%", delay: 1.8 },
+  { left: "14%", top: "62%", delay: 0.3 },
+  { left: "48%", top: "72%", delay: 2.5 },
+  { left: "78%", top: "58%", delay: 1.1 },
+  { left: "30%", top: "82%", delay: 3.0 },
+  { left: "64%", top: "88%", delay: 0.7 },
+  { left: "90%", top: "72%", delay: 1.6 },
+];
+
+const HUB_ID = "e";
 
 function getNode(id) {
   return NODES.find((n) => n.id === id);
@@ -45,19 +69,45 @@ export default function PartnerRoom({ room }) {
   const parallaxRef = useRoomParallax();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [signalIdx, setSignalIdx] = useState(0);
 
   useEffect(() => setMounted(true), []);
+
+  // Wander the signal arc-by-arc
+  useEffect(() => {
+    if (!mounted || reduce) return;
+    const id = setInterval(() => {
+      setSignalIdx((i) => (i + 1) % SIGNAL_TOUR.length);
+    }, 2800);
+    return () => clearInterval(id);
+  }, [mounted, reduce]);
 
   const openPanel = () => {
     navigator.vibrate?.(14);
     setOpen(true);
   };
 
+  const currentArc = ARCS[SIGNAL_TOUR[signalIdx]];
+
   return (
     <div className="partner-room" ref={parallaxRef}>
       <div className="partner-room__backdrop" aria-hidden="true">
         <div className="room-layer partner-room__wall"      style={{ "--depth": 0.04 }} />
-        <div className="room-layer partner-room__graticule"  style={{ "--depth": 0.07 }} />
+        <div className="room-layer partner-room__graticule"  style={{ "--depth": 0.06 }} />
+
+        {/* City dots scattered across the globe map */}
+        {mounted && CITY_DOTS.map((dot, i) => (
+          <span
+            key={i}
+            className="partner-room__city-dot"
+            style={{
+              left: dot.left,
+              top: dot.top,
+              animationDelay: `${dot.delay}s`,
+            }}
+          />
+        ))}
+
         <div className="room-layer partner-room__pool"      style={{ "--depth": 0.12 }} />
         <div className="room-layer partner-room__vignette"   style={{ "--depth": 0.17 }} />
       </div>
@@ -116,44 +166,78 @@ export default function PartnerRoom({ room }) {
               viewBox="0 0 400 280"
               aria-hidden="true"
             >
+              {/* Arcs — multi-color */}
               {ARCS.map((arc, i) => (
                 <path
                   key={i}
-                  className="partner-room__arc"
+                  className={`partner-room__arc partner-room__arc--${ARC_COLORS[i]}`}
                   d={arcPath(arc.from, arc.to)}
-                  fill="none"
                   style={{ animationDelay: `${i * 0.3}s` }}
                 />
               ))}
 
-              {mounted && !reduce && (
-                <circle className="partner-room__signal" r="3">
+              {/* Wandering signal — remounts on key change to restart animateMotion */}
+              {mounted && !reduce && currentArc && (
+                <circle key={signalIdx} className="partner-room__signal" r="3.5">
                   <animateMotion
-                    dur="4s"
-                    repeatCount="indefinite"
-                    path={arcPath("b", "e")}
+                    dur="2.5s"
+                    path={arcPath(currentArc.from, currentArc.to)}
                   />
                 </circle>
               )}
 
-              {NODES.map((node, i) => (
-                <g key={node.id}>
-                  <circle
-                    className="partner-room__node-pulse"
-                    cx={node.cx}
-                    cy={node.cy}
-                    r="4"
-                    style={{ animationDelay: `${i * 0.45}s` }}
-                  />
-                  <circle
-                    className="partner-room__node"
-                    cx={node.cx}
-                    cy={node.cy}
-                    r="3.5"
-                    style={{ animationDelay: `${i * 0.45}s` }}
-                  />
-                </g>
-              ))}
+              {/* Nodes */}
+              {NODES.map((node, i) => {
+                const isHub = node.id === HUB_ID;
+                return (
+                  <g key={node.id}>
+                    {/* Hub gets two staggered pulse rings; others get one */}
+                    {isHub ? (
+                      <>
+                        <circle
+                          className="partner-room__node-pulse partner-room__node-pulse--hub"
+                          cx={node.cx}
+                          cy={node.cy}
+                          r="6"
+                        />
+                        <circle
+                          className="partner-room__node-pulse partner-room__node-pulse--hub"
+                          cx={node.cx}
+                          cy={node.cy}
+                          r="6"
+                          style={{ animationDelay: "1.2s" }}
+                        />
+                      </>
+                    ) : (
+                      <circle
+                        className="partner-room__node-pulse"
+                        cx={node.cx}
+                        cy={node.cy}
+                        r="4"
+                        style={{ animationDelay: `${i * 0.45}s` }}
+                      />
+                    )}
+                    <circle
+                      className={`partner-room__node${isHub ? " partner-room__node--hub" : ""}`}
+                      cx={node.cx}
+                      cy={node.cy}
+                      r={isHub ? 6 : 3.5}
+                      style={!isHub ? { animationDelay: `${i * 0.45}s` } : undefined}
+                    />
+                    {/* Tap cue on hub */}
+                    {isHub && (
+                      <text
+                        className="partner-room__hub-cue"
+                        x={node.cx}
+                        y={node.cy + 18}
+                        textAnchor="middle"
+                      >
+                        open channel
+                      </text>
+                    )}
+                  </g>
+                );
+              })}
             </svg>
             <span className="partner-room__map-glow" aria-hidden="true" />
           </button>

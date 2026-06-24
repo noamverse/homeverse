@@ -48,8 +48,8 @@ export default function Door({ door, isOpen, onOpen }) {
         onKeyDown={handleKeyDown}
         animate={
           flat
-            ? { opacity: isOpen ? 0 : 1 }
-            : { rotateY: isOpen ? -112 : 0 }
+            ? { opacity: isOpen ? 0.3 : 1 }
+            : { rotateY: isOpen ? -80 : 0 }
         }
         whileHover={!isOpen && !flat ? { z: 36, scale: 1.03 } : undefined}
         whileTap={!isOpen ? { scale: 0.96 } : undefined}

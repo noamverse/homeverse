@@ -15,7 +15,7 @@
   align-items: center;
   gap: 18px;
   padding: 16px 24px;
-  opacity: 0.5;
+  opacity: 0.88;
   transition: opacity 0.35s ease;
 }
 
@@ -365,6 +365,7 @@
 .hmap-lobby__header {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   margin-bottom: 11px;
 }
@@ -395,6 +396,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
+  justify-content: center;
 }
 
 
