@@ -87,21 +87,28 @@ socials: {
   ]
 },
 
-   {
+  {
   slug: "ted-koontz",
   type: "founder",
   status: "standard",
   published: true,
   name: "Ted Koontz",
-  title: "The Quiet Operator Arrives",
-  publishedDate: "2026-04-30",
+  title: "The Quiet Operator",
+  publishedDate: "2026-04-29",
   readTime: "5 min read",
-  category: "FOUNDER PROFILE",
-  byline: "Profile by Noam Polinger",
-  excerpt: "16+ years of experience operating at the highest level, it’s finally time to share who Ted is",
+  category: "FOUNDER",
+  excerpt: "Ted's Superpower: The ability to keep going, to never give up, to never quit, ever.",
   pullQuote: "'You can be anything—but only if you're willing to do what most won't. Hard work isn't optional. It's the price of becoming.'",
   heroImage: "/images/features/ted-koontz.png",
   heroImageWide: "/images/features/ted-koontz-feature.png",
+  company:    "Red's Team Sports",          
+  companyUrl: "https://redsteamsports.com/?srsltid=AfmBOopsx87hEGFp95qFsa_OO9-vHXVDsGxvGe9Y5vxZkXXiBcezoBJW",          
+  superpower: "The ability to keep going, to never give up, to never quit, ever.",         
+  location:   "Headquartered in Tampa, Florida",          
+socials: {
+     instagram: "https://www.instagram.com/redsteamsports",        
+     linkedin:  "https://www.linkedin.com/in/tfkoontz",
+   },
   body: [
     "Ted Koontz prefers to be underestimated. He says it like it's a strategy, but listen long enough and you realize it's also a temperament — a way of moving through the world that has, until now, kept him quietly building one of the more impressive vertically integrated operations you've now heard of. Apparel, signs, awards, branded merchandise. Multiple companies under one umbrella, all of them growing, none of them needing to yell to the masses. Ted says he's 'just a guy.' He says it the way men who have built things from nothing tend to say it — with a smile and a confidence that knows better.",
     "Ted is approaching sixty. He has grandchildren. He has worked his way up from a kid who paid his own way through college, did his time enlisted and as an officer, and never once let himself believe the floor was solid until the day he hit his first million, and even then… He keeps going. 'I knew in the back of my head I could always go back to the corporate world if I had to,' he says of those early years. 'Once I hit the million mark I knew I was going to be okay, and then there's never been a doubt since.' That sentence is the whole shape of him. Belief, then certainty, then the long quiet work of compounding.",
