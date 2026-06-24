@@ -168,27 +168,28 @@ socials: {
   ]
 },
   
-  {
-    slug: "placeholder-founder-four",
-    type: "founder",
-    status: "standard",
-    published: false,
-    name: "[Founder Name]",
-    title: "[Role], [Company]",
-    publishedDate: "2026-03-28",
-    readTime: "5 min read",
-    category: "NEW THIS WEEK",
-    byline: "Profile by Noam Polinger",
-    excerpt:
-      "[One-line pitch of the feature — what makes this person worth reading about.]",
-    pullQuote: "[A resonant one-line quote from this founder.]",
-    heroImage: "/images/features/placeholder.jpg",
-    body: [
-      "Placeholder first paragraph for this founder feature. New this week — and already the kind of person you want to keep watching.",
-      "A second paragraph that situates their work inside a larger shift happening in their industry.",
-      "A closing paragraph with something specific: a detail, a moment, a room they built.",
-    ],
-  },
+    {
+  slug: "cleandy-gomez",
+  type: "founder",
+  status: "standard",
+  published: true,
+  name: "Cleandy Gomez",
+  title: "The Machine",
+  publishedDate: "2026-06-24",
+  readTime: "5 min read",
+  category: "FOUNDER",
+  excerpt: "Cleandy’s Superpower: Super speed and efficiency..",
+  pullQuote: "'Strong opinions, loosely held. Fortune favors the bold.'",
+  heroImage: "/images/features/cleandy-gomez.png",
+  heroImageWide: "/images/features/cleandy-gomez-feature.png",
+  company:    "Pomodoro Capital Group",          
+  companyUrl: "https://pomodoroinvests.com/",          
+  superpower: "Super speed and efficiency across all facets of business and life.",         
+  location:   "Headquartered in Tampa, Florida",          
+socials: {
+     instagram: "https://www.instagram.com/cleandyg/",        
+     linkedin:  "https://www.linkedin.com/in/cleandy-gomez-84676b129/",
+   },
 
   // ── COMPANY SPOTLIGHT ────────────────────────────────────────────────────────
   {
