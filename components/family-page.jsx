@@ -22,7 +22,11 @@ function matchesSearch(f, q) {
 
 const publishedSorted = [...features]
   .filter((f) => f.published === true)
-  .sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate));
+  .sort((a, b) => {
+    if (a.slug === "noam-polinger") return -1;
+    if (b.slug === "noam-polinger") return 1;
+    return new Date(b.publishedDate) - new Date(a.publishedDate);
+  });
 
 // ── Wall Tile ─────────────────────────────────────────────────────────────────
 

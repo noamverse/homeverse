@@ -16,6 +16,7 @@ export const stories = [
   // ── FEATURED STORY ───────────────────────────────────────────────────────────
   {
   slug: "the-man-who-built-a-home",
+  featured: true,
   kind: "essay",
   title: "The Man Who Built a Home",
   publishedDate: "2026-05-04",

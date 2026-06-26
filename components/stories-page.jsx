@@ -113,14 +113,17 @@ function GridCard({ story, delay = 0 }) {
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function StoriesPage() {
-  const sorted = [...stories].sort(
+  const sortedByDate = [...stories].sort(
     (a, b) => new Date(b.publishedDate) - new Date(a.publishedDate)
   );
 
-  const [lead, second, third, ...rest] = sorted;
+  const featuredStory = stories.find((s) => s.featured);
+  const lead = featuredStory ?? sortedByDate[0];
+  const rest = sortedByDate.filter((s) => s.slug !== lead?.slug);
+  const [second, third, ...remaining] = rest;
   const secondaries = [second, third].filter(Boolean);
-  const gridStories = rest.slice(0, 6);
-  const hasMore = rest.length > 6;
+  const gridStories = remaining.slice(0, 6);
+  const hasMore = remaining.length > 6;
 
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -166,7 +169,7 @@ export default function StoriesPage() {
       <div className="container stories-body" style={{ position: "relative", zIndex: 1 }}>
 
         {/* ── Empty state ── */}
-        {sorted.length === 0 && (
+        {stories.length === 0 && (
           <p className="stories-empty">
             The library is being written. The first essays arrive soon.
           </p>
