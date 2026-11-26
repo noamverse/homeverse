@@ -1,12 +1,10 @@
-"use client";
+
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { isNoFooterRoute } from "@/lib/immersive-routes";
 
 // TODO: Replace '#' with actual page URLs when those pages exist
 const exploreLinks = [
-  { href: "/",           label: "Lobby" },
+  { href: "/",           label: "Home" },
   { href: "/philosophy", label: "Philosophy" },
   { href: "/family",     label: "Family" },
   { href: "/stories",    label: "Stories" },
@@ -23,9 +21,7 @@ const ecosystemLinks = [
 ];
 
 export default function SiteFooter() {
-  const pathname = usePathname();
 
-  if (isNoFooterRoute(pathname)) return null;
 
   return (
     <footer className="site-footer">

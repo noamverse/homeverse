@@ -1,12 +1,10 @@
-import Lobby from "@/components/lobby/Lobby";
-import "@/styles/lobby-theme.css";
+import HomePage from "@/components/home-page";
 
 export const metadata = {
-  title: "HOME — You found the door.",
-  description:
-    "The front door of a relational ecosystem. Life is a family, not a marketplace.",
+  title: "Welcome",
+  description: "The front door of a relational ecosystem. Life is a family, not a marketplace.",
 };
 
 export default function Page() {
-  return <Lobby />;
+  return <HomePage />;
 }
