@@ -4,7 +4,7 @@ import Link from "next/link";
 
 // TODO: Replace '#' with actual page URLs when those pages exist
 const exploreLinks = [
-  { href: "/",           label: "Lobby" },
+  { href: "/",           label: "Home" },
   { href: "/philosophy", label: "Philosophy" },
   { href: "/family",     label: "Family" },
   { href: "/stories",    label: "Stories" },
