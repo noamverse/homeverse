@@ -9308,11 +9308,6 @@ h1, h2, h3, h4, h5, h6 {
   height: auto;
   display: block;
   filter: none;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
 }
 
 /* Typography spacing per spec: 48px gap from logo, 20px gap to subline. */
